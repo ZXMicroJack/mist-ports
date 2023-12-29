@@ -1,0 +1,3 @@
+[submodule "menu/Menu_MIST"]
+	path = menu/Menu_MIST
+	url = git@github.com:mist-devel/Menu_MIST.git
