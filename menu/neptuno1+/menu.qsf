@@ -70,12 +70,7 @@ set_location_assignment PIN_B4 -to AUDIO_R
 #set_property -dict {PACKAGE_PIN W6 IOSTANDARD LVTTL} [get_ports mist_ss3] G8
 #set_property -dict {PACKAGE_PIN W4 IOSTANDARD LVTTL} [get_ports mist_ss4] F10
 
-
-#16  v8_miso \   uart0 tx, SPI0RX - spi_do
-#17  w9_mosi |-- sdcard high level / uart0 rx, SPI0CSN
-#18  w7_sck  |   SPI0SCK
-#19  v7_cs   /   SPI0TX
-
+# mist
 set_location_assignment PIN_E10 -to SPI_DO
 set_location_assignment PIN_C10 -to SPI_DI
 set_location_assignment PIN_D10 -to SPI_SCK
@@ -84,6 +79,7 @@ set_location_assignment PIN_G8 -to SPI_SS3
 set_location_assignment PIN_F10 -to SPI_SS4
 set_location_assignment PIN_E9 -to CONF_DATA0
 
+# sdram
 set_location_assignment PIN_V6 -to SDRAM_A[12]
 set_location_assignment PIN_Y4 -to SDRAM_A[11]
 set_location_assignment PIN_W1 -to SDRAM_A[10]
@@ -130,11 +126,48 @@ set_location_assignment PIN_AB4 -to SDRAM_nWE
 #set_location_assignment PIN_B19 -to JOY_DATA
 #set_location_assignment PIN_AA18 -to JOY_SELECT
 
+# joysticks from mb
+#set_location_assignment PIN_F14 -to JOY_XCLK
+#set_location_assignment PIN_F15 -to JOY_XLOAD
+#set_location_assignment PIN_F13 -to JOY_XDATA
+
 # audio data in
-#set_location_assignment PIN_H21 -to SCLK
-#set_location_assignment PIN_H22 -to SDIN
-#set_location_assignment PIN_F22 -to MCLK
-#set_location_assignment PIN_L22 -to LRCLK
+#set_location_assignment PIN_U22 -to MIDI_RX
+#set_location_assignment PIN_N22 -to DADB
+#set_location_assignment PIN_P22 -to CLKBD
+#set_location_assignment PIN_AA14 -to WSBD
+
+# ps2
+#set_location_assignment PIN_N20 -to KDAT
+#set_location_assignment PIN_N19 -to KCLK
+#set_location_assignment PIN_B21 -to MDAT
+#set_location_assignment PIN_C21 -to MCLK
+
+# mmc
+#set_location_assignment PIN_E21 -to MISO
+#set_location_assignment PIN_D21 -to MOSI
+#set_location_assignment PIN_E22 -to SCK
+#set_location_assignment PIN_D22 -to CS
+
+# wifi
+#set_location_assignment PIN_P21 -to RTS
+#set_location_assignment PIN_R21 -to GPIO0
+#set_location_assignment PIN_AB20 -to RXD
+#set_location_assignment PIN_AB16 -to TXD
+
+# rtc
+#set_location_assignment PIN_R22 -to SCL
+#set_location_assignment PIN_V21 -to SDA
+
+# i2s out
+#set_location_assignment PIN_AB14 -to I2SL
+#set_location_assignment PIN_M20 -to I2SC
+#set_location_assignment PIN_AA15 -to I2SD
+
+# misc
+#set_location_assignment PIN_AA13 -to EAR
+
+
 
 
 # Classic Timing Assignments
