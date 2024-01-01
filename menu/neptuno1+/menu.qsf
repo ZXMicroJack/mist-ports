@@ -121,15 +121,15 @@ set_location_assignment PIN_AB3 -to SDRAM_nRAS
 set_location_assignment PIN_AB4 -to SDRAM_nWE
 
 # joysticks in
-#set_location_assignment PIN_A20 -to JOY_CLK
-#set_location_assignment PIN_B20 -to JOY_LOAD
-#set_location_assignment PIN_B19 -to JOY_DATA
+set_location_assignment PIN_A20 -to JOY_CLK
+set_location_assignment PIN_B20 -to JOY_LOAD
+set_location_assignment PIN_B19 -to JOY_DATA
 #set_location_assignment PIN_AA18 -to JOY_SELECT
 
 # joysticks from mb
-#set_location_assignment PIN_F14 -to JOY_XCLK
-#set_location_assignment PIN_F15 -to JOY_XLOAD
-#set_location_assignment PIN_F13 -to JOY_XDATA
+set_location_assignment PIN_F14 -to JOY_XCLK
+set_location_assignment PIN_F15 -to JOY_XLOAD
+set_location_assignment PIN_F13 -to JOY_XDATA
 
 # audio data in
 #set_location_assignment PIN_U22 -to MIDI_RX
@@ -160,12 +160,12 @@ set_location_assignment PIN_AB4 -to SDRAM_nWE
 #set_location_assignment PIN_V21 -to SDA
 
 # i2s out
-#set_location_assignment PIN_AB14 -to I2SL
-#set_location_assignment PIN_M20 -to I2SC
-#set_location_assignment PIN_AA15 -to I2SD
+set_location_assignment PIN_AB14 -to I2SL
+set_location_assignment PIN_M20 -to I2SC
+set_location_assignment PIN_AA15 -to I2SD
 
 # misc
-#set_location_assignment PIN_AA13 -to EAR
+set_location_assignment PIN_AA13 -to EAR
 
 
 
@@ -179,7 +179,7 @@ set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 # ================================
 set_global_assignment -name CYCLONEII_OPTIMIZATION_TECHNIQUE SPEED
 set_global_assignment -name FAMILY "Cyclone IV E"
-set_global_assignment -name TOP_LEVEL_ENTITY MENU
+set_global_assignment -name TOP_LEVEL_ENTITY menu_neptuno1p_top
 set_global_assignment -name DEVICE_FILTER_PIN_COUNT 484
 set_global_assignment -name SYNTH_TIMING_DRIVEN_SYNTHESIS ON
 set_global_assignment -name SAVE_DISK_SPACE OFF
@@ -194,7 +194,7 @@ set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_DUPLICATION ON
 set_global_assignment -name PHYSICAL_SYNTHESIS_COMBO_LOGIC_FOR_AREA ON
 set_global_assignment -name PHYSICAL_SYNTHESIS_MAP_LOGIC_TO_MEMORY_FOR_AREA ON
 set_global_assignment -name PHYSICAL_SYNTHESIS_EFFORT EXTRA
-set_global_assignment -name DEVICE EP4CE30F23C8
+set_global_assignment -name DEVICE EP4CE15F23C8
 set_global_assignment -name CYCLONEIII_CONFIGURATION_SCHEME "PASSIVE SERIAL"
 set_global_assignment -name FORCE_CONFIGURATION_VCCIO ON
 set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
@@ -356,7 +356,7 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to AUDIO_R
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SPI_DO
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to CONF_DATA0
 
-set_location_assignment PLL_1 -to "pll:pll|altpll:altpll_component"
+#set_location_assignment PLL_1 -to "pll:pll|altpll:altpll_component"
 
 # Incremental Compilation Assignments
 # ===================================
@@ -370,6 +370,139 @@ set_global_assignment -name QIP_FILE "../Menu_MIST/mist-modules/mist.qip"
 set_global_assignment -name SYSTEMVERILOG_FILE ../Menu_MIST/sdram.sv
 set_global_assignment -name VERILOG_FILE ../Menu_MIST/lfsr.v
 set_global_assignment -name SYSTEMVERILOG_FILE ../Menu_MIST/cos.sv
-set_global_assignment -name QIP_FILE pll.qip
+#set_global_assignment -name QIP_FILE pll.qip
+set_global_assignment -name VERILOG_FILE pll25.v
 set_global_assignment -name SIGNALTAP_FILE output_files/sdram.stp
+set_global_assignment -name VERILOG_FILE neptuno1p_top.v
+
+
+set_global_assignment -name VERILOG_MACRO "USE_AUDIO_IN=1"
+set_global_assignment -name VERILOG_MACRO "I2S_AUDIO=1"
+set_global_assignment -name ENABLE_OCT_DONE OFF
+set_global_assignment -name ENABLE_CONFIGURATION_PINS OFF
+set_global_assignment -name ENABLE_BOOT_SEL_PIN OFF
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_WEAK_PULLUP "AS INPUT TRI-STATED"
+
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to AUDIO_L -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to AUDIO_R -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to CONF_DATA0 -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to LED -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[0] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[10] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[11] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[12] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[1] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[2] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[3] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[4] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[5] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[6] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[7] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[8] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_A[9] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_BA[0] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_BA[1] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_CKE -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_CLK -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQMH -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQML -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[0] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[10] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[11] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[12] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[13] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[14] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[15] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[1] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[2] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[3] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[4] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[5] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[6] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[7] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[8] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_DQ[9] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_nCAS -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_nCS -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_nRAS -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to SDRAM_nWE -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to SPI_DO -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_B[0] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_B[1] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_B[2] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_B[3] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_B[4] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_B[5] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_G[0] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_G[1] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_G[2] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_G[3] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_G[4] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_G[5] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_HS -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_R[0] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_R[1] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_R[2] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_R[3] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_R[4] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_R[5] -entity MENU
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to VGA_VS -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[0] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[10] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[11] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[12] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[13] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[14] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[15] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[1] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[2] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[3] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[4] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[5] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[6] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[7] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[8] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to SDRAM_DQ[9] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[0] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[10] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[11] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[12] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[1] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[2] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[3] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[4] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[5] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[6] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[7] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[8] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_A[9] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_BA[0] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_BA[1] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQMH -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQML -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[0] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[10] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[11] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[12] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[13] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[14] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[15] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[1] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[2] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[3] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[4] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[5] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[6] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[7] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[8] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_DQ[9] -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nCAS -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nCS -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nRAS -entity MENU
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to SDRAM_nWE -entity MENU
+set_global_assignment -name PARTITION_COLOR 16764057 -entity MENU -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -entity MENU -section_id Top
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -entity MENU -section_id Top
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -entity MENU -section_id Top
+
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
