@@ -133,9 +133,9 @@ MENU menu_mist_inst(
 	 .SPI_SS4(SPI_SS4),
    .VGA_HS(VGA_HS),
    .VGA_VS(VGA_VS),
-   .VGA_R(VGA_R[7:2]),
-   .VGA_G(VGA_G[7:2]),
-   .VGA_B(VGA_B[7:2]),
+   .VGA_R(VGA_R),
+   .VGA_G(VGA_G),
+   .VGA_B(VGA_B),
    .LED(LED),
    .SDRAM_A(SDRAM_A), //std_logic_vector(12 downto 0)
    .SDRAM_DQ(SDRAM_DQ),  // std_logic_vector(15 downto 0);
