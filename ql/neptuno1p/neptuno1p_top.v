@@ -1,5 +1,5 @@
 
-module ql_neptuno2_top(
+module ql_neptuno1p_top(
   input wire CLOCK_50,
 
   output wire [7:0] VGA_R,

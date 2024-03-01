@@ -8,12 +8,14 @@
 module zx3top(
   input wire clk50mhz,
 
+  // VGA
   output wire [7:0] vga_r,
   output wire [7:0] vga_g,
   output wire [7:0] vga_b,
   output wire vga_hs,
   output wire vga_vs,
 
+  // MiST control
   inout wire mist_miso,
   input wire mist_mosi,
   input wire mist_sck,
@@ -21,6 +23,8 @@ module zx3top(
   input wire mist_ss2,
   input wire mist_ss3,
   input wire mist_ss4,
+
+  // SDRAM
   output wire sdram_clk,
   output wire sdram_cke,
   output wire sdram_dqmh_n,
@@ -32,9 +36,18 @@ module zx3top(
   output wire[1:0] sdram_ba,
   output wire[12:0] sdram_addr,
   inout wire[15:0] sdram_dq,
+
+  // MISC
   output wire testled,
 
-  // forward JAMMA DB9 data
+  // AUDIO
+  output wire audio_out_left,
+  output wire audio_out_right,
+  output wire i2s_bclk,
+  output wire i2s_lrclk,
+  output wire i2s_dout,
+
+  // DB9 data
   output wire joy_clk,
   input wire xjoy_clk,
   output wire joy_load_n,
@@ -140,8 +153,8 @@ ql ql_inst(
    .SDRAM_BA(sdram_ba), //		:  out 		std_logic_vector(1 downto 0);
    .SDRAM_CLK(sdram_clk), //	:  out 		std_logic;
    .SDRAM_CKE(sdram_cke), //	:  out 		std_logic;
-   .AUDIO_L(),
-   .AUDIO_R()
+   .AUDIO_L(audio_out_left),
+   .AUDIO_R(audio_out_right)
 //   .I2S_BCK(),
 //   .I2S_LRCK(),
 //   .I2S_DATA(),
@@ -156,6 +169,17 @@ assign joy_clk = xjoy_clk;
 assign joy_load_n = xjoy_load_n;
 assign xjoy_data = joy_data;
 
+wire[15:0] audio_l = audio_out_left ? 16'h3fff : 16'hc000;
+wire[15:0] audio_r = audio_out_right ? 16'h3fff : 16'hc000;
+
+i2s_sound #(.CLKMHZ(50)) i2scodec (
+    .clk(clk50mhz),
+    .audio_l(audio_l),
+    .audio_r(audio_r),
+    .i2s_bclk(i2s_bclk),
+    .i2s_lrclk(i2s_lrclk),
+    .i2s_dout(i2s_dout)
+  );
 
 endmodule
 
