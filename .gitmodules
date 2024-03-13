@@ -4,3 +4,6 @@
 [submodule "ql/ql"]
 	path = ql/ql
 	url = git@github.com:mist-devel/ql.git
+[submodule "spectrum/spectrum-128k"]
+	path = spectrum/spectrum-128k
+	url = https://github.com/UzixLS/ZX_Spectrum-128K_MIST.git

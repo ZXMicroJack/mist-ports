@@ -1,0 +1,295 @@
+diff --git a/T80 b/T80
+--- a/T80
++++ b/T80
+@@ -1 +1 @@
+-Subproject commit 0917cdf114034702dab18db176e1adc4c761df0f
++Subproject commit 0917cdf114034702dab18db176e1adc4c761df0f-dirty
+diff --git a/sdram.sv b/sdram.sv
+index 6103a77..bd75726 100644
+--- a/sdram.sv
++++ b/sdram.sv
+@@ -24,7 +24,7 @@
+ module sdram (
+ 
+ 	// interface to the MT48LC16M16 chip
+-	inout  reg [15:0] SDRAM_DQ,   // 16 bit bidirectional data bus
++	inout  		 [15:0] SDRAM_DQ,   // 16 bit bidirectional data bus
+ 	output reg [12:0] SDRAM_A,    // 13 bit multiplexed address bus
+ 	output reg        SDRAM_DQML, // two byte masks
+ 	output reg        SDRAM_DQMH, // two byte masks
+@@ -146,6 +146,8 @@ assign SDRAM_nRAS = sd_cmd[2];
+ assign SDRAM_nCAS = sd_cmd[1];
+ assign SDRAM_nWE  = sd_cmd[0];
+ 
++reg [15:0] SDRAM_DQr;
++
+ reg [24:1] addr_latch[2];
+ reg [24:1] addr_latch_next[2];
+ reg [15:0] din_latch[2];
+@@ -154,6 +156,10 @@ reg  [1:0] we_latch;
+ reg  [1:0] ds[2];
+ reg  [1:0] state;
+ 
++assign SDRAM_DQ = sd_cmd[0] ? 16'hZZZZ : SDRAM_DQr;
++
++
++
+ localparam PORT_NONE  = 1'd0;
+ localparam PORT_REQ   = 1'd1;
+ 
+@@ -199,7 +205,7 @@ always @(posedge clk) begin
+ 
+ 	// permanently latch ram data to reduce delays
+ 	sd_din <= SDRAM_DQ;
+-	SDRAM_DQ <= 16'bZZZZZZZZZZZZZZZZ;
++//	SDRAM_DQ <= 16'bZZZZZZZZZZZZZZZZ;
+ 	{ SDRAM_DQMH, SDRAM_DQML } <= 2'b11;
+ 	sd_cmd <= CMD_NOP;  // default: idle
+ 	refresh_cnt <= refresh_cnt + 1'd1;
+@@ -271,7 +277,7 @@ always @(posedge clk) begin
+ 			sd_cmd <= we_latch[0]?CMD_WRITE:CMD_READ;
+ 			{ SDRAM_DQMH, SDRAM_DQML } <= ~ds[0];
+ 			if (we_latch[0]) begin
+-				SDRAM_DQ <= din_latch[0];
++				SDRAM_DQr <= din_latch[0];
+ 				port1_ack_reg <= port1_req;
+ 			end
+ 			SDRAM_A <= { 4'b0010, addr_latch[0][9:1] };  // auto precharge
+@@ -282,7 +288,7 @@ always @(posedge clk) begin
+ 			sd_cmd <= we_latch[1]?CMD_WRITE:CMD_READ;
+ 			{ SDRAM_DQMH, SDRAM_DQML } <= ~ds[1];
+ 			if (we_latch[1]) begin
+-				SDRAM_DQ <= din_latch[1];
++				SDRAM_DQr <= din_latch[1];
+ 				port2_ack_reg <= port2_req;
+ 			end
+ 			SDRAM_A <= { 4'b0010, addr_latch[1][9:1] };  // auto precharge
+diff --git a/snap_loader.sv b/snap_loader.sv
+index 5eb9604..4fc4ed3 100644
+--- a/snap_loader.sv
++++ b/snap_loader.sv
+@@ -34,7 +34,7 @@ module snap_loader #(parameter ARCH_ZX48, ARCH_ZX128, ARCH_ZX3, ARCH_P128)
+ 	output [211:0] REG,
+ 	output         REGSet,
+ 
+-	output  [24:0] addr,
++	output reg [24:0] addr,
+ 	output   [7:0] dout,
+ 	output         wr,
+ 
+diff --git a/sys/hq2x.sv b/sys/hq2x.sv
+index f17732b..de5b354 100644
+--- a/sys/hq2x.sv
++++ b/sys/hq2x.sv
+@@ -82,6 +82,14 @@ module hq2x_buf #(parameter NUMWORDS, parameter AWIDTH, parameter DWIDTH)
+ 	output [DWIDTH:0] q
+ );
+ 
++  reg [7:0] mem [0:32767] /* synthesis ramstyle = "M144K" */;
++
++   always @(posedge clock) begin
++     q <= mem[rdaddress];
++     if (wren)
++        mem[wraddress] <= data;
++   end
++
+ 	altsyncram	altsyncram_component (
+ 				.address_a (wraddress),
+ 				.clock0 (clock),
+diff --git a/sys/scandoubler.v b/sys/scandoubler.v
+index 32482b5..3773920 100644
+--- a/sys/scandoubler.v
++++ b/sys/scandoubler.v
+@@ -19,6 +19,18 @@
+ 
+ // TODO: Delay vsync one line
+ 
++`define BITS_TO_FIT(N) ( \
++     N <=   2 ? 0 : \
++     N <=   4 ? 1 : \
++     N <=   8 ? 2 : \
++     N <=  16 ? 3 : \
++     N <=  32 ? 4 : \
++     N <=  64 ? 5 : \
++     N <= 128 ? 6 : \
++     N <= 256 ? 7 : \
++     N <= 512 ? 8 : \
++     N <=1024 ? 9 : 10 )
++
+ module scandoubler #(parameter LENGTH, parameter HALF_DEPTH)
+ (
+ 	// system interface
+diff --git a/sys/video_mixer.sv b/sys/video_mixer.sv
+index 385059c..2e4e27c 100644
+--- a/sys/video_mixer.sv
++++ b/sys/video_mixer.sv
+@@ -117,17 +117,17 @@ wire [DWIDTH:0] rt  = (scandoubler_disable ? R : R_sd);
+ wire [DWIDTH:0] gt  = (scandoubler_disable ? G : G_sd);
+ wire [DWIDTH:0] bt  = (scandoubler_disable ? B : B_sd);
+ 
+-generate
+-	if(HALF_DEPTH) begin
++//generate
++//	if(HALF_DEPTH) begin
+ 		wire [5:0] r  = mono ? {gt,rt} : {rt,rt};
+ 		wire [5:0] g  = mono ? {gt,rt} : {gt,gt};
+ 		wire [5:0] b  = mono ? {gt,rt} : {bt,bt};
+-	end else begin
+-		wire [5:0] r  = rt;
+-		wire [5:0] g  = gt;
+-		wire [5:0] b  = bt;
+-	end
+-endgenerate
++//	end else begin
++		//wire [5:0] r  = rt;
++		//wire [5:0] g  = gt;
++		//wire [5:0] b  = bt;
++//	end
++//endgenerate
+ 
+ wire       hs = (scandoubler_disable ? HSync : hs_sd);
+ wire       vs = (scandoubler_disable ? VSync : vs_sd);
+@@ -143,7 +143,7 @@ always @(posedge clk_sys) begin
+ 	if(old_vs && ~vs) scanline <= 0;
+ end
+ 
+-wire [5:0] r_out, g_out, b_out;
++reg [5:0] r_out, g_out, b_out;
+ always @(*) begin
+ 	case(scanlines & {scanline, scanline})
+ 		1: begin // reduce 25% = 1/2 + 1/4
+diff --git a/tape.sv b/tape.sv
+index b00f65f..e3c956e 100644
+--- a/tape.sv
++++ b/tape.sv
+@@ -54,7 +54,7 @@ module tape
+ 
+ 	input         rd_en,
+ 	output        rd,
+-	output [24:0] addr,
++	output reg [24:0] addr,
+ 	input   [7:0] din
+ );
+ 
+diff --git a/u765.sv b/u765.sv
+index 6ecffbf..974968f 100644
+--- a/u765.sv
++++ b/u765.sv
+@@ -47,7 +47,7 @@ module u765 #(parameter CYCLES = 20'd4000, SPECCY_SPEEDLOCK_HACK = 0)
+ 	input      [1:0] img_mounted, // signaling that new image has been mounted
+ 	input            img_wp,      // write protect. latched at img_mounted
+ 	input     [31:0] img_size,    // size of image in bytes
+-	output    [31:0] sd_lba,
++	output reg[31:0] sd_lba,
+ 	output reg [1:0] sd_rd,
+ 	output reg [1:0] sd_wr,
+ 	input            sd_ack,
+@@ -190,7 +190,7 @@ end
+ 
+ wire       rd = nWR & ~nRD;
+ wire       wr = ~nWR & nRD;
+-wire [7:0] i_total_sectors;
++reg [7:0] i_total_sectors;
+ 
+ reg  [7:0] m_status;  //main status register
+ reg  [7:0] m_data;    //data register
+diff --git a/wd1793.sv b/wd1793.sv
+index 8384218..c463fa1 100644
+--- a/wd1793.sv
++++ b/wd1793.sv
+@@ -83,11 +83,13 @@ assign prepare   = EDSK ? scan_active : img_mounted;
+ assign buff_addr = {buff_a[19:9], 9'd0} + byte_addr;
+ assign buff_read = ((addr == A_DATA) && buff_rd);
+ 
++reg  [7:0] spt_addr;
+ reg   [7:0] sectors_per_track, edsk_spt = 0;
+ wire [10:0] sector_size = 11'd128 << wd_size_code;
+ reg  [10:0] byte_addr;
+ reg  [19:0] buff_a;
+ reg   [1:0] wd_size_code;
++reg buff_wr;
+ 
+ wire  [7:0] buff_dout;
+ reg   [1:0] sd_block = 0;
+@@ -108,7 +110,6 @@ generate
+ 			.wren_b(wre & buff_wr & (addr == A_DATA) & ~scan_active),
+ 			.q_b(buff_dout)
+ 		);
+-		reg buff_wr;
+ 	end else begin
+ 		assign buff_dout   = 0;
+ 		assign sd_buff_din = 0;
+@@ -765,7 +766,6 @@ generate
+ 		reg [53:0] edsk[1992];
+ 		reg  [7:0] spt[166];
+ 
+-		reg  [7:0] spt_addr;
+ 		always @(posedge clk_sys) begin
+ 			{edsk_track,edsk_side,edsk_trackf,edsk_sidef,edsk_sector,edsk_sizecode,edsk_offset} <= edsk[edsk_addr];
+ 			edsk_spt <= spt[spt_addr];
+diff --git a/zxspectrum.sv b/zxspectrum.sv
+index 9f91f9b..c327737 100644
+--- a/zxspectrum.sv
++++ b/zxspectrum.sv
+@@ -55,7 +55,11 @@ module zxspectrum
+    output        SDRAM_nCS,
+    output  [1:0] SDRAM_BA,
+    output        SDRAM_CLK,
+-   output        SDRAM_CKE
++   output        SDRAM_CKE,
++
++   output[15:0]	AUDIO_LEFT,
++   output[15:0]	AUDIO_RIGHT,
++   output wire  clock50
+ );
+ `default_nettype none
+ 
+@@ -75,7 +79,9 @@ localparam ARCH_P48   = 5'b011_10; // Pentagon 48
+ localparam ARCH_P128  = 5'b000_10; // Pentagon 128
+ localparam ARCH_P1024 = 5'b001_10; // Pentagon 1024
+ 
+-`include "build_id.v"
++`define BUILD_DATE "231230"
++
++//`include "build_id.v"
+ localparam CONF_STR = {
+ 	"SPECTRUM;;",
+ 	"S1U,TRDIMGDSKMGT,Load Disk;",
+@@ -118,6 +124,7 @@ pll pll
+ 	.inclk0(CLOCK_27),
+ 	.c0(clk_sys),
+ 	.c1(SDRAM_CLK),
++	.c2(clock50),
+ 	.locked(locked)
+ );
+ 
+@@ -273,7 +280,7 @@ mist_io #(.STRLEN(($size(CONF_STR)>>3)+5)) mist_io
+ 
+ ///////////////////   CPU   ///////////////////
+ wire [15:0] addr;
+-wire  [7:0] cpu_din;
++reg  [7:0] cpu_din;
+ wire  [7:0] cpu_dout;
+ wire        nM1;
+ wire        nMREQ;
+@@ -784,6 +791,9 @@ always @(posedge clk_sys) begin
+     end
+ end
+ 
++assign AUDIO_LEFT[15:0] = {~gs_l[14], gs_l[13:0], 1'b0} + {1'd0, psg_left, 4'd0} + {2'd0, sd_l0, 5'd0} + {2'd0, sd_l1, 5'd0} + {2'd0, ear_out, mic_out, tape_in, 11'd0};
++assign AUDIO_RIGHT[15:0] = {~gs_r[14], gs_r[13:0], 1'b0} + {1'd0, psg_right, 4'd0} + {2'd0, sd_r0, 5'd0} + {2'd0, sd_r1, 5'd0} + {2'd0, ear_out, mic_out, tape_in, 11'd0};
++
+ // Final audio signal mixing
+ sigma_delta_dac #(14) dac_l
+ (
+@@ -1168,8 +1178,8 @@ assign ula_tape_in = tape_in | ear_out | (issue2 & !tape_active & mic_out);
+ //////////////////  SNAPSHOT  //////////////////
+ reg          snap_dl = 0;
+ reg   [24:0] snap_dl_addr;
+-wire   [7:0] snap_dl_data;
+-wire         snap_dl_wr;
++reg   [7:0] snap_dl_data;
++reg         snap_dl_wr;
+ wire         snap_dl_wait;
+ reg          snap_rd = 0;
+ reg          snap_rd_old;
