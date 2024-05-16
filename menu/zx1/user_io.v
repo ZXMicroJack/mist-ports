@@ -145,7 +145,7 @@ module user_io (
 	parameter PS2BIDIR = 0;
 	parameter FEATURES = 0;
 	parameter ARCHIE = 0;
-	localparam W = $clog2(SD_IMAGES);
+	localparam W = 1; //$clog2(SD_IMAGES);
 	reg [6:0] sbuf;
 	reg [7:0] cmd;
 	reg [2:0] bit_cnt;

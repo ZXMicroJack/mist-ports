@@ -47,10 +47,13 @@ module MENU (
 	input SPI_SS3;
 	input CONF_DATA0;
 	input SPI_SS4;
-
-	output wire [12:0] SRAM_ADDR;
-	inout [15:0] SRAM_DQ;
+	output wire [18:0] SRAM_ADDR;
+	inout [7:0] SRAM_DQ;
 	output wire SRAM_WE_N;
+
+	//output wire [18:0] SDRAM_ADD;
+	//inout [15:0] SDRAM_DQ;
+	//output wire SDRAM_DQML;
 
 	//output wire [12:0] SDRAM_A;
 	//inout [15:0] SDRAM_DQ;
@@ -142,8 +145,8 @@ module MENU (
 	always @(posedge clk_ram) begin : sv2v_autoblock_1
 		reg ioctl_wr_last;
 		reg ioctl_downl_last;
-		ioctl_wr_last = 0;
-		ioctl_downl_last = 0;
+		ioctl_wr_last <= 0;
+		ioctl_downl_last <= 0;
 		ioctl_wr_last <= ioctl_wr;
 		ioctl_downl_last <= ioctl_downl;
 		if (ioctl_downl) begin
@@ -165,30 +168,123 @@ module MENU (
 	reg [9:0] hc;
 	reg [8:0] vc;
 	always @(posedge clk_ram) cpu1_addr <= ((((line_max - 1'd1) - vc) << 9) + hc) << 2;
-	sdram #(.MHZ(50)) sdram(
-		.SDRAM_DQ(SDRAM_DQ),
-		.SDRAM_A(SDRAM_A),
-		.SDRAM_DQML(SDRAM_DQML),
-		.SDRAM_DQMH(SDRAM_DQMH),
-		.SDRAM_BA(SDRAM_BA),
-		.SDRAM_nCS(SDRAM_nCS),
-		.SDRAM_nWE(SDRAM_nWE),
-		.SDRAM_nRAS(SDRAM_nRAS),
-		.SDRAM_nCAS(SDRAM_nCAS),
-		.init_n(pll_locked),
-		.clk(clk_ram),
-		.clkref(),
-		.port1_req(port1_req),
-		.port1_ack(),
-		.port1_a(downl_addr[23:1]),
-		.port1_ds({downl_addr[0], ~downl_addr[0]}),
-		.port1_we(ioctl_downl),
-		.port1_d({ioctl_dout, ioctl_dout}),
-		.port1_q(),
-		.cpu1_addr(cpu1_addr[23:2]),
-		.cpu1_q(cpu_q),
-		.cpu1_oe(~ioctl_downl)
-	);
+
+	//dpSRAM_5128 sram(
+		//.clk_i(clk_ram),
+		//// Port 0
+		//.porta0_addr_i(), //19
+		//.porta0_ce_i(),
+		//.porta0_oe_i(),
+		//.porta0_we_i(),
+		//.porta0_data_i(), //8
+		//.porta0_data_o(), //8
+		//// Port 1
+		//.porta1_addr_i(), //19
+		//.porta1_ce_i(),
+		//.porta1_oe_i(),
+		//.porta1_we_i(),
+		//.porta1_data_i(), //8
+		//.porta1_data_o(), //8
+		//// SRAM in board
+		//.sram_addr_o(SRAM_ADDR),
+		//.sram_data_io(SRAM_DQ),
+		//.sram_we_n_o(SRAM_WE_N)
+		//.sram_ce_n_o(),
+		//.sram_oe_n_o()
+	//);
+
+	//reg sram_which = 0;
+	//reg[1:0] cpu1_state = 0;
+	//reg[18:0] sram_addr = sram_which ? ; { cpu1_addr[18:2], cpu1_state[1:0] } : {downl_addr[17:0], cpu1_state[0]};
+	reg[7:0] sram_data_i;
+	reg[18:0] sram_addr;
+
+	//reg[7:0] portb_d;
+
+
+	reg[2:0] ram_state;
+	reg[31:0] cpu_q_;
+	assign cpu_q[31:0] = cpu_q_[31:0];
+	reg sram_we_n_o = 1'b1;
+
+	assign SRAM_DQ[7:0] = SRAM_WE_N ? 8'hZZ : sram_data_i[7:0];
+	assign SRAM_WE_N = sram_we_n_o;
+	assign SRAM_ADDR[18:0] = sram_addr;
+
+	always @(posedge clk_ram) begin
+		case (ram_state)
+			3'd0: begin
+				if (port1_req) begin
+					sram_we_n_o <= 1'b1;
+					sram_addr[18:0] <= {cpu1_addr[18:2], 2'b00};
+					ram_state <= 8'd1;
+				end else if (ioctl_downl) begin
+					sram_addr[18:0] <= {downl_addr[18:1], 1'b0};
+					ram_state <= 8'd5;
+					sram_data_i[7:0] <= ioctl_dout[7:0];
+				end;
+			end
+
+			3'd1: begin
+				cpu_q_[31:24] <= SRAM_DQ;
+				sram_addr[18:0] <= {cpu1_addr[18:2], 2'b01};
+				ram_state <= 8'd2;
+			end
+
+			3'd2: begin
+				cpu_q_[23:16] <= SRAM_DQ;
+				sram_addr[18:0] <= {cpu1_addr[18:2], 2'b10};
+				ram_state <= 8'd3;
+			end
+
+			3'd3: begin
+				cpu_q_[15:8] <= SRAM_DQ;
+				sram_addr[18:0] <= {cpu1_addr[18:2], 2'b11};
+				ram_state <= 8'd4;
+			end
+
+			3'd4: begin
+				cpu_q_[7:0] <= SRAM_DQ;
+				if (!port1_req) ram_state <= 8'd0;
+			end
+
+			3'd5: begin
+				sram_we_n_o <= 1'b0;
+				ram_state <= 8'd6;
+			end
+
+			3'd6: begin
+				sram_we_n_o <= 1'b1;
+				if (!ioctl_downl) ram_state <= 8'd0;
+			end
+
+		endcase;
+	end
+
+	//sdram #(.MHZ(50)) sdram(
+		//.SDRAM_DQ(SDRAM_DQ),
+		//.SDRAM_A(SDRAM_A),
+		//.SDRAM_DQML(SDRAM_DQML),
+		//.SDRAM_DQMH(SDRAM_DQMH),
+		//.SDRAM_BA(SDRAM_BA),
+		//.SDRAM_nCS(SDRAM_nCS),
+		//.SDRAM_nWE(SDRAM_nWE),
+		//.SDRAM_nRAS(SDRAM_nRAS),
+		//.SDRAM_nCAS(SDRAM_nCAS),
+		//.init_n(pll_locked),
+		//.clk(clk_ram),
+		//.clkref(),
+		//.port1_req(port1_req),
+		//.port1_ack(),
+		//.port1_a(downl_addr[23:1]),
+		//.port1_ds({downl_addr[0], ~downl_addr[0]}),
+		//.port1_we(ioctl_downl),
+		//.port1_d({ioctl_dout, ioctl_dout}),
+		//.port1_q(),
+		//.cpu1_addr(cpu1_addr[23:2]),
+		//.cpu1_q(cpu_q),
+		//.cpu1_oe(~ioctl_downl)
+	//);
 	reg [9:0] vvc;
 	reg [22:0] rnd_reg;
 	wire [5:0] rnd_c = {rnd_reg[0], rnd_reg[1], rnd_reg[2], rnd_reg[2], rnd_reg[2], rnd_reg[2]};
@@ -234,8 +330,12 @@ module MENU (
 	wire [7:0] cos_g = cos_out[7:1] + 6'd32;
 	wire [8:1] sv2v_tmp_cos_y;
 	always @(*) cos_out = sv2v_tmp_cos_y;
+
+	//wire[9:0] cos_x = vvc + {vc, 2'b00};
+
 	cos cos(
 		.x(vvc + {vc, 2'b00}),
+		//.x(cos_x),
 		.y(sv2v_tmp_cos_y)
 	);
 	wire [7:0] comp_v = (cos_g >= rnd_c ? cos_g - rnd_c : 8'd0);
@@ -280,4 +380,8 @@ module MENU (
 		.ypbpr(ypbpr),
 		.no_csync(no_csync)
 	);
+
+	assign AUDIO_L = 1'b0;
+	assign AUDIO_R = 1'b0;
+
 endmodule

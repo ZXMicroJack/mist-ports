@@ -9,14 +9,14 @@ module s_fix (
 	reg pol;
 	assign sync_out = sync_in ^ pol;
 	always @(posedge clk) begin : sv2v_autoblock_1
-		integer pos;
-		integer neg;
-		integer cnt;
+		integer pos = 0;
+		integer neg = 0;
+		integer cnt = 0;
 		reg s1;
 		reg s2;
-		pos = 0;
-		neg = 0;
-		cnt = 0;
+		//pos = 0;
+		//neg = 0;
+		//cnt = 0;
 		s1 <= sync_in;
 		s2 <= s1;
 		if (~s2 & s1)

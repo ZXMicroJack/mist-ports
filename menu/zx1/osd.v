@@ -85,11 +85,11 @@ module osd (
 	wire doublescan = dsp_height > 350;
 	reg auto_ce_pix;
 	always @(posedge clk_sys) begin : sv2v_autoblock_2
-		reg [15:0] cnt;
+		reg [15:0] cnt = 0;
 		reg [2:0] pixsz;
 		reg [2:0] pixcnt;
 		reg hs;
-		cnt = 0;
+		//cnt = 0;
 		cnt <= cnt + 1'd1;
 		hs <= HSync;
 		pixcnt <= pixcnt + 1'd1;
@@ -190,7 +190,7 @@ module osd (
 			end
 			osd_de <= (((((osd_enable && ((USE_BLANKS && !HBlank) || (!USE_BLANKS && (HSync != hs_pol)))) && (h_cnt >= h_osd_start)) && (h_cnt < h_osd_end)) && ((USE_BLANKS && !VBlank) || (!USE_BLANKS && (VSync != vs_pol)))) && (v_cnt >= v_osd_start)) && (v_cnt < v_osd_end);
 		end
-	assign R_out = (!osd_de ? R_in : {osd_pixel, osd_pixel, OSD_COLOR[2], R_in[OUT_COLOR_DEPTH - 1:3]});
-	assign G_out = (!osd_de ? G_in : {osd_pixel, osd_pixel, OSD_COLOR[1], G_in[OUT_COLOR_DEPTH - 1:3]});
-	assign B_out = (!osd_de ? B_in : {osd_pixel, osd_pixel, OSD_COLOR[0], B_in[OUT_COLOR_DEPTH - 1:3]});
+	assign R_out = (!osd_de ? R_in : {osd_pixel, osd_pixel, OSD_COLOR[2], R_in[OUT_COLOR_DEPTH - 1:0]});
+	assign G_out = (!osd_de ? G_in : {osd_pixel, osd_pixel, OSD_COLOR[1], G_in[OUT_COLOR_DEPTH - 1:0]});
+	assign B_out = (!osd_de ? B_in : {osd_pixel, osd_pixel, OSD_COLOR[0], B_in[OUT_COLOR_DEPTH - 1:0]});
 endmodule
