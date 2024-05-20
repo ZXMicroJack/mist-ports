@@ -30,9 +30,26 @@ module MENU (
 	AUDIO_L,
 	AUDIO_R,
 	UART_RX,
-	UART_TX
+	UART_TX,
+	SD_cs,
+	SD_datain,
+	SD_dataout,
+	SD_clk,
+	SD_cs1,
+	SD_datain1,
+	SD_dataout1,
+	SD_clk1
 );
-	input CLOCK_50;
+
+	output wire SD_cs;
+	output wire SD_datain;
+	output wire SD_clk;
+	input wire SD_dataout;
+	input wire SD_cs1;
+	input wire SD_datain1;
+	input wire SD_clk1;
+	output wire SD_dataout1;
+	input wire CLOCK_50;
 	output wire LED;
 	localparam VGA_BITS = 3;
 	output wire [2:0] VGA_R;
@@ -40,13 +57,13 @@ module MENU (
 	output wire [2:0] VGA_B;
 	output wire VGA_HS;
 	output wire VGA_VS;
-	input SPI_SCK;
-	inout SPI_DO;
-	input SPI_DI;
-	input SPI_SS2;
-	input SPI_SS3;
-	input CONF_DATA0;
-	input SPI_SS4;
+	input wire SPI_SCK;
+	inout wire SPI_DO;
+	input wire SPI_DI;
+	input wire SPI_SS2;
+	input wire SPI_SS3;
+	input wire CONF_DATA0;
+	input wire SPI_SS4;
 	output wire [18:0] SRAM_ADDR;
 	inout [7:0] SRAM_DQ;
 	output wire SRAM_WE_N;
@@ -70,6 +87,13 @@ module MENU (
 	output wire AUDIO_R;
 	input UART_RX;
 	output wire UART_TX;
+
+
+	assign SD_cs = SD_cs1;
+	assign SD_datain = SD_datain1;
+	assign SD_clk = SD_clk1;
+	assign SD_dataout1 = SD_dataout;
+
 	localparam [0:0] DIRECT_UPLOAD = 1;
 	localparam [0:0] QSPI = 0;
 	localparam [0:0] HDMI = 0;
@@ -128,6 +152,7 @@ module MENU (
 		.SPI_SCK(SPI_SCK),
 		.SPI_SS2(SPI_SS2),
 		.SPI_SS4(SPI_SS4),
+		//.SPI_SS4(1'b1),
 		.SPI_DI(SPI_DI),
 		.SPI_DO(SPI_DO_D),
 		.ioctl_download(ioctl_downl),
@@ -196,9 +221,6 @@ module MENU (
 	//reg sram_which = 0;
 	//reg[1:0] cpu1_state = 0;
 	//reg[18:0] sram_addr = sram_which ? ; { cpu1_addr[18:2], cpu1_state[1:0] } : {downl_addr[17:0], cpu1_state[0]};
-	reg[7:0] sram_data_i;
-	reg[18:0] sram_addr;
-
 	//reg[7:0] portb_d;
 
 
@@ -206,6 +228,8 @@ module MENU (
 	reg[31:0] cpu_q_;
 	assign cpu_q[31:0] = cpu_q_[31:0];
 	reg sram_we_n_o = 1'b1;
+	reg[7:0] sram_data_i;
+	reg[18:0] sram_addr;
 
 	assign SRAM_DQ[7:0] = SRAM_WE_N ? 8'hZZ : sram_data_i[7:0];
 	assign SRAM_WE_N = sram_we_n_o;
