@@ -188,9 +188,10 @@ module osd (
 				osd_buffer_addr <= (rotate[0] ? {(rotate[1] ? osd_hcnt_next[7:4] : ~osd_hcnt_next[7:4]), (rotate[1] ? (doublescan ? ~osd_vcnt[7:0] : ~{osd_vcnt[6:0], 1'b0}) : (doublescan ? osd_vcnt[7:0] : {osd_vcnt[6:0], 1'b0}))} : {(doublescan ? osd_vcnt[7:4] : osd_vcnt[6:3]), osd_hcnt_next[7:0]});
 				osd_pixel <= (rotate[0] ? osd_byte[(rotate[1] ? osd_hcnt[3:1] : ~osd_hcnt[3:1])] : osd_byte[(doublescan ? osd_vcnt[3:1] : osd_vcnt[2:0])]);
 			end
+//			osd_de <= (((((((USE_BLANKS && !HBlank) || (!USE_BLANKS && (HSync != hs_pol)))) && (h_cnt >= h_osd_start)) && (h_cnt < h_osd_end)) && ((USE_BLANKS && !VBlank) || (!USE_BLANKS && (VSync != vs_pol)))) && (v_cnt >= v_osd_start)) && (v_cnt < v_osd_end);
 			osd_de <= (((((osd_enable && ((USE_BLANKS && !HBlank) || (!USE_BLANKS && (HSync != hs_pol)))) && (h_cnt >= h_osd_start)) && (h_cnt < h_osd_end)) && ((USE_BLANKS && !VBlank) || (!USE_BLANKS && (VSync != vs_pol)))) && (v_cnt >= v_osd_start)) && (v_cnt < v_osd_end);
 		end
-	assign R_out = (!osd_de ? R_in : {osd_pixel, osd_pixel, OSD_COLOR[2], R_in[OUT_COLOR_DEPTH - 1:0]});
-	assign G_out = (!osd_de ? G_in : {osd_pixel, osd_pixel, OSD_COLOR[1], G_in[OUT_COLOR_DEPTH - 1:0]});
-	assign B_out = (!osd_de ? B_in : {osd_pixel, osd_pixel, OSD_COLOR[0], B_in[OUT_COLOR_DEPTH - 1:0]});
+	assign R_out = (!osd_de ? R_in : {osd_pixel, osd_pixel, OSD_COLOR[2], R_in[OUT_COLOR_DEPTH - 1:3]});
+	assign G_out = (!osd_de ? G_in : {osd_pixel, osd_pixel, OSD_COLOR[1], G_in[OUT_COLOR_DEPTH - 1:3]});
+	assign B_out = (!osd_de ? B_in : {osd_pixel, osd_pixel, OSD_COLOR[0], B_in[OUT_COLOR_DEPTH - 1:3]});
 endmodule

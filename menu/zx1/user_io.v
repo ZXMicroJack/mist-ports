@@ -341,8 +341,8 @@ module user_io (
 						spi_byte_out <= {6'd0, i2c_ack, i2c_end};
 					else
 						spi_byte_out <= i2c_din;
-				default:
-					spi_byte_out <= cmd;
+				//default:
+					//spi_byte_out <= cmd;
 			endcase
 		end
 	end

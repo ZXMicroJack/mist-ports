@@ -51,7 +51,7 @@ module MENU (
 	output wire SD_dataout1;
 	input wire CLOCK_50;
 	output wire LED;
-	localparam VGA_BITS = 3;
+	localparam VGA_BITS = 6;
 	output wire [2:0] VGA_R;
 	output wire [2:0] VGA_G;
 	output wire [2:0] VGA_B;
@@ -235,17 +235,31 @@ module MENU (
 	assign SRAM_WE_N = sram_we_n_o;
 	assign SRAM_ADDR[18:0] = sram_addr;
 
+	reg port1_req_a = 1'b0;
+	reg port1_req_b = 1'b0;
+	reg ioctl_downl_a = 1'b0;
+	reg ioctl_downl_b = 1'b0;
+
+	always @(posedge port1_req)
+		port1_req_a <= !port1_req_a;
+
+	always @(posedge ioctl_downl)
+		ioctl_downl_a <= !ioctl_downl_a;
+
 	always @(posedge clk_ram) begin
 		case (ram_state)
 			3'd0: begin
-				if (port1_req) begin
+				if (port1_req_a ^ port1_req_b) begin
 					sram_we_n_o <= 1'b1;
 					sram_addr[18:0] <= {cpu1_addr[18:2], 2'b00};
 					ram_state <= 8'd1;
-				end else if (ioctl_downl) begin
-					sram_addr[18:0] <= {downl_addr[18:1], 1'b0};
+					port1_req_b <= port1_req_a;
+				end else if (ioctl_downl_a ^ ioctl_downl_b) begin
+					//sram_addr[18:0] <= {downl_addr[18:1], 1'b0};
+					sram_addr[18:0] <= downl_addr[18:0];
 					ram_state <= 8'd5;
 					sram_data_i[7:0] <= ioctl_dout[7:0];
+					ioctl_downl_b <= ioctl_downl_a;
 				end;
 			end
 
@@ -269,7 +283,7 @@ module MENU (
 
 			3'd4: begin
 				cpu_q_[7:0] <= SRAM_DQ;
-				if (!port1_req) ram_state <= 8'd0;
+				ram_state <= 8'd0;
 			end
 
 			3'd5: begin
@@ -279,7 +293,7 @@ module MENU (
 
 			3'd6: begin
 				sram_we_n_o <= 1'b1;
-				if (!ioctl_downl) ram_state <= 8'd0;
+				ram_state <= 8'd0;
 			end
 
 		endcase;
@@ -363,12 +377,20 @@ module MENU (
 		.y(sv2v_tmp_cos_y)
 	);
 	wire [7:0] comp_v = (cos_g >= rnd_c ? cos_g - rnd_c : 8'd0);
+	//wire [7:0] comp_v = rnd[7:0];
 	wire [7:0] bmp_r = cpu_q[23:16];
 	wire [7:0] bmp_g = cpu_q[15:8];
 	wire [7:0] bmp_b = cpu_q[7:0];
 	wire [7:0] R_in = (bmp_loaded ? bmp_r : comp_v);
 	wire [7:0] G_in = (bmp_loaded ? bmp_g : comp_v);
 	wire [7:0] B_in = (bmp_loaded ? bmp_b : comp_v);
+	wire [5:0] VGA_R_;
+	wire [5:0] VGA_G_;
+	wire [5:0] VGA_B_;
+	assign VGA_R[2:0] = VGA_R_[5:3];
+	assign VGA_G[2:0] = VGA_G_[5:3];
+	assign VGA_B[2:0] = VGA_B_[5:3];
+
 	mist_video #(
 		.COLOR_DEPTH(8),
 		.SD_HCNT_WIDTH(10),
@@ -391,9 +413,9 @@ module MENU (
 		.VBlank(VBlank),
 		.HSync(~HSync),
 		.VSync(~VSync),
-		.VGA_R(VGA_R),
-		.VGA_G(VGA_G),
-		.VGA_B(VGA_B),
+		.VGA_R(VGA_R_),
+		.VGA_G(VGA_G_),
+		.VGA_B(VGA_B_),
 		.VGA_VS(VGA_VS),
 		.VGA_HS(VGA_HS),
 		.ce_divider(1'b1),
