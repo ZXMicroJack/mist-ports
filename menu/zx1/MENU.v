@@ -38,9 +38,18 @@ module MENU (
 	SD_cs1,
 	SD_datain1,
 	SD_dataout1,
-	SD_clk1
+	SD_clk1,
+	PS2C,
+	PS2D,
+	PS2COUT,
+	PS2DOUT,
+	JUP,
+	JDN,
+	JLT,
+	JRT,
+	JF1,
+	JSEL
 );
-
 	output wire SD_cs;
 	output wire SD_datain;
 	output wire SD_clk;
@@ -68,6 +77,13 @@ module MENU (
 	inout [7:0] SRAM_DQ;
 	output wire SRAM_WE_N;
 
+	input wire JUP;
+	input wire JDN;
+	input wire JLT;
+	input wire JRT;
+	input wire JF1;
+	output wire JSEL;
+
 	//output wire [18:0] SDRAM_ADD;
 	//inout [15:0] SDRAM_DQ;
 	//output wire SDRAM_DQML;
@@ -88,11 +104,20 @@ module MENU (
 	input UART_RX;
 	output wire UART_TX;
 
+	input PS2C;
+	input PS2D;
+	output wire PS2COUT;
+	output wire PS2DOUT;
+
+	assign PS2COUT = PS2C;
+	assign PS2DOUT = PS2D;
 
 	assign SD_cs = SD_cs1;
 	assign SD_datain = SD_datain1;
 	assign SD_clk = SD_clk1;
 	assign SD_dataout1 = SD_dataout;
+
+	assign JSEL = 1'b1;
 
 	localparam [0:0] DIRECT_UPLOAD = 1;
 	localparam [0:0] QSPI = 0;
