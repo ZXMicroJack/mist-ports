@@ -1,5 +1,5 @@
 module zxspectrum (
-	CLOCK_27,
+	CLOCK_50,
 	VGA_R,
 	VGA_G,
 	VGA_B,
@@ -8,31 +8,62 @@ module zxspectrum (
 	LED,
 	AUDIO_L,
 	AUDIO_R,
-	UART_TX,
-	UART_RX,
+	//UART_TX,
+	EAR,
 	SPI_SCK,
 	SPI_DO,
 	SPI_DI,
 	SPI_SS2,
 	SPI_SS3,
+	SPI_SS4,
 	CONF_DATA0,
-	SDRAM_A,
-	SDRAM_DQ,
-	SDRAM_DQML,
-	SDRAM_DQMH,
-	SDRAM_nWE,
-	SDRAM_nCAS,
-	SDRAM_nRAS,
-	SDRAM_nCS,
-	SDRAM_BA,
-	SDRAM_CLK,
-	SDRAM_CKE,
-	AUDIO_LEFT,
-	AUDIO_RIGHT,
-	clock50
+	SRAM_ADDR,
+	SRAM_DQ,
+	SRAM_WE_N,
+	//SDRAM_A,
+	//SDRAM_DQ,
+	//SDRAM_DQML,
+	//SDRAM_DQMH,
+	//SDRAM_nWE,
+	//SDRAM_nCAS,
+	//SDRAM_nRAS,
+	//SDRAM_nCS,
+	//SDRAM_BA,
+	//SDRAM_CLK,
+	//SDRAM_CKE,
+	//AUDIO_LEFT,
+	//AUDIO_RIGHT
+	//AUDIO_L,
+	//AUDIO_R,
+	SD_cs,
+	SD_datain,
+	SD_dataout,
+	SD_clk,
+	SD_cs1,
+	SD_datain1,
+	SD_dataout1,
+	SD_clk1,
+	PS2C,
+	PS2D,
+	PS2COUT,
+	PS2DOUT,
+	JUP,
+	JDN,
+	JLT,
+	JRT,
+	JF1,
+	JSEL
 );
+	output wire SD_cs;
+	output wire SD_datain;
+	output wire SD_clk;
+	input wire SD_dataout;
+	input wire SD_cs1;
+	input wire SD_datain1;
+	input wire SD_clk1;
+	output wire SD_dataout1;
 	reg _sv2v_0;
-	input CLOCK_27;
+	input CLOCK_50;
 	output wire [5:0] VGA_R;
 	output wire [5:0] VGA_G;
 	output wire [5:0] VGA_B;
@@ -41,28 +72,63 @@ module zxspectrum (
 	output wire LED;
 	output wire AUDIO_L;
 	output wire AUDIO_R;
-	output wire UART_TX;
-	input UART_RX;
+	//output wire UART_TX;
+	input wire EAR;
+	input wire SPI_SS4;
+	//input UART_RX;
 	input SPI_SCK;
 	output wire SPI_DO;
 	input SPI_DI;
 	input SPI_SS2;
 	input SPI_SS3;
 	input CONF_DATA0;
-	output wire [12:0] SDRAM_A;
-	inout [15:0] SDRAM_DQ;
-	output wire SDRAM_DQML;
-	output wire SDRAM_DQMH;
-	output wire SDRAM_nWE;
-	output wire SDRAM_nCAS;
-	output wire SDRAM_nRAS;
-	output wire SDRAM_nCS;
-	output wire [1:0] SDRAM_BA;
-	output wire SDRAM_CLK;
-	output wire SDRAM_CKE;
-	output wire [15:0] AUDIO_LEFT;
-	output wire [15:0] AUDIO_RIGHT;
-	output wire clock50;
+	output wire [18:0] SRAM_ADDR;
+	inout [7:0] SRAM_DQ;
+	output wire SRAM_WE_N;
+	input wire JUP;
+	input wire JDN;
+	input wire JLT;
+	input wire JRT;
+	input wire JF1;
+	output wire JSEL;
+	//output wire [12:0] SDRAM_A;
+	//inout [15:0] SDRAM_DQ;
+	//output wire SDRAM_DQML;
+	//output wire SDRAM_DQMH;
+	//output wire SDRAM_nWE;
+	//output wire SDRAM_nCAS;
+	//output wire SDRAM_nRAS;
+	//output wire SDRAM_nCS;
+	//output wire [1:0] SDRAM_BA;
+	//output wire SDRAM_CLK;
+	//output wire SDRAM_CKE;
+	//output wire [15:0] AUDIO_LEFT;
+	//output wire [15:0] AUDIO_RIGHT;
+
+		input PS2C;
+	input PS2D;
+	output wire PS2COUT;
+	output wire PS2DOUT;
+
+	assign PS2COUT = PS2C;
+	assign PS2DOUT = PS2D;
+
+	assign SD_cs = SD_cs1;
+	assign SD_datain = SD_datain1;
+	assign SD_clk = SD_clk1;
+	assign SD_dataout1 = SD_dataout;
+
+	assign JSEL = 1'b1;
+
+	wire [5:0] VGA_R_x;
+	wire [5:0] VGA_G_x;
+	wire [5:0] VGA_B_x;
+
+	assign VGA_R[2:0] = VGA_R_x[5:3];
+	assign VGA_G[2:0] = VGA_G_x[5:3];
+	assign VGA_B[2:0] = VGA_B_x[5:3];
+
+	//output wire clock50;
 	`default_nettype none
 	wire ioctl_download;
 	wire tape_led;
@@ -93,11 +159,13 @@ module zxspectrum (
 	wire unrainer = status[7];
 	wire clk_sys;
 	wire locked;
+	//wire SDRAM_CLK; // NOT USED
+	//wire clock50; // NOT USED
 	pll pll(
-		.inclk0(CLOCK_27),
+		.inclk0(CLOCK_50),
 		.c0(clk_sys),
-		.c1(SDRAM_CLK),
-		.c2(clock50),
+		//.c1(SDRAM_CLK),
+		//.c2(clock50),
 		.locked(locked)
 	);
 	reg ce_psg;
@@ -482,35 +550,65 @@ module zxspectrum (
 	wire [15:0] sdram_dout;
 	reg sdram_req;
 	reg sdram_we;
-	sdram ram(
-		.SDRAM_DQ(SDRAM_DQ),
-		.SDRAM_A(SDRAM_A),
-		.SDRAM_DQML(SDRAM_DQML),
-		.SDRAM_DQMH(SDRAM_DQMH),
-		.SDRAM_BA(SDRAM_BA),
-		.SDRAM_nCS(SDRAM_nCS),
-		.SDRAM_nWE(SDRAM_nWE),
-		.SDRAM_nRAS(SDRAM_nRAS),
-		.SDRAM_nCAS(SDRAM_nCAS),
-		.init_n(locked),
-		.clk(clk_sys),
-		.clkref(ce_14m),
-		.port1_req(sdram_req),
-		.port1_a(sdram_addr[23:1]),
-		.port1_ds((sdram_we ? {sdram_addr[0], ~sdram_addr[0]} : 2'b11)),
-		.port1_d({sdram_din, sdram_din}),
-		.port1_q(sdram_dout),
-		.port1_we(sdram_we),
-		.port1_ack(sdram_ack),
-		.port2_req(gs_sdram_req),
-		.port2_a(gs_sdram_addr[23:1]),
-		.port2_ds((gs_sdram_we ? {gs_sdram_addr[0], ~gs_sdram_addr[0]} : 2'b11)),
-		.port2_q(gs_sdram_dout),
-		.port2_d({gs_sdram_din, gs_sdram_din}),
-		.port2_we(gs_sdram_we),
-		.port2_ack(gs_sdram_ack)
-	);
-	assign SDRAM_CKE = 1;
+	//sdram ram(
+		//.SDRAM_DQ(SDRAM_DQ),
+		//.SDRAM_A(SDRAM_A),
+		//.SDRAM_DQML(SDRAM_DQML),
+		//.SDRAM_DQMH(SDRAM_DQMH),
+		//.SDRAM_BA(SDRAM_BA),
+		//.SDRAM_nCS(SDRAM_nCS),
+		//.SDRAM_nWE(SDRAM_nWE),
+		//.SDRAM_nRAS(SDRAM_nRAS),
+		//.SDRAM_nCAS(SDRAM_nCAS),
+		//.init_n(locked),
+		//.clk(clk_sys),
+		//.clkref(ce_14m),
+		//.port1_req(sdram_req),
+		//.port1_a(sdram_addr[23:1]),
+		//.port1_ds((sdram_we ? {sdram_addr[0], ~sdram_addr[0]} : 2'b11)),
+		//.port1_d({sdram_din, sdram_din}),
+		//.port1_q(sdram_dout),
+		//.port1_we(sdram_we),
+		//.port1_ack(sdram_ack),
+		//.port2_req(gs_sdram_req),
+		//.port2_a(gs_sdram_addr[23:1]),
+		//.port2_ds((gs_sdram_we ? {gs_sdram_addr[0], ~gs_sdram_addr[0]} : 2'b11)),
+		//.port2_q(gs_sdram_dout),
+		//.port2_d({gs_sdram_din, gs_sdram_din}),
+		//.port2_we(gs_sdram_we),
+		//.port2_ack(gs_sdram_ack)
+	//);
+
+	dpSRAM_5128 sram0
+	(
+		.clk_i         (clk_sys),
+		//TODO
+		.porta0_addr_i (sdram_addr[23:1]),
+		.porta0_we_i   (sdram_we    ),
+		//.porta0_ce_i   (ioctl_wr|cart_rd),
+		.porta0_ce_i (sdram_req),
+		.porta0_oe_i   (sdram_req && !sdram_we),
+		.porta0_data_i ({sdram_din, sdram_din}),
+		.porta0_data_o (sdram_dout),
+
+		.porta1_addr_i (gs_sdram_addr),
+		.porta1_we_i   (gs_rom_we | gs_mem_wr),
+		.porta1_ce_i   (gs_mem_rd),
+		.porta1_oe_i   (gs_mem_rd),
+		.porta1_data_i (gs_mem_dout),
+		.porta1_data_o (gs_mem_din),
+
+		//TODO
+		.sram_addr_o  (SRAM_ADDR),
+		.sram_data_io (SRAM_DQ),
+		.sram_ce_n_o  (       ),
+		.sram_oe_n_o  (       ),
+		.sram_we_n_o  (SRAM_WE_N)
+		);
+
+
+
+	//assign SDRAM_CKE = 1;
 	reg ram_rd_old;
 	reg ram_rd_old2;
 	reg ram_we_old;
@@ -531,7 +629,7 @@ module zxspectrum (
 			endcase
 		end
 	end
-	assign ram_dout = (sdram_addr[0] ? sdram_dout[15:8] : sdram_dout[7:0]);
+	//assign ram_dout = (sdram_addr[0] ? sdram_dout[15:8] : sdram_dout[7:0]);
 	assign ram_ready = (sdram_ack == sdram_req) & ~new_ram_req;
 	wire [20:0] gs_mem_addr;
 	wire [7:0] gs_mem_dout;
@@ -570,8 +668,10 @@ module zxspectrum (
 			gs_sdram_addr <= (gs_rom_we ? ioctl_addr - 24'h030000 : gs_mem_addr);
 		end
 	end
-	assign gs_mem_dout = (gs_sdram_addr[0] ? gs_sdram_dout[15:8] : gs_sdram_dout[7:0]);
-	assign gs_mem_ready = (gs_sdram_ack == gs_sdram_req) & ~new_gs_mem_req;
+	//assign gs_mem_dout = (gs_sdram_addr[0] ? gs_sdram_dout[15:8] : gs_sdram_dout[7:0]);
+	//assign gs_mem_ready = (gs_sdram_ack == gs_sdram_req) & ~new_gs_mem_req;
+	assign gs_mem_ready = 1'b1;
+
 	wire vram_sel = (((ram_addr[20:16] == 1) & ram_addr[14]) & ~dma) & ~tape_req;
 	wire [14:0] vram_addr;
 	wire [7:0] vram_dout;
@@ -785,15 +885,15 @@ module zxspectrum (
 		end
 	reg [15:0] audio_left;
 	reg [15:0] audio_right;
-	assign AUDIO_LEFT[15:0] = audio_left;
-	assign AUDIO_RIGHT[15:0] = audio_right;
+	//assign AUDIO_LEFT[15:0] = audio_left;
+	//assign AUDIO_RIGHT[15:0] = audio_right;
 	wire tape_in;
 	always @(posedge clk_sys) begin
 		audio_left <= ((({~gs_l[14], gs_l[13:0], 1'b0} + {1'd0, psg_left, 4'd0}) + {2'd0, sd_l0, 5'd0}) + {2'd0, sd_l1, 5'd0}) + {2'd0, ear_out, mic_out, tape_in, 11'd0};
 		audio_right <= ((({~gs_r[14], gs_r[13:0], 1'b0} + {1'd0, psg_right, 4'd0}) + {2'd0, sd_r0, 5'd0}) + {2'd0, sd_r1, 5'd0}) + {2'd0, ear_out, mic_out, tape_in, 11'd0};
 	end
-	assign AUDIO_LEFT[15:0] = audio_left;
-	assign AUDIO_RIGHT[15:0] = audio_right;
+	//assign AUDIO_LEFT[15:0] = audio_left;
+	//assign AUDIO_RIGHT[15:0] = audio_right;
 	sigma_delta_dac #(.MSBI(14)) dac_l(
 		.CLK(clk_sys),
 		.RESET(reset),
@@ -883,9 +983,9 @@ module zxspectrum (
 		.ypbpr(ypbpr),
 		.HSync(HSync),
 		.VSync(VSync),
-		.VGA_R(VGA_R),
-		.VGA_G(VGA_G),
-		.VGA_B(VGA_B),
+		.VGA_R(VGA_R_x),
+		.VGA_G(VGA_G_x),
+		.VGA_B(VGA_B_x),
 		.VGA_VS(VGA_VS),
 		.VGA_HS(VGA_HS),
 		.ce_pix(ce_7mp | ce_7mn),
@@ -1156,8 +1256,8 @@ module zxspectrum (
 		else
 			tape_loaded_reg <= 0;
 	end
-	assign UART_TX = 1;
-	assign tape_in = ~(tape_loaded_reg ? tape_vin : UART_RX);
+	//assign UART_TX = 1;
+	assign tape_in = ~(tape_loaded_reg ? tape_vin : EAR);
 	assign ula_tape_in = (tape_in | ear_out) | ((issue2 & !tape_active) & mic_out);
 	reg [7:0] snap_dl_data;
 	reg snap_dl_wr;

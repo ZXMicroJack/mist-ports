@@ -9,6 +9,9 @@ NET "CLOCK_50" 			LOC = P55	| IOSTANDARD = LVCMOS33 ;
 
 NET "LED" 												 LOC = P11 	| IOSTANDARD = LVTTL;
 
+
+NET "EAR" LOC="P94" | IOSTANDARD = LVCMOS33;
+
 #NET "kbd_clk" 		LOC = P99 	| IOSTANDARD = LVTTL;
 #NET "kbd_data" 		LOC = P98 	| IOSTANDARD = LVTTL;
 
