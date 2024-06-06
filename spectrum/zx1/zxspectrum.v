@@ -1,5 +1,5 @@
 `default_nettype none
-	module zxspectrum (
+module zxspectrum (
 	CLOCK_50,
 	VGA_R,
 	VGA_G,
@@ -400,8 +400,9 @@
 	wire plusd_stealth = 1;
 	wire plusd_ena = (plusd_stealth ? plusd_mem : plusd_en);
 	wire fdd_sel2 = ((plusd_ena & (&addr[7:5])) & ~addr[2]) & (&addr[1:0]);
-	wire [7:0] gs_dout;
-	wire gs_sel = ((addr[7:0] | 'b1000) == 'b10111011) & ~&st_gs_memory;
+	//wire [7:0] gs_dout;
+	//wire gs_sel = ((addr[7:0] | 'b1000) == 'b10111011) & ~&st_gs_memory;
+	wire gs_sel = 1'b0;
 	reg [4:0] joy_cursor;
 	reg [4:0] joy_sinclair1;
 	reg [4:0] joy_sinclair2;
@@ -439,7 +440,7 @@
 			'b1x0001xxxxxx: cpu_din = mmc_dout;
 			'b1x00001xxxxx: cpu_din = (mouse_sel ? mouse_data : {2'b00, joy_kempston});
 			'b1x000001xxxx: cpu_din = {page_scr_copy, 7'b1111111};
-			'b1x0000001xxx: cpu_din = gs_dout;
+			//'b1x0000001xxx: cpu_din = gs_dout;
 			'b1x00000001xx: cpu_din = (addr[14] ? sound_data : 8'hff);
 			'b1x000000001x: cpu_din = ulap_dout;
 			'b1x0000000000: cpu_din = {1'b1, ula_tape_in, 1'b1, key_data[4:0] & joy_kbd};
@@ -540,12 +541,12 @@
 			'b0: ram_we = (((((mmc_ram_en | page_special) | addr[15]) | addr[14]) | ((plusd_mem | mf128_mem) & addr[13])) & ~nMREQ) & ~nWR;
 		endcase
 	end
-	wire gs_sdram_ack;
-	reg [24:0] gs_sdram_addr;
-	reg [7:0] gs_sdram_din;
-	wire [15:0] gs_sdram_dout;
-	reg gs_sdram_req;
-	reg gs_sdram_we;
+	//wire gs_sdram_ack;
+	//reg [24:0] gs_sdram_addr;
+	//reg [7:0] gs_sdram_din;
+	//wire [15:0] gs_sdram_dout;
+	//reg gs_sdram_req;
+	//reg gs_sdram_we;
 	wire sdram_ack;
 	reg [24:0] sdram_addr;
 	reg [7:0] sdram_din;
@@ -581,32 +582,36 @@
 		//.port2_ack(gs_sdram_ack)
 	//);
 
-	dpSRAM_5128 sram0
-	(
-		.clk_i         (clk_sys),
-		//TODO
-		.porta0_addr_i (sdram_addr[23:1]),
-		.porta0_we_i   (sdram_we    ),
-		//.porta0_ce_i   (ioctl_wr|cart_rd),
-		.porta0_ce_i (sdram_req),
-		.porta0_oe_i   (sdram_req && !sdram_we),
-		.porta0_data_i ({sdram_din, sdram_din}),
-		.porta0_data_o (sdram_dout),
+	//dpSRAM_5128 sram0
+	//(
+		//.clk_i         (clk_sys),
+		//.porta0_addr_i (sdram_addr[23:1]),
+		//.porta0_we_i   (sdram_we    ),
+		//.porta0_ce_i (sdram_req),
+		//.porta0_oe_i   (sdram_req && !sdram_we),
+		//.porta0_data_i ({sdram_din, sdram_din}),
+		//.porta0_data_o (sdram_dout),
 
-		.porta1_addr_i (gs_sdram_addr),
-		.porta1_we_i   (gs_rom_we | gs_mem_wr),
-		.porta1_ce_i   (gs_mem_rd),
-		.porta1_oe_i   (gs_mem_rd),
-		.porta1_data_i (gs_mem_dout),
-		.porta1_data_o (gs_mem_din),
+		//.porta1_addr_i (gs_sdram_addr),
+		//.porta1_we_i   (gs_rom_we | gs_mem_wr),
+		//.porta1_ce_i   (gs_mem_rd),
+		//.porta1_oe_i   (gs_mem_rd),
+		//.porta1_data_i (gs_mem_dout),
+		//.porta1_data_o (gs_mem_din),
 
-		//TODO
-		.sram_addr_o  (SRAM_ADDR),
-		.sram_data_io (SRAM_DQ),
-		.sram_ce_n_o  (       ),
-		.sram_oe_n_o  (       ),
-		.sram_we_n_o  (SRAM_WE_N)
-		);
+		//.sram_addr_o  (SRAM_ADDR),
+		//.sram_data_io (SRAM_DQ),
+		//.sram_ce_n_o  (       ),
+		//.sram_oe_n_o  (       ),
+		//.sram_we_n_o  (SRAM_WE_N)
+		//);
+
+
+	assign SRAM_ADDR = sdram_addr[18:0];
+	assign SRAM_DQ = sdram_we ? sdram_din : 8'hzz;
+	assign sdram_dout = SRAM_DQ;
+	assign SRAM_WE_N = !sdram_we;
+
 
 
 
@@ -633,46 +638,46 @@
 	end
 	//assign ram_dout = (sdram_addr[0] ? sdram_dout[15:8] : sdram_dout[7:0]);
 	assign ram_ready = (sdram_ack == sdram_req) & ~new_ram_req;
-	wire [20:0] gs_mem_addr;
-	wire [7:0] gs_mem_dout;
-	wire [7:0] gs_mem_din;
-	wire gs_mem_rd;
-	wire gs_mem_wr;
-	wire gs_mem_ready;
-	reg [7:0] gs_mem_mask;
-	always @(*) begin
-		//if (_sv2v_0)
-			;
-		gs_mem_mask = 0;
-		case (st_gs_memory)
-			0:
-				if (gs_mem_addr[20:19])
-					gs_mem_mask = 8'hff;
-			1:
-				if (gs_mem_addr[20])
-					gs_mem_mask = 8'hff;
-			2, 3: gs_mem_mask = 0;
-		endcase
-	end
-	wire gs_rom_we = ioctl_wr && (ioctl_index == 0);
-	reg gs_mem_rd_old;
-	reg gs_mem_wr_old;
-	wire new_gs_mem_req = ((~gs_mem_rd_old & gs_mem_rd) || (~gs_mem_wr_old & gs_mem_wr)) || gs_rom_we;
-	always @(posedge clk_sys) begin
-		gs_mem_rd_old <= gs_mem_rd;
-		gs_mem_wr_old <= gs_mem_wr;
-		if (new_gs_mem_req) begin
-			if (((gs_sdram_we | gs_rom_we) | gs_mem_wr) | (gs_sdram_addr[20:1] != gs_mem_addr[20:1])) begin
-				gs_sdram_req <= ~gs_sdram_req;
-				gs_sdram_we <= gs_rom_we | gs_mem_wr;
-				gs_sdram_din <= (gs_rom_we ? ioctl_dout : gs_mem_din);
-			end
-			gs_sdram_addr <= (gs_rom_we ? ioctl_addr - 24'h030000 : gs_mem_addr);
-		end
-	end
+	//wire [20:0] gs_mem_addr;
+	//wire [7:0] gs_mem_dout;
+	//wire [7:0] gs_mem_din;
+	//wire gs_mem_rd;
+	//wire gs_mem_wr;
+	//wire gs_mem_ready;
+	//reg [7:0] gs_mem_mask;
+	//always @(*) begin
+		////if (_sv2v_0)
+			//;
+		//gs_mem_mask = 0;
+		//case (st_gs_memory)
+			//0:
+				//if (gs_mem_addr[20:19])
+					//gs_mem_mask = 8'hff;
+			//1:
+				//if (gs_mem_addr[20])
+					//gs_mem_mask = 8'hff;
+			//2, 3: gs_mem_mask = 0;
+		//endcase
+	//end
+	//wire gs_rom_we = ioctl_wr && (ioctl_index == 0);
+	//reg gs_mem_rd_old;
+	//reg gs_mem_wr_old;
+	//wire new_gs_mem_req = ((~gs_mem_rd_old & gs_mem_rd) || (~gs_mem_wr_old & gs_mem_wr)) || gs_rom_we;
+	//always @(posedge clk_sys) begin
+		//gs_mem_rd_old <= gs_mem_rd;
+		//gs_mem_wr_old <= gs_mem_wr;
+		//if (new_gs_mem_req) begin
+			//if (((gs_sdram_we | gs_rom_we) | gs_mem_wr) | (gs_sdram_addr[20:1] != gs_mem_addr[20:1])) begin
+				//gs_sdram_req <= ~gs_sdram_req;
+				//gs_sdram_we <= gs_rom_we | gs_mem_wr;
+				//gs_sdram_din <= (gs_rom_we ? ioctl_dout : gs_mem_din);
+			//end
+			//gs_sdram_addr <= (gs_rom_we ? ioctl_addr - 24'h030000 : gs_mem_addr);
+		//end
+	//end
 	//assign gs_mem_dout = (gs_sdram_addr[0] ? gs_sdram_dout[15:8] : gs_sdram_dout[7:0]);
 	//assign gs_mem_ready = (gs_sdram_ack == gs_sdram_req) & ~new_gs_mem_req;
-	assign gs_mem_ready = 1'b1;
+	//assign gs_mem_ready = 1'b1;
 
 	wire vram_sel = (((ram_addr[20:16] == 1) & ram_addr[14]) & ~dma) & ~tape_req;
 	wire [14:0] vram_addr;
@@ -815,50 +820,50 @@
 		.IOA_in(0),
 		.IOB_in(0)
 	);
-	wire [14:0] gs_l;
-	wire [14:0] gs_r;
-	reg [3:0] gs_ce_count;
-	wire gs_ce_p = gs_ce_count == 0;
-	always @(posedge clk_sys) begin : sv2v_autoblock_7
-		reg gs_no_wait;
-		if (reset) begin
-			gs_ce_count <= 0;
-			gs_no_wait <= 1;
-		end
-		else begin
-			if (gs_ce_p)
-				gs_no_wait <= 0;
-			if (gs_mem_ready)
-				gs_no_wait <= 1;
-			if (gs_ce_count == 4'd7) begin
-				if (gs_mem_ready | gs_no_wait)
-					gs_ce_count <= 0;
-			end
-			else
-				gs_ce_count <= gs_ce_count + 1'd1;
-		end
-	end
-	wire gs_ce_n = gs_ce_count == 4;
-	gs #(.INT_DIV(373)) gs(
-		.RESET(reset),
-		.CLK(clk_sys),
-		.CE_N(gs_ce_n),
-		.CE_P(gs_ce_p),
-		.A(addr[3]),
-		.DI(cpu_dout),
-		.DO(gs_dout),
-		.CS_n((~nM1 | nIORQ) | ~gs_sel),
-		.WR_n(nWR),
-		.RD_n(nRD),
-		.MEM_ADDR(gs_mem_addr),
-		.MEM_DI(gs_mem_din),
-		.MEM_DO(gs_mem_dout | gs_mem_mask),
-		.MEM_RD(gs_mem_rd),
-		.MEM_WR(gs_mem_wr),
-		.MEM_WAIT(~gs_mem_ready),
-		.OUTL(gs_l),
-		.OUTR(gs_r)
-	);
+	//wire [14:0] gs_l;
+	//wire [14:0] gs_r;
+	//reg [3:0] gs_ce_count;
+	//wire gs_ce_p = gs_ce_count == 0;
+	//always @(posedge clk_sys) begin : sv2v_autoblock_7
+		//reg gs_no_wait;
+		//if (reset) begin
+			//gs_ce_count <= 0;
+			//gs_no_wait <= 1;
+		//end
+		//else begin
+			//if (gs_ce_p)
+				//gs_no_wait <= 0;
+			//if (gs_mem_ready)
+				//gs_no_wait <= 1;
+			//if (gs_ce_count == 4'd7) begin
+				//if (gs_mem_ready | gs_no_wait)
+					//gs_ce_count <= 0;
+			//end
+			//else
+				//gs_ce_count <= gs_ce_count + 1'd1;
+		//end
+	//end
+	//wire gs_ce_n = gs_ce_count == 4;
+	//gs #(.INT_DIV(373)) gs(
+		//.RESET(reset),
+		//.CLK(clk_sys),
+		//.CE_N(gs_ce_n),
+		//.CE_P(gs_ce_p),
+		//.A(addr[3]),
+		//.DI(cpu_dout),
+		//.DO(gs_dout),
+		//.CS_n((~nM1 | nIORQ) | ~gs_sel),
+		//.WR_n(nWR),
+		//.RD_n(nRD),
+		//.MEM_ADDR(gs_mem_addr),
+		//.MEM_DI(gs_mem_din),
+		//.MEM_DO(gs_mem_dout | gs_mem_mask),
+		//.MEM_RD(gs_mem_rd),
+		//.MEM_WR(gs_mem_wr),
+		//.MEM_WAIT(~gs_mem_ready),
+		//.OUTL(gs_l),
+		//.OUTR(gs_r)
+	//);
 	reg [7:0] sd_l0;
 	reg [7:0] sd_l1;
 	reg [7:0] sd_r0;
@@ -891,21 +896,25 @@
 	//assign AUDIO_RIGHT[15:0] = audio_right;
 	wire tape_in;
 	always @(posedge clk_sys) begin
-		audio_left <= ((({~gs_l[14], gs_l[13:0], 1'b0} + {1'd0, psg_left, 4'd0}) + {2'd0, sd_l0, 5'd0}) + {2'd0, sd_l1, 5'd0}) + {2'd0, ear_out, mic_out, tape_in, 11'd0};
-		audio_right <= ((({~gs_r[14], gs_r[13:0], 1'b0} + {1'd0, psg_right, 4'd0}) + {2'd0, sd_r0, 5'd0}) + {2'd0, sd_r1, 5'd0}) + {2'd0, ear_out, mic_out, tape_in, 11'd0};
+		//audio_left <= ((({~gs_l[14], gs_l[13:0], 1'b0} + {1'd0, psg_left, 4'd0}) + {2'd0, sd_l0, 5'd0}) + {2'd0, sd_l1, 5'd0}) + {2'd0, ear_out, mic_out, tape_in, 11'd0};
+		audio_left <= ((({1'd0, psg_left, 4'd0}) + {2'd0, sd_l0, 5'd0}) + {2'd0, sd_l1, 5'd0}) + {2'd0, ear_out, mic_out, tape_in, 11'd0};
+		//audio_right <= ((({~gs_r[14], gs_r[13:0], 1'b0} + {1'd0, psg_right, 4'd0}) + {2'd0, sd_r0, 5'd0}) + {2'd0, sd_r1, 5'd0}) + {2'd0, ear_out, mic_out, tape_in, 11'd0};
+		audio_right <= ((({1'd0, psg_right, 4'd0}) + {2'd0, sd_r0, 5'd0}) + {2'd0, sd_r1, 5'd0}) + {2'd0, ear_out, mic_out, tape_in, 11'd0};
 	end
 	//assign AUDIO_LEFT[15:0] = audio_left;
 	//assign AUDIO_RIGHT[15:0] = audio_right;
 	sigma_delta_dac #(.MSBI(14)) dac_l(
 		.CLK(clk_sys),
 		.RESET(reset),
-		.DACin(((({~gs_l[14], gs_l[13:0]} + {1'd0, psg_left, 3'd0}) + {2'd0, sd_l0, 4'd0}) + {2'd0, sd_l1, 4'd0}) + {2'd0, ear_out, mic_out, tape_in, 10'd0}),
+		//.DACin(((({~gs_l[14], gs_l[13:0]} + {1'd0, psg_left, 3'd0}) + {2'd0, sd_l0, 4'd0}) + {2'd0, sd_l1, 4'd0}) + {2'd0, ear_out, mic_out, tape_in, 10'd0}),
+		.DACin(((({1'd0, psg_left, 3'd0}) + {2'd0, sd_l0, 4'd0}) + {2'd0, sd_l1, 4'd0}) + {2'd0, ear_out, mic_out, tape_in, 10'd0}),
 		.DACout(AUDIO_L)
 	);
 	sigma_delta_dac #(.MSBI(14)) dac_r(
 		.CLK(clk_sys),
 		.RESET(reset),
-		.DACin(((({~gs_r[14], gs_r[13:0]} + {1'd0, psg_right, 3'd0}) + {2'd0, sd_r0, 4'd0}) + {2'd0, sd_r1, 4'd0}) + {2'd0, ear_out, mic_out, tape_in, 10'd0}),
+		//.DACin(((({~gs_r[14], gs_r[13:0]} + {1'd0, psg_right, 3'd0}) + {2'd0, sd_r0, 4'd0}) + {2'd0, sd_r1, 4'd0}) + {2'd0, ear_out, mic_out, tape_in, 10'd0}),
+		.DACin(((({1'd0, psg_right, 3'd0}) + {2'd0, sd_r0, 4'd0}) + {2'd0, sd_r1, 4'd0}) + {2'd0, ear_out, mic_out, tape_in, 10'd0}),
 		.DACout(AUDIO_R)
 	);
 	(* maxfan = 10 *) wire ce_cpu_sn;
@@ -1154,6 +1163,7 @@
 			end
 		end
 	end
+`ifdef WD
 	wd1793 #(
 		.RWMODE(1),
 		.EDSK(0)
@@ -1190,6 +1200,8 @@
 		.input_wr(0),
 		.buff_din(0)
 	);
+`endif
+`ifdef ZXP3
 	u765 #(
 		.CYCLES(20'd1800),
 		.SPECCY_SPEEDLOCK_HACK(1)
@@ -1218,6 +1230,8 @@
 		.sd_buff_din(sd_buff_din_plus3),
 		.sd_buff_wr(sd_buff_wr)
 	);
+`endif
+`ifdef TAPE
 	wire tape_turbo;
 	wire tape_vin;
 	smart_tape tape(
@@ -1262,6 +1276,12 @@
 	//assign UART_TX = 1;
 	assign tape_in = ~(tape_loaded_reg ? tape_vin : EAR);
 	assign ula_tape_in = (tape_in | ear_out) | ((issue2 & !tape_active) & mic_out);
+`else
+	assign tape_in = EAR;
+	assign ula_tape_in = (tape_in | ear_out) | ((issue2 & !tape_active) & mic_out);
+`endif
+
+`ifdef SNAP
 	reg [7:0] snap_dl_data;
 	reg snap_dl_wr;
 	wire snap_dl_wait;
@@ -1330,5 +1350,6 @@
 		.reg_1ffd(snap_1ffd),
 		.reg_7ffd(snap_7ffd)
 	);
+`endif
 	//initial _sv2v_0 = 0;
 endmodule
