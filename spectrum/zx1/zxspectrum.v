@@ -931,9 +931,9 @@ module zxspectrum (
 		endcase
 	end
 	wire [1:0] scale = st_scanlines;
-	wire [2:0] Rx;
-	wire [2:0] Gx;
-	wire [2:0] Bx;
+	wire [5:0] Rx;
+	wire [5:0] Gx;
+	wire [5:0] Bx;
 	wire HSync;
 	wire VSync;
 	wire HBlank;
