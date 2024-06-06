@@ -1,3 +1,4 @@
+`default_nettype none
 module hq2x_in (
 	clk,
 	rdaddr,

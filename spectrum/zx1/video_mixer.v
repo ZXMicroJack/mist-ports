@@ -1,3 +1,4 @@
+`default_nettype none
 module video_mixer (
 	clk_sys,
 	ce_pix,

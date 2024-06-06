@@ -9,14 +9,14 @@ module Blend (
 	H,
 	Result
 );
-	input [5:0] rule;
-	input disable_hq2x;
-	input [17:0] E;
-	input [17:0] A;
-	input [17:0] B;
-	input [17:0] D;
-	input [17:0] F;
-	input [17:0] H;
+	input wire [5:0] rule;
+	input wire disable_hq2x;
+	input wire [17:0] E;
+	input wire [17:0] A;
+	input wire [17:0] B;
+	input wire [17:0] D;
+	input wire [17:0] F;
+	input wire [17:0] H;
 	output wire [17:0] Result;
 	reg [1:0] input_ctrl;
 	reg [8:0] op;

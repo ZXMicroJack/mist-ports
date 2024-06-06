@@ -20,7 +20,6 @@ module snap_loader (
 	reg_1ffd,
 	reg_7ffd
 );
-	reg _sv2v_0;
 	parameter ARCH_ZX48 = 0;
 	parameter ARCH_ZX128 = 0;
 	parameter ARCH_ZX3 = 0;
@@ -72,8 +71,6 @@ module snap_loader (
 	reg [24:0] addr_pre;
 	reg hdrv1;
 	always @(*) begin
-		if (_sv2v_0)
-			;
 		addr = addr_pre;
 		if (hdrv1 || snap_sna)
 			case (addr_pre[17:14])
@@ -335,5 +332,4 @@ module snap_loader (
 		if ((snap_wr && ((snap_hdrlen == 30) || snap_sna)) && (addr_pre == 'hbfff))
 			wren <= 0;
 	end
-	initial _sv2v_0 = 0;
 endmodule

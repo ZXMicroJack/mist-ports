@@ -1,3 +1,4 @@
+`default_nettype none
 module Hq2x (
 	clk,
 	ce_x4,

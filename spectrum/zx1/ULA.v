@@ -1,3 +1,4 @@
+`default_nettype none
 module ULA (
 	reset,
 	clk_sys,
@@ -37,38 +38,38 @@ module ULA (
 	Gx,
 	Bx
 );
-	reg _sv2v_0;
-	input reset;
-	input clk_sys;
-	input ce_7mp;
-	input ce_7mn;
+	//reg _sv2v_0;
+	input wire reset;
+	input wire clk_sys;
+	input wire ce_7mp;
+	input wire ce_7mn;
 	output wire ce_cpu_sp;
 	output wire ce_cpu_sn;
-	input [15:0] addr;
-	input [7:0] din;
-	input nMREQ;
-	input nIORQ;
-	input nRD;
-	input nWR;
+	input wire [15:0] addr;
+	input wire [7:0] din;
+	input wire nMREQ;
+	input wire nIORQ;
+	input wire nRD;
+	input wire nWR;
 	output wire nINT;
 	output wire nPortRD;
 	output wire nPortWR;
 	output wire [14:0] vram_addr;
-	input [7:0] vram_dout;
+	input wire [7:0] vram_dout;
 	output wire [7:0] port_ff;
-	input ulap_avail;
+	input wire ulap_avail;
 	output wire ulap_sel;
 	output wire [7:0] ulap_dout;
 	output reg ulap_ena;
 	output reg ulap_mono;
-	input tmx_avail;
+	input wire tmx_avail;
 	output reg mode512;
-	input snow_ena;
-	input mZX;
-	input m128;
-	input page_scr;
-	input [2:0] page_ram;
-	input [2:0] border_color;
+	input wire snow_ena;
+	input wire mZX;
+	input wire m128;
+	input wire page_scr;
+	input wire [2:0] page_ram;
+	input wire [2:0] border_color;
 	output reg HSync;
 	output reg VSync;
 	output reg HBlank;
@@ -235,7 +236,7 @@ module ULA (
 	reg [511:0] palette;
 	wire [7:0] color = palette[(63 - ((tmx_hi ? hiSRegister[15] : SRegister[7]) ? {AttrOut[7:6], 1'b0, AttrOut[2:0]} : {AttrOut[7:6], 1'b1, AttrOut[5:3]})) * 8+:8];
 	always @(*) begin
-		if (_sv2v_0)
+		//if (_sv2v_0)
 			;
 		casez ({HBlank | VSync, ulap_ena})
 			'b1z: {Gx, Rx, Bx} = 0;
@@ -303,5 +304,5 @@ module ULA (
 				{tmx_using_ff, tmx_ena, tmx_cfg} <= {1'b1, |din[2:0], din[5:0]};
 		end
 	end
-	initial _sv2v_0 = 0;
+	//initial _sv2v_0 = 0;
 endmodule

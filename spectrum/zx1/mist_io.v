@@ -1,3 +1,4 @@
+`default_nettype none
 module mist_io (
 	conf_str,
 	clk_sys,

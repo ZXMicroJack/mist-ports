@@ -4,7 +4,7 @@
 CONFIG VCCAUX=3.3; # Valid values are 2.5 and 3.3
 
 NET "CLOCK_50" TNM_NET = "CLOCK_50";
-TIMESPEC TS_sys_clk_i = PERIOD "sys_clk_i" 20 ns HIGH 50 %;
+//TIMESPEC TS_sys_clk_i = PERIOD "sys_clk_i" 20 ns HIGH 50 %;
 NET "CLOCK_50" 			LOC = P55	| IOSTANDARD = LVCMOS33 ;
 
 NET "LED" 												 LOC = P11 	| IOSTANDARD = LVTTL;

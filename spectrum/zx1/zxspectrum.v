@@ -1,4 +1,5 @@
-module zxspectrum (
+`default_nettype none
+	module zxspectrum (
 	CLOCK_50,
 	VGA_R,
 	VGA_G,
@@ -62,11 +63,11 @@ module zxspectrum (
 	input wire SD_datain1;
 	input wire SD_clk1;
 	output wire SD_dataout1;
-	reg _sv2v_0;
+	//reg _sv2v_0;
 	input CLOCK_50;
-	output wire [5:0] VGA_R;
-	output wire [5:0] VGA_G;
-	output wire [5:0] VGA_B;
+	output wire [2:0] VGA_R;
+	output wire [2:0] VGA_G;
+	output wire [2:0] VGA_B;
 	output wire VGA_HS;
 	output wire VGA_VS;
 	output wire LED;
@@ -76,12 +77,12 @@ module zxspectrum (
 	input wire EAR;
 	input wire SPI_SS4;
 	//input UART_RX;
-	input SPI_SCK;
+	input wire SPI_SCK;
 	output wire SPI_DO;
-	input SPI_DI;
-	input SPI_SS2;
-	input SPI_SS3;
-	input CONF_DATA0;
+	input wire SPI_DI;
+	input wire SPI_SS2;
+	input wire SPI_SS3;
+	input wire CONF_DATA0;
 	output wire [18:0] SRAM_ADDR;
 	inout [7:0] SRAM_DQ;
 	output wire SRAM_WE_N;
@@ -105,8 +106,8 @@ module zxspectrum (
 	//output wire [15:0] AUDIO_LEFT;
 	//output wire [15:0] AUDIO_RIGHT;
 
-		input PS2C;
-	input PS2D;
+		input wire PS2C;
+	input wire PS2D;
 	output wire PS2COUT;
 	output wire PS2DOUT;
 
@@ -129,13 +130,13 @@ module zxspectrum (
 	assign VGA_B[2:0] = VGA_B_x[5:3];
 
 	//output wire clock50;
-	`default_nettype none
 	wire ioctl_download;
 	wire tape_led;
 	assign LED = ~(ioctl_download | tape_led);
 	localparam CONF_BDI = "(BDI)";
 	localparam CONF_PLUSD = "(+D) ";
-	localparam ROM_ADDR = 25'h0150000;
+	localparam ROM_ADDR = 25'h0040000;
+	//localparam ROM_ADDR = 25'h0150000;
 	localparam TAPE_ADDR = 25'h0400000;
 	localparam SNAP_ADDR = 25'h0600000;
 	localparam ARCH_ZX48 = 5'b01100;
@@ -186,9 +187,9 @@ module zxspectrum (
 	wire ce_u765 = ce_cpu;
 	wire ce_tape = ce_cpu;
 	always @(posedge clk_sys) begin : sv2v_autoblock_1
-		reg [5:0] counter = 0;
+		reg [5:0] counter;
 		//counter = 0;
-		counter <= counter + 1'd1;
+		counter <= counter + 1;
 		ce_14m <= !counter[2:0];
 		ce_7mp <= !counter[3] & !counter[2:0];
 		ce_7mn <= counter[3] & !counter[2:0];
@@ -201,7 +202,7 @@ module zxspectrum (
 	reg turbo_key_active;
 	wire [11:1] Fn;
 	wire [2:0] mod;
-	reg reset;
+	reg reset = 1'b0;
 	always @(posedge clk_sys) begin : sv2v_autoblock_2
 		reg old_Fn9;
 		old_Fn9 <= Fn[9];
@@ -364,7 +365,7 @@ module zxspectrum (
 		.CLK(clk_sys),
 		.CEN_p(ce_cpu_p),
 		.CEN_n(ce_cpu_n),
-		.WAIT_n(1),
+		.WAIT_n(1'b1),
 		.INT_n(nINT),
 		.NMI_n(~NMI),
 		.BUSRQ_n(nBUSRQ),
@@ -428,7 +429,7 @@ module zxspectrum (
 	wire [7:0] ulap_dout;
 	wire ulap_sel;
 	always @(*) begin
-		if (_sv2v_0)
+		//if (_sv2v_0)
 			;
 		casex ({nMREQ, tape_dout_en, (~nM1 | nIORQ) | nRD, (fdd_sel | fdd_sel2) | plus3_fdd, mf3_port, mmc_sel, addr[5:0] == 6'h1f, portBF, gs_sel, psg_enable, ulap_sel, addr[0]})
 			'b1xxxxxxxxxx: cpu_din = tape_dout;
@@ -505,12 +506,13 @@ module zxspectrum (
 	wire snap_wr;
 	wire tape_req;
 	always @(*) begin
-		if (_sv2v_0)
+		//if (_sv2v_0)
 			;
 		casex ({snap_dl | snap_reset, mmc_ram_en, page_special, addr[15:14]})
 			'b1xxxx: ram_addr = (snap_rd ? SNAP_ADDR + snap_dl_addr : snap_addr);
 			'b1000: ram_addr = {4'b1000, mmc_ram_bank, addr[12:0]};
-			'b0: ram_addr = {3'b101, page_rom, addr[13:0]};
+			//'b0: ram_addr = {3'b101, page_rom, addr[13:0]};
+			'b0: ram_addr = {3'b001, page_rom, addr[13:0]};
 			'b0x001: ram_addr = {7'h05, addr[13:0]};
 			'b0x010: ram_addr = {7'h02, addr[13:0]};
 			'b0x011: ram_addr = {1'b0, page_ram, addr[13:0]};
@@ -639,7 +641,7 @@ module zxspectrum (
 	wire gs_mem_ready;
 	reg [7:0] gs_mem_mask;
 	always @(*) begin
-		if (_sv2v_0)
+		//if (_sv2v_0)
 			;
 		gs_mem_mask = 0;
 		case (st_gs_memory)
@@ -717,7 +719,7 @@ module zxspectrum (
 	end
 	wire mmc_rom_en;
 	always @(*) begin
-		if (_sv2v_0)
+		//if (_sv2v_0)
 			;
 		casex ({mmc_rom_en, trdos_en, plusd_mem, mf128_mem, plus3})
 			'b1xxxx: page_rom <= 4'b0100;
@@ -911,7 +913,7 @@ module zxspectrum (
 	reg mZX;
 	reg m128;
 	always @(*) begin
-		if (_sv2v_0)
+		//if (_sv2v_0)
 			;
 		case (ula_type)
 			0: {mZX, m128} <= 2'b10;
@@ -933,7 +935,8 @@ module zxspectrum (
 	wire tmx_avail = ~status[13] & ~trdos_en;
 	wire snow_ena = (&turbo & ~plus3) & ~unrainer;
 	ULA ULA(
-		.reset(reset),
+		//.reset(reset),
+		.reset(1'b0),
 		.clk_sys(clk_sys),
 		.ce_7mp(ce_7mp),
 		.ce_7mn(ce_7mn),
@@ -973,7 +976,7 @@ module zxspectrum (
 	);
 	video_mixer #(
 		.LINE_LENGTH(896),
-		.HALF_DEPTH(1)
+		.HALF_DEPTH(0)
 	) video_mixer(
 		.clk_sys(clk_sys),
 		.SPI_SCK(SPI_SCK),
@@ -1327,5 +1330,5 @@ module zxspectrum (
 		.reg_1ffd(snap_1ffd),
 		.reg_7ffd(snap_7ffd)
 	);
-	initial _sv2v_0 = 0;
+	//initial _sv2v_0 = 0;
 endmodule

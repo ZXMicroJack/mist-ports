@@ -86,7 +86,7 @@ module scandoubler (
 	localparam AWIDTH = (LENGTH <= 2 ? 0 : (LENGTH <= 4 ? 1 : (LENGTH <= 8 ? 2 : (LENGTH <= 16 ? 3 : (LENGTH <= 32 ? 4 : (LENGTH <= 64 ? 5 : (LENGTH <= 128 ? 6 : (LENGTH <= 256 ? 7 : (LENGTH <= 512 ? 8 : (LENGTH <= 1024 ? 9 : 10))))))))));
 	reg [10:0] sd_h_actual;
 	reg [1:0] sd_line;
-/*	Hq2x #(
+	Hq2x #(
 		.LENGTH(LENGTH),
 		.HALF_DEPTH(HALF_DEPTH)
 	) Hq2x(
@@ -100,11 +100,11 @@ module scandoubler (
 		.read_y(sd_line),
 		.read_x(sd_h_actual),
 		.outpixel({b_out, g_out, r_out})
-	); */
+	);
 	
-	assign b_out = b_in;
-	assign g_out = g_in;
-	assign r_out = r_in;
+	//assign b_out = b_in;
+	//assign g_out = g_in;
+	//assign r_out = r_in;
 	
 	reg [10:0] sd_h;
 	always @(*)
