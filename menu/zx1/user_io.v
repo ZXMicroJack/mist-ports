@@ -1,3 +1,4 @@
+`default_nettype none
 module user_io (
 	conf_str,
 	conf_addr,
