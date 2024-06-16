@@ -9,7 +9,6 @@ module zxspectrum (
 	LED,
 	AUDIO_L,
 	AUDIO_R,
-	//UART_TX,
 	EAR,
 	SPI_SCK,
 	SPI_DO,
@@ -21,21 +20,7 @@ module zxspectrum (
 	SRAM_ADDR,
 	SRAM_DQ,
 	SRAM_WE_N,
-	//SDRAM_A,
-	//SDRAM_DQ,
-	//SDRAM_DQML,
-	//SDRAM_DQMH,
-	//SDRAM_nWE,
-	//SDRAM_nCAS,
-	//SDRAM_nRAS,
-	//SDRAM_nCS,
-	//SDRAM_BA,
-	//SDRAM_CLK,
-	//SDRAM_CKE,
-	//AUDIO_LEFT,
-	//AUDIO_RIGHT
-	//AUDIO_L,
-	//AUDIO_R,
+
 	SD_cs,
 	SD_datain,
 	SD_dataout,
@@ -233,24 +218,25 @@ module zxspectrum (
 	wire tape_active;
 	wire [4:0] turbo_req = (tape_active & ~st_fast_tape ? 5'b00001 : (turbo_key_active ? turbo_key : turbo_conf));
 	wire ram_ready;
-	always @(posedge clk_sys) begin : sv2v_autoblock_3
-		reg [1:0] timeout;
-		if (cpu_n) begin
-			if (timeout)
-				timeout <= timeout + 1'd1;
-			if (turbo != turbo_req) begin
-				cpu_en <= 0;
-				timeout <= 1;
-				turbo <= turbo_req;
-			end
-			else if ((!cpu_en & !timeout) & ram_ready)
-				cpu_en <= ~pause;
-			else if (!turbo[4:3] & !ram_ready)
-				cpu_en <= 0;
-			else if (cpu_en & pause)
-				cpu_en <= 0;
-		end
-	end
+	//assign cpu_en = ~pause;
+	//always @(posedge clk_sys) begin : sv2v_autoblock_3
+		//reg [1:0] timeout;
+		//if (cpu_n) begin
+			//if (timeout)
+				//timeout <= timeout + 1'd1;
+			//if (turbo != turbo_req) begin
+				//cpu_en <= 0;
+				//timeout <= 1;
+				//turbo <= turbo_req;
+			//end
+			//else if ((!cpu_en & !timeout) & ram_ready)
+				//cpu_en <= ~pause;
+			//else if (!turbo[4:3] & !ram_ready)
+				//cpu_en <= 0;
+			//else if (cpu_en & pause)
+				//cpu_en <= 0;
+		//end
+	//end
 	wire [10:0] ps2_key;
 	wire [24:0] ps2_mouse;
 	wire [7:0] joystick_0;
@@ -609,7 +595,7 @@ module zxspectrum (
 
 	assign SRAM_ADDR = sdram_addr[18:0];
 	assign SRAM_DQ = sdram_we ? sdram_din : 8'hzz;
-	assign sdram_dout = SRAM_DQ;
+	assign ram_dout = SRAM_DQ;
 	assign SRAM_WE_N = !sdram_we;
 
 
@@ -637,7 +623,8 @@ module zxspectrum (
 		end
 	end
 	//assign ram_dout = (sdram_addr[0] ? sdram_dout[15:8] : sdram_dout[7:0]);
-	assign ram_ready = (sdram_ack == sdram_req) & ~new_ram_req;
+	//assign ram_ready = (sdram_ack == sdram_req) & ~new_ram_req;
+	assign ram_ready = 1'b1;
 	//wire [20:0] gs_mem_addr;
 	//wire [7:0] gs_mem_dout;
 	//wire [7:0] gs_mem_din;
