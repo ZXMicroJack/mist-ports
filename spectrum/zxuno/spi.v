@@ -33,6 +33,6 @@ module spi (
 		else begin
 			if (spi_clk)
 				io_byte <= {io_byte[6:0], spi_di};
-			counter <= counter + 2'd1;
+			counter <= counter + 5'd1;
 		end
 endmodule

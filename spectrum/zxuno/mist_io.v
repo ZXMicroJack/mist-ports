@@ -114,7 +114,7 @@ module mist_io (
 			spi_data_out <= core_type;
 		end
 		else begin
-			bit_cnt <= bit_cnt + 1'd1;
+			bit_cnt <= bit_cnt + 3'd1;
 			sbuf <= {sbuf[5:0], SPI_DI};
 			if (bit_cnt == 7) begin
 				if (!byte_cnt)
@@ -164,7 +164,7 @@ module mist_io (
 		old_ready2 <= old_ready1;
 		sd_buff_wr <= b_wr[0];
 		if (b_wr[2] && ~&sd_buff_addr)
-			sd_buff_addr <= sd_buff_addr + 1'b1;
+			sd_buff_addr <= sd_buff_addr + 9'b1;
 		b_wr <= b_wr << 1;
 		if (old_ss2) begin
 			got_ps2 <= 0;
@@ -187,7 +187,7 @@ module mist_io (
 		end
 		else if (old_ready2 ^ old_ready1) begin
 			if ((cmd == 8'h18) && ~&sd_buff_addr)
-				sd_buff_addr <= sd_buff_addr + 1'b1;
+				sd_buff_addr <= sd_buff_addr + 9'b1;
 			if (byte_cnt < 2) begin
 				if (cmd == 8'h19)
 					sd_ack_conf <= 1;
@@ -210,13 +210,13 @@ module mist_io (
 							4: ps2_mouse[23:16] <= spi_data_in;
 						endcase
 						ps2_mouse_fifo[ps2_mouse_wptr] <= spi_data_in;
-						ps2_mouse_wptr <= ps2_mouse_wptr + 1'd1;
+						ps2_mouse_wptr <= ps2_mouse_wptr + 3'd1;
 					end
 					8'h05: begin
 						got_ps2 <= 1;
 						ps2_key_raw[31:0] <= {ps2_key_raw[23:0], spi_data_in};
 						ps2_kbd_fifo[ps2_kbd_wptr] <= spi_data_in;
-						ps2_kbd_wptr <= ps2_kbd_wptr + 1'd1;
+						ps2_kbd_wptr <= ps2_kbd_wptr + 3'd1;
 					end
 					8'h15: status[7:0] <= spi_data_in;
 					8'h19, 8'h17: begin
@@ -253,7 +253,7 @@ module mist_io (
 	reg clk_ps2;
 	always @(negedge clk_sys) begin : sv2v_autoblock_3
 		integer cnt;
-		cnt <= cnt + 1'd1;
+		cnt <= cnt + 7'd1;
 		if (cnt == PS2DIV) begin
 			clk_ps2 <= ~clk_ps2;
 			cnt <= 0;
@@ -271,7 +271,7 @@ module mist_io (
 		if (~old_clk & clk_ps2) begin
 			ps2_kbd_r_inc <= 0;
 			if (ps2_kbd_r_inc)
-				ps2_kbd_rptr <= ps2_kbd_rptr + 1'd1;
+				ps2_kbd_rptr <= ps2_kbd_rptr + 3'd1;
 			if (ps2_kbd_tx_state == 0) begin
 				if (ps2_kbd_wptr != ps2_kbd_rptr) begin
 					ps2_kbd_tx_byte <= ps2_kbd_fifo[ps2_kbd_rptr];
@@ -293,7 +293,7 @@ module mist_io (
 				if (ps2_kbd_tx_state == 10)
 					ps2_kbd_data <= 1;
 				if (ps2_kbd_tx_state < 11)
-					ps2_kbd_tx_state <= ps2_kbd_tx_state + 1'd1;
+					ps2_kbd_tx_state <= ps2_kbd_tx_state + 4'd1;
 				else
 					ps2_kbd_tx_state <= 0;
 			end
@@ -311,7 +311,7 @@ module mist_io (
 		if (~old_clk & clk_ps2) begin
 			ps2_mouse_r_inc <= 0;
 			if (ps2_mouse_r_inc)
-				ps2_mouse_rptr <= ps2_mouse_rptr + 1'd1;
+				ps2_mouse_rptr <= ps2_mouse_rptr + 3'd1;
 			if (ps2_mouse_tx_state == 0) begin
 				if (ps2_mouse_wptr != ps2_mouse_rptr) begin
 					ps2_mouse_tx_byte <= ps2_mouse_fifo[ps2_mouse_rptr];
@@ -333,7 +333,7 @@ module mist_io (
 				if (ps2_mouse_tx_state == 10)
 					ps2_mouse_data <= 1;
 				if (ps2_mouse_tx_state < 11)
-					ps2_mouse_tx_state <= ps2_mouse_tx_state + 1'd1;
+					ps2_mouse_tx_state <= ps2_mouse_tx_state + 4'd1;
 				else
 					ps2_mouse_tx_state <= 0;
 			end
@@ -357,7 +357,7 @@ module mist_io (
 			if (cnt != 15)
 				sbuf <= {sbuf[5:0], SPI_DI};
 			if (cnt < 15)
-				cnt <= cnt + 1'd1;
+				cnt <= cnt + 5'd1;
 			else
 				cnt <= 8;
 			if (cnt == 7)
@@ -375,7 +375,7 @@ module mist_io (
 			if ((cmd == UIO_FILE_TX_DAT) && (cnt == 15)) begin
 				addr_w <= addr;
 				data_w <= {sbuf, SPI_DI};
-				addr <= addr + 1'd1;
+				addr <= addr + 25'd1;
 				rclk <= ~rclk;
 			end
 			if ((cmd == UIO_FILE_INDEX) && (cnt == 15))

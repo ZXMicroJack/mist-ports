@@ -83,6 +83,7 @@ module zxspectrum (
 	input wire PS2D;
 	output wire PS2COUT;
 	output wire PS2DOUT;
+	wire [15:0] dbg;
 
 	assign PS2COUT = PS2C;
 	assign PS2DOUT = PS2D;
@@ -295,7 +296,7 @@ module zxspectrum (
 		.ioctl_wr(ioctl_wr),
 		.ioctl_addr(ioctl_addr),
 		.ioctl_dout(ioctl_dout),
-		.ioctl_ce(1),
+		.ioctl_ce(1'b1),
 		.ioctl_index({ioctl_ext_index, ioctl_index}),
 		.conf_str({CONF_STR, (plusd_en ? CONF_PLUSD : CONF_BDI)}),
 		.ps2_kbd_clk(),
@@ -308,6 +309,7 @@ module zxspectrum (
 	wire [15:0] addr;
 	reg [7:0] cpu_din;
 	wire [7:0] cpu_dout;
+	assign dbg = addr;
 	wire nM1;
 	wire nMREQ;
 	wire nIORQ;
@@ -576,36 +578,80 @@ module zxspectrum (
 		//);
 
 
-	assign SRAM_ADDR = sdram_addr[18:0];
-	assign SRAM_DQ = sdram_we ? sdram_din : 8'hzz;
-	assign ram_dout = SRAM_DQ;
-	assign SRAM_WE_N = !sdram_we;
+	wire[23:0] qram_addr = dma ? (ioctl_addr + (ioctl_index == 0 ? ROM_ADDR : (ioctl_index == 2 ? TAPE_ADDR : SNAP_ADDR))) : ram_addr;
+	assign SRAM_ADDR[18:0] = qram_addr[18:0];
+	assign SRAM_DQ[7:0] = ram_we ? ram_din[7:0] : 8'hzz;
+	assign ram_dout[7:0] = SRAM_DQ[7:0];
+	assign SRAM_WE_N = !ram_we;
 
 
+	//reg ram_ready = 1'b0;
 
+	//reg old_ram_rd = 1'b0;
+	//reg old_ram_we = 1'b0;
+	//always @(posedge clk_sys) begin
+		//old_ram_rd <= ram_rd;
+		//old_ram_we <= ram_we;
+	//end
+	//assign ram_ready = ({ram_rd, old_ram_rd} == 2'b11  || ({ram_we, old_ram_we} == 2'b11));
 
-	//assign SDRAM_CKE = 1;
-	reg ram_rd_old;
-	reg ram_rd_old2;
-	reg ram_we_old;
-	wire new_ram_req = (~ram_rd_old2 & ram_rd_old) || (~ram_we_old & ram_we);
-	wire [24:0] tape_addr;
-	always @(posedge clk_sys) begin
-		ram_rd_old <= ram_rd;
-		ram_rd_old2 <= ram_rd_old;
-		ram_we_old <= ram_we;
-		if (new_ram_req) begin
-			sdram_req <= ~sdram_req;
-			sdram_we <= ram_we;
-			sdram_din <= ram_din;
-			casex ({dma, tape_req})
-				'b1x: sdram_addr <= ioctl_addr + (ioctl_index == 0 ? ROM_ADDR : (ioctl_index == 2 ? TAPE_ADDR : SNAP_ADDR));
-				'b1: sdram_addr <= tape_addr + TAPE_ADDR;
-				'b0: sdram_addr <= ram_addr;
-			endcase
-		end
-	end
 	assign ram_ready = 1'b1;
+/*
+	reg[2:0] ram_ready_q = 2'd0;
+	always @(posedge clk_sys) begin
+		ram_ready_q[2:0] <= {ram_ready_q[1:0], ram_rd | ram_we};
+	end
+	assign ram_ready = |ram_ready_q;
+
+	assign ram_ready = 1'b1;*/
+
+	//reg ram_rd_old;
+	//reg ram_rd_old2;
+	//reg ram_we_old;
+	//wire new_ram_req = (~ram_rd_old2 & ram_rd_old) || (~ram_we_old & ram_we);
+	//wire [24:0] tape_addr;
+	//always @(posedge clk_sys) begin
+		//ram_rd_old <= ram_rd;
+		//ram_rd_old2 <= ram_rd_old;
+		//ram_we_old <= ram_we;
+		//if (new_ram_req) begin
+			//sdram_req <= ~sdram_req;
+			//sdram_we <= ram_we;
+			//sdram_din <= ram_din;
+			//casex ({dma, tape_req})
+				//'b1x: sdram_addr <= ioctl_addr + (ioctl_index == 0 ? ROM_ADDR : (ioctl_index == 2 ? TAPE_ADDR : SNAP_ADDR));
+				//'b1: sdram_addr <= tape_addr + TAPE_ADDR;
+				//'b0: sdram_addr <= ram_addr;
+			//endcase
+		//end
+	//end
+
+
+	//assign SRAM_ADDR = sdram_addr[18:0];
+	//assign SRAM_DQ = sdram_we ? sdram_din : 8'hzz;
+	//assign ram_dout = SRAM_DQ;
+	//assign SRAM_WE_N = !sdram_we;
+
+	//reg ram_rd_old;
+	//reg ram_rd_old2;
+	//reg ram_we_old;
+	//wire new_ram_req = (~ram_rd_old2 & ram_rd_old) || (~ram_we_old & ram_we);
+	//wire [24:0] tape_addr;
+	//always @(posedge clk_sys) begin
+		//ram_rd_old <= ram_rd;
+		//ram_rd_old2 <= ram_rd_old;
+		//ram_we_old <= ram_we;
+		//if (new_ram_req) begin
+			//sdram_req <= ~sdram_req;
+			//sdram_we <= ram_we;
+			//sdram_din <= ram_din;
+			//casex ({dma, tape_req})
+				//'b1x: sdram_addr <= ioctl_addr + (ioctl_index == 0 ? ROM_ADDR : (ioctl_index == 2 ? TAPE_ADDR : SNAP_ADDR));
+				//'b1: sdram_addr <= tape_addr + TAPE_ADDR;
+				//'b0: sdram_addr <= ram_addr;
+			//endcase
+		//end
+	//end
 
 	//assign ram_dout = (sdram_addr[0] ? sdram_dout[15:8] : sdram_dout[7:0]);
 	//assign ram_ready = (sdram_ack == sdram_req) & ~new_ram_req;
@@ -657,7 +703,8 @@ module zxspectrum (
 		.data(ram_din),
 		.wren(ram_we & vram_sel),
 		.rdaddress(vram_addr),
-		.q(vram_dout)
+		.q(vram_dout),
+		.dbg(dbg)
 	);
 	(* maxfan = 10 *) reg zx48;
 	(* maxfan = 10 *) reg p1024;
@@ -903,6 +950,11 @@ module zxspectrum (
 	wire [5:0] Rx;
 	wire [5:0] Gx;
 	wire [5:0] Bx;
+
+	assign Rx[2:0] = 3'd0;
+	assign Gx[2:0] = 3'd0;
+	assign Bx[2:0] = 3'd0;
+
 	wire HSync;
 	wire VSync;
 	wire HBlank;
@@ -943,9 +995,9 @@ module zxspectrum (
 		.HSync(HSync),
 		.VSync(VSync),
 		.HBlank(HBlank),
-		.Rx(Rx),
-		.Gx(Gx),
-		.Bx(Bx),
+		.Rx(Rx[5:3]),
+		.Gx(Gx[5:3]),
+		.Bx(Bx[5:3]),
 		.nPortRD(),
 		.nPortWR(ula_nWR),
 		.din(cpu_dout),

@@ -101,13 +101,13 @@ module ULA (
 			hc_next = 0;
 			if (vc == (!mZX ? 319 : (m128 ? 310 : 311))) begin
 				vc_next = 0;
-				FlashCnt_next = FlashCnt + 1'd1;
+				FlashCnt_next = FlashCnt + 5'd1;
 			end
 			else
-				vc_next = vc + 1'd1;
+				vc_next = vc + 9'd1;
 		end
 		else
-			hc_next = hc + 1'd1;
+			hc_next = hc + 9'd1;
 	end
 	reg [7:0] AttrOut;
 	reg [6:0] INTCnt = 1;
@@ -184,7 +184,7 @@ module ULA (
 			if ((!mZX && (vc_next == 239)) && (hc_next == 326))
 				INT <= 1;
 			if (INT)
-				INTCnt <= ((m128 && (INTCnt == 71)) || (~m128 && (INTCnt == 63)) ? 7'd0 : INTCnt + 1'd1);
+				INTCnt <= ((m128 && (INTCnt == 71)) || (~m128 && (INTCnt == 63)) ? 7'd0 : INTCnt + 7'd1);
 			if (INTCnt == 0)
 				INT <= 0;
 			if ((hc_next[3:0] == 4) || (hc_next[3:0] == 12)) begin

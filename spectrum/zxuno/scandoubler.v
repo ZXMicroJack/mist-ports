@@ -51,11 +51,11 @@ module scandoubler (
 		reg [7:0] pixsz2;
 		old_ce <= ce_pix;
 		if (~&pix_len)
-			pix_len <= pix_len + 1'd1;
+			pix_len <= pix_len + 8'd1;
 		ce_x4 <= 0;
 		ce_x1 <= 0;
 		if (((pl == pixsz4) || (pl == pixsz2)) || (pl == (pixsz2 + pixsz4))) begin
-			phase <= phase + 1'd1;
+			phase <= phase + 3'd1;
 			ce_x4 <= 1;
 		end
 		if (~old_ce & ce_pix) begin
@@ -64,11 +64,11 @@ module scandoubler (
 			ce_x1 <= 1;
 			ce_x4 <= 1;
 			pix_len <= 0;
-			phase <= phase + 1'd1;
-			ce_cnt <= ce_cnt + 1'd1;
+			phase <= phase + 3'd1;
+			ce_cnt <= ce_cnt + 3'd1;
 			if (ce_pix_actual) begin
 				phase <= 0;
-				ce_div <= ce_cnt + 1'd1;
+				ce_div <= ce_cnt + 3'd1;
 				ce_cnt <= 0;
 				req_line_reset <= 0;
 			end
@@ -86,6 +86,7 @@ module scandoubler (
 	localparam AWIDTH = (LENGTH <= 2 ? 0 : (LENGTH <= 4 ? 1 : (LENGTH <= 8 ? 2 : (LENGTH <= 16 ? 3 : (LENGTH <= 32 ? 4 : (LENGTH <= 64 ? 5 : (LENGTH <= 128 ? 6 : (LENGTH <= 256 ? 7 : (LENGTH <= 512 ? 8 : (LENGTH <= 1024 ? 9 : 10))))))))));
 	reg [10:0] sd_h_actual;
 	reg [1:0] sd_line;
+`ifdef HQ2X
 	Hq2x #(
 		.LENGTH(LENGTH),
 		.HALF_DEPTH(HALF_DEPTH)
@@ -101,6 +102,12 @@ module scandoubler (
 		.read_x(sd_h_actual),
 		.outpixel({b_out, g_out, r_out})
 	);
+`else
+	assign r_out = r_in;
+	assign g_out = g_in;
+	assign b_out = b_in;
+`endif
+
 	reg [10:0] sd_h;
 	always @(*)
 		case (ce_div)
@@ -130,7 +137,7 @@ module scandoubler (
 					hs_ls <= 11'h001;
 			end
 			else
-				hcnt <= hcnt + 1'd1;
+				hcnt <= hcnt + 11'd1;
 			if (!hs && hs_in)
 				hs_rise <= {hcnt, 1'b1};
 			vs <= vs_in;
@@ -140,7 +147,7 @@ module scandoubler (
 		if (ce_x4) begin
 			hs2 <= hs_in;
 			sd_hcnt <= sd_hcnt + 1'd1;
-			sd_h <= sd_h + 1'd1;
+			sd_h <= sd_h + 11'd1;
 			if (hs2 && !hs_in)
 				sd_hcnt <= hs_max;
 			if (sd_hcnt == hs_max)
@@ -152,7 +159,7 @@ module scandoubler (
 			if (sd_hcnt == hs_ls)
 				sd_h <= 0;
 			if (sd_hcnt == hs_ls)
-				sd_line <= sd_line + 1'd1;
+				sd_line <= sd_line + 2'd1;
 		end
 	end
 endmodule
