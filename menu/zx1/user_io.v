@@ -68,7 +68,9 @@ module user_io (
 	i2c_ack,
 	i2c_end,
 	serial_data,
-	serial_strobe
+	serial_strobe,
+	rtc_in,
+	rtc_reset
 );
 	parameter STRLEN = 0;
 	input [(8 * STRLEN) - 1:0] conf_str;
@@ -141,6 +143,10 @@ module user_io (
 	input i2c_end;
 	input [7:0] serial_data;
 	input serial_strobe;
+
+	input wire [55:0] rtc_in;
+	output reg rtc_reset = 1'b0;
+
 	parameter PS2DIV = 100;
 	parameter ROM_DIRECT_UPLOAD = 0;
 	parameter PS2BIDIR = 0;
@@ -342,6 +348,26 @@ module user_io (
 						spi_byte_out <= {6'd0, i2c_ack, i2c_end};
 					else
 						spi_byte_out <= i2c_din;
+				8'hfe: begin
+					if (byte_cnt == 2) begin
+						rtc_reset <= spi_byte_in[0];
+						//spi_byte_out <= 8'hcd;
+						//spi_byte_out <= {spi_byte_in[0],spi_byte_in[0],spi_byte_in[0],spi_byte_in[0],spi_byte_in[0],spi_byte_in[0],spi_byte_in[0],spi_byte_in[0]};
+					end
+
+
+					if (byte_cnt == 1) spi_byte_out <= rtc_in[55:48];
+					else if (byte_cnt == 2) spi_byte_out <= rtc_in[47:40];
+					else if (byte_cnt == 3) spi_byte_out <= rtc_in[39:32];
+					else if (byte_cnt == 4) spi_byte_out <= rtc_in[31:24];
+					else if (byte_cnt == 5) spi_byte_out <= rtc_in[23:16];
+					else if (byte_cnt == 6) spi_byte_out <= rtc_in[15:8];
+					else if (byte_cnt == 7) spi_byte_out <= rtc_in[7:0];
+					//else if (byte_cnt > 1 && byte_cnt < 8) begin
+						//spi_byte_out <= rtc_in[(byte_cnt - 2) << 3+:8];
+					//end
+				end
+
 				//default:
 					//spi_byte_out <= cmd;
 			endcase
@@ -519,6 +545,7 @@ module user_io (
 							i2c_dout <= spi_byte_in;
 							i2c_start <= 1;
 						end
+
 				endcase
 			end
 		end

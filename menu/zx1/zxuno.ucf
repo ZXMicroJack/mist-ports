@@ -169,6 +169,10 @@ NET "JRT" 		LOC = P7 	| IOSTANDARD = LVCMOS33 |PULLUP;
 NET "JF1" 		LOC = P2 	| IOSTANDARD = LVCMOS33 |PULLUP;
 NET "JSEL" 		LOC = P39 	| IOSTANDARD = LVCMOS33 |DRIVE=24 |SLEW = SLOW;
 
+NET "SDA" LOC="P21" | IOSTANDARD = LVCMOS33;
+NET "SCL" LOC="P17" | IOSTANDARD = LVCMOS33;
+
+
 #set_property -dict {PACKAGE_PIN V8 IOSTANDARD LVTTL} [get_ports mist_miso]
 #set_property -dict {PACKAGE_PIN V7 IOSTANDARD LVTTL} [get_ports mist_mosi]
 #set_property -dict {PACKAGE_PIN W7 IOSTANDARD LVTTL} [get_ports mist_sck]

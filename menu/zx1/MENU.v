@@ -48,7 +48,9 @@ module MENU (
 	JLT,
 	JRT,
 	JF1,
-	JSEL
+	JSEL,
+	SDA,
+	SCL
 );
 	output wire SD_cs;
 	output wire SD_datain;
@@ -84,21 +86,9 @@ module MENU (
 	input wire JF1;
 	output wire JSEL;
 
-	//output wire [18:0] SDRAM_ADD;
-	//inout [15:0] SDRAM_DQ;
-	//output wire SDRAM_DQML;
+	inout wire SDA;
+	inout wire SCL;
 
-	//output wire [12:0] SDRAM_A;
-	//inout [15:0] SDRAM_DQ;
-	//output wire SDRAM_DQML;
-	//output wire SDRAM_DQMH;
-	//output wire SDRAM_nWE;
-	//output wire SDRAM_nCAS;
-	//output wire SDRAM_nRAS;
-	//output wire SDRAM_nCS;
-	//output wire [1:0] SDRAM_BA;
-	//output wire SDRAM_CLK;
-	//output wire SDRAM_CKE;
 	output wire AUDIO_L;
 	output wire AUDIO_R;
 	input UART_RX;
@@ -135,12 +125,14 @@ module MENU (
 		.c2(clk_pix),
 		.locked(pll_locked)
 	);
-	assign SDRAM_CLK = clk_ram;
-	assign SDRAM_CKE = 1;
+	//assign SDRAM_CLK = clk_ram;
+	//assign SDRAM_CKE = 1;
 	localparam CONF_STR = {"MENU;;", "O1,Video mode,PAL,NTSC;", "O23,Rotate,Off,Left,Right;", "V,", "231230"};
 	wire scandoubler_disable;
 	wire ypbpr;
 	wire no_csync;
+	wire[55:0] rtc;
+	wire rtc_reset;
 	wire [63:0] status;
 	wire SPI_DO_U;
 	wire SPI_DO_D;
@@ -159,7 +151,9 @@ module MENU (
 		.status(status),
 		.scandoubler_disable(scandoubler_disable),
 		.ypbpr(ypbpr),
-		.no_csync(no_csync)
+		.no_csync(no_csync),
+		.rtc_in(rtc),
+		.rtc_reset(rtc_reset)
 	);
 	wire ntsc = status[1];
 	wire [1:0] rotate = status[3:2];
@@ -324,30 +318,6 @@ module MENU (
 		endcase;
 	end
 
-	//sdram #(.MHZ(50)) sdram(
-		//.SDRAM_DQ(SDRAM_DQ),
-		//.SDRAM_A(SDRAM_A),
-		//.SDRAM_DQML(SDRAM_DQML),
-		//.SDRAM_DQMH(SDRAM_DQMH),
-		//.SDRAM_BA(SDRAM_BA),
-		//.SDRAM_nCS(SDRAM_nCS),
-		//.SDRAM_nWE(SDRAM_nWE),
-		//.SDRAM_nRAS(SDRAM_nRAS),
-		//.SDRAM_nCAS(SDRAM_nCAS),
-		//.init_n(pll_locked),
-		//.clk(clk_ram),
-		//.clkref(),
-		//.port1_req(port1_req),
-		//.port1_ack(),
-		//.port1_a(downl_addr[23:1]),
-		//.port1_ds({downl_addr[0], ~downl_addr[0]}),
-		//.port1_we(ioctl_downl),
-		//.port1_d({ioctl_dout, ioctl_dout}),
-		//.port1_q(),
-		//.cpu1_addr(cpu1_addr[23:2]),
-		//.cpu1_q(cpu_q),
-		//.cpu1_oe(~ioctl_downl)
-	//);
 	reg [9:0] vvc;
 	reg [22:0] rnd_reg;
 	wire [5:0] rnd_c = {rnd_reg[0], rnd_reg[1], rnd_reg[2], rnd_reg[2], rnd_reg[2], rnd_reg[2]};
@@ -450,6 +420,15 @@ module MENU (
 		.scanlines(2'b00),
 		.ypbpr(ypbpr),
 		.no_csync(no_csync)
+	);
+
+	pcf8563 pcf8563_inst(
+		.mclk(clk_ram),
+		//.reset(1'b1), //rtc_reset),
+		.reset(rtc_reset),
+		.scl(SCL),
+		.sda(SDA),
+		.rtc(rtc)
 	);
 
 	assign AUDIO_L = 1'b0;
