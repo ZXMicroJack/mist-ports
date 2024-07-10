@@ -70,7 +70,10 @@ module user_io (
 	serial_data,
 	serial_strobe,
 	rtc_in,
-	rtc_reset
+	rtc_out,
+	rtc_reset,
+	rtc_set,
+	rtc_get
 );
 	parameter STRLEN = 0;
 	input [(8 * STRLEN) - 1:0] conf_str;
@@ -145,7 +148,10 @@ module user_io (
 	input serial_strobe;
 
 	input wire [55:0] rtc_in;
+	output reg [55:0] rtc_out;
 	output reg rtc_reset = 1'b0;
+	output reg rtc_set = 1'b0;
+	output reg rtc_get = 1'b0;
 
 	parameter PS2DIV = 100;
 	parameter ROM_DIRECT_UPLOAD = 0;
@@ -351,10 +357,17 @@ module user_io (
 				8'hfe: begin
 					if (byte_cnt == 2) begin
 						rtc_reset <= spi_byte_in[0];
-						//spi_byte_out <= 8'hcd;
-						//spi_byte_out <= {spi_byte_in[0],spi_byte_in[0],spi_byte_in[0],spi_byte_in[0],spi_byte_in[0],spi_byte_in[0],spi_byte_in[0],spi_byte_in[0]};
+						rtc_get <= spi_byte_in[1];
+						rtc_set <= spi_byte_in[2];
 					end
 
+					if (byte_cnt == 2) rtc_out[55:48] <= spi_byte_in;
+					else if (byte_cnt == 3) rtc_out[47:40] <= spi_byte_in;
+					else if (byte_cnt == 4) rtc_out[39:32] <= spi_byte_in;
+					else if (byte_cnt == 5) rtc_out[31:24] <= spi_byte_in;
+					else if (byte_cnt == 6) rtc_out[23:16] <= spi_byte_in;
+					else if (byte_cnt == 7) rtc_out[15:8] <= spi_byte_in;
+					else if (byte_cnt == 8) rtc_out[7:0] <= spi_byte_in;
 
 					if (byte_cnt == 1) spi_byte_out <= rtc_in[55:48];
 					else if (byte_cnt == 2) spi_byte_out <= rtc_in[47:40];
@@ -363,9 +376,6 @@ module user_io (
 					else if (byte_cnt == 5) spi_byte_out <= rtc_in[23:16];
 					else if (byte_cnt == 6) spi_byte_out <= rtc_in[15:8];
 					else if (byte_cnt == 7) spi_byte_out <= rtc_in[7:0];
-					//else if (byte_cnt > 1 && byte_cnt < 8) begin
-						//spi_byte_out <= rtc_in[(byte_cnt - 2) << 3+:8];
-					//end
 				end
 
 				//default:

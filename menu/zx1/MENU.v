@@ -132,7 +132,10 @@ module MENU (
 	wire ypbpr;
 	wire no_csync;
 	wire[55:0] rtc;
+	wire[55:0] rtc_out;
 	wire rtc_reset;
+	wire rtc_set;
+	wire rtc_get;
 	wire [63:0] status;
 	wire SPI_DO_U;
 	wire SPI_DO_D;
@@ -153,7 +156,10 @@ module MENU (
 		.ypbpr(ypbpr),
 		.no_csync(no_csync),
 		.rtc_in(rtc),
-		.rtc_reset(rtc_reset)
+		.rtc_out(rtc_out),
+		.rtc_reset(rtc_reset),
+		.rtc_set(rtc_set),
+		.rtc_get(rtc_get)
 	);
 	wire ntsc = status[1];
 	wire [1:0] rotate = status[3:2];
@@ -428,7 +434,8 @@ module MENU (
 		.reset(rtc_reset),
 		.scl(SCL),
 		.sda(SDA),
-		.rtc(rtc)
+		.rtc(rtc),
+		.rtc_in(rtc_out)
 	);
 
 	assign AUDIO_L = 1'b0;
