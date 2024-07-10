@@ -435,7 +435,8 @@ module MENU (
 		.scl(SCL),
 		.sda(SDA),
 		.rtc(rtc),
-		.rtc_in(rtc_out)
+		.rtc_in(rtc_out),
+		.rtc_set(rtc_set)
 	);
 
 	assign AUDIO_L = 1'b0;

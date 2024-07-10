@@ -54,30 +54,43 @@ parameter ack=8;
 parameter nack=9;
 
 
-assign rtc[55:0] = {s_reg,m_reg,h_reg,d_reg,wd_reg,cm_reg,y_reg};
+//assign rtc[55:0] = {s_reg,m_reg,h_reg,d_reg,wd_reg,cm_reg,y_reg};
+assign rtc[55:0] = {s_reg,m_reg,h_reg,d_reg,rtc_set,reset,wd_reg[5:0],cnt3};
 
 assign scl=scl_hi_z? 1'bz:1'b0;
 assign sda=sda_hi_z? 1'bz:1'b0;
 
 //div
 always @(posedge mclk) begin
-  if (reset) begin
+  //if (reset) begin
     cnt<=cnt+1;
     if (cnt==4'b1000) begin
       cnt<=0;
       clk<=~clk;
     end
-  end else cnt<=0;
+  //end else cnt<=0;
 end
 
 always @(posedge mclk)
   sda_reg<=sda;
 
+//reg rtc_set_a = 1'b0;
+//reg rtc_set_b = 1'b0;
+//reg rtc_set_prev = 1'b0;
+//wire rtc_set_sig = rtc_set_a ^ rtc_set_b;
+//always @(posedge mclk) begin
+  //rtc_set_prev <= rtc_set;
+  //if (!rtc_set_prev && rtc_set) begin
+    //rtc_set_a <= ~rtc_set_a;
+  //end
+//end
+
+
 always @(posedge clk) begin
   if (!reset) begin
     p_state<=prepare;
     cnt2<=0;
-    cnt3<=0;
+    cnt3<=rtc_set ? 16'd0 : 16'd10;
     cnt4<=0;
     write_reg<=0;
     //led<=8'h00;
@@ -137,19 +150,20 @@ always @(posedge clk) begin
             16'd19:begin p_state<=read_data; m_reg<=read_reg; end
             16'd20:p_state<=ack;
             16'd21:begin p_state<=read_data; h_reg<=read_reg; end
-            16'd22:p_state<=nack;
-            16'd23:begin p_state<=stop;   d_reg<=read_reg; end
-            16'd24:begin   cnt3<=10; end
 
+            //16'd22:p_state<=nack;
+            //16'd23:begin p_state<=stop;   d_reg<=read_reg; end
+            //16'd24:begin   cnt3<=10; end
 
-            //16'd23:begin p_state<=read_data; d_reg<=read_reg; end
-            //16'd24:p_state<=ack;
-            //16'd25:begin p_state<=read_data; wd_reg<=read_reg; end
-            //16'd26:p_state<=ack;
-            //16'd27:begin p_state<=read_data; cm_reg<=read_reg; end
-            //16'd28:p_state<=nack;
-            //16'd29:begin p_state<=stop; y_reg<=read_reg; end
-            //16'd30:begin   cnt3<=0; end
+            16'd22:p_state<=ack;
+            16'd23:begin p_state<=read_data; d_reg<=read_reg; end
+            16'd24:p_state<=ack;
+            16'd25:begin p_state<=read_data; wd_reg<=read_reg; end
+            16'd26:p_state<=ack;
+            16'd27:begin p_state<=read_data; cm_reg<=read_reg; end
+            16'd28:p_state<=nack;
+            16'd29:begin p_state<=stop; y_reg<=read_reg; end
+            16'd30:begin cnt3<=10; end
 
 
 
