@@ -74,16 +74,26 @@ end
 always @(posedge mclk)
   sda_reg<=sda;
 
-//reg rtc_set_a = 1'b0;
-//reg rtc_set_b = 1'b0;
-//reg rtc_set_prev = 1'b0;
-//wire rtc_set_sig = rtc_set_a ^ rtc_set_b;
-//always @(posedge mclk) begin
-  //rtc_set_prev <= rtc_set;
-  //if (!rtc_set_prev && rtc_set) begin
-    //rtc_set_a <= ~rtc_set_a;
-  //end
-//end
+reg rtc_set_a = 1'b0;
+reg rtc_set_b = 1'b0;
+reg rtc_set_prev = 1'b0;
+wire rtc_set_sig = rtc_set_a ^ rtc_set_b;
+
+reg rtc_get_a = 1'b0;
+reg rtc_get_b = 1'b0;
+reg rtc_get_prev = 1'b0;
+wire rtc_get_sig = rtc_get_a ^ rtc_get_b;
+always @(posedge mclk) begin
+  rtc_set_prev <= rtc_set;
+  if (!rtc_set_prev && rtc_set) begin
+    rtc_set_a <= ~rtc_set_a;
+  end
+
+  rtc_get_prev <= rtc_get;
+  if (!rtc_get_prev && rtc_get) begin
+    rtc_get_a <= ~rtc_get_a;
+  end
+end
 
 
 always @(posedge clk) begin
@@ -131,13 +141,23 @@ always @(posedge clk) begin
             16'd0:p_state<=start;
             16'd1:begin p_state<=write_data;write_reg<=`SLAVE_ADD_WRITE ; end
             16'd2:begin p_state<=write_data;write_reg<=8'h02 ; end
-            16'd3:begin p_state<=write_data;write_reg<=8'h00 ; end  //s set
-            16'd4:begin p_state<=write_data;write_reg<=8'h59; end  //m set
-            16'd5:begin p_state<=write_data;write_reg<=8'h23 ; end  //h set
-            16'd6:begin p_state<=write_data;write_reg<=8'h03 ; end  //d set
-            16'd7:begin p_state<=write_data;write_reg<=8'h06 ; end  //week
-            16'd8:begin p_state<=write_data;write_reg<=8'h01 ; end  //month
-            16'd9:begin p_state<=write_data;write_reg<=8'h10 ; end  //year
+
+            16'd3:begin p_state<=write_data;write_reg<=rtc_in[55:48]; end  //s set
+            16'd4:begin p_state<=write_data;write_reg<=rtc_in[47:40]; end  //m set
+            16'd5:begin p_state<=write_data;write_reg<=rtc_in[39:32]; end  //h set
+            16'd6:begin p_state<=write_data;write_reg<=rtc_in[31:24]; end  //d set
+            16'd7:begin p_state<=write_data;write_reg<=rtc_in[23:16]; end  //week
+            16'd8:begin p_state<=write_data;write_reg<=rtc_in[15:8]; end  //month
+            16'd9:begin p_state<=write_data;write_reg<=rtc_in[7:0]; end  //year
+
+
+            //16'd3:begin p_state<=write_data;write_reg<=8'h00 ; end  //s set
+            //16'd4:begin p_state<=write_data;write_reg<=8'h59; end  //m set
+            //16'd5:begin p_state<=write_data;write_reg<=8'h23 ; end  //h set
+            //16'd6:begin p_state<=write_data;write_reg<=8'h03 ; end  //d set
+            //16'd7:begin p_state<=write_data;write_reg<=8'h06 ; end  //week
+            //16'd8:begin p_state<=write_data;write_reg<=8'h01 ; end  //month
+            //16'd9:begin p_state<=write_data;write_reg<=8'h10 ; end  //year
             16'd10:p_state<=start;
             16'd11:begin p_state<=write_data;write_reg<=`SLAVE_ADD_WRITE ; end
             16'd12:begin p_state<=write_data;write_reg<=8'h02 ; end
@@ -163,7 +183,7 @@ always @(posedge clk) begin
             16'd27:begin p_state<=read_data; cm_reg<=read_reg; end
             16'd28:p_state<=nack;
             16'd29:begin p_state<=stop; y_reg<=read_reg; end
-            16'd30:begin cnt3<=10; end
+            16'd30:begin cnt3<=rtc_set_sig ? 0 : 10; rtc_set_b <= rtc_set_a; end
 
 
 

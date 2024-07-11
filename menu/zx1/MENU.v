@@ -51,6 +51,7 @@ module MENU (
 	JSEL,
 	SDA,
 	SCL
+	,STND
 );
 	output wire SD_cs;
 	output wire SD_datain;
@@ -78,6 +79,7 @@ module MENU (
 	output wire [18:0] SRAM_ADDR;
 	inout [7:0] SRAM_DQ;
 	output wire SRAM_WE_N;
+	output wire[ 1:0] STND;
 
 	input wire JUP;
 	input wire JDN;
@@ -108,6 +110,8 @@ module MENU (
 	assign SD_dataout1 = SD_dataout;
 
 	assign JSEL = 1'b1;
+
+	assign STND = 2'b01;
 
 	localparam [0:0] DIRECT_UPLOAD = 1;
 	localparam [0:0] QSPI = 0;
@@ -328,7 +332,12 @@ module MENU (
 	reg [22:0] rnd_reg;
 	wire [5:0] rnd_c = {rnd_reg[0], rnd_reg[1], rnd_reg[2], rnd_reg[2], rnd_reg[2], rnd_reg[2]};
 	wire [22:0] rnd;
-	lfsr random(.rnd(rnd));
+	//lfsr random(.rnd(rnd));
+	lfsr2 random(
+		.rnd(rnd),
+		.clk(clk_pix)
+	);
+
 	always @(posedge clk_pix) begin
 		if (hc == 799) begin
 			hc <= 0;
@@ -377,8 +386,8 @@ module MENU (
 		//.x(cos_x),
 		.y(sv2v_tmp_cos_y)
 	);
-	wire [7:0] comp_v = (cos_g >= rnd_c ? cos_g - rnd_c : 8'd0);
-	//wire [7:0] comp_v = rnd[7:0];
+	//wire [7:0] comp_v = (cos_g >= rnd_c ? cos_g - rnd_c : 8'd0);
+	wire [7:0] comp_v = rnd[7:0];
 	wire [7:0] bmp_r = cpu_q[23:16];
 	wire [7:0] bmp_g = cpu_q[15:8];
 	wire [7:0] bmp_b = cpu_q[7:0];
@@ -436,7 +445,8 @@ module MENU (
 		.sda(SDA),
 		.rtc(rtc),
 		.rtc_in(rtc_out),
-		.rtc_set(rtc_set)
+		.rtc_set(rtc_set),
+		.rtc_get(rtc_get)
 	);
 
 	assign AUDIO_L = 1'b0;
