@@ -54,8 +54,8 @@ parameter ack=8;
 parameter nack=9;
 
 
-//assign rtc[55:0] = {s_reg,m_reg,h_reg,d_reg,wd_reg,cm_reg,y_reg};
-assign rtc[55:0] = {s_reg,m_reg,h_reg,d_reg,rtc_set,reset,wd_reg[5:0],cnt3};
+assign rtc[55:0] = {s_reg,m_reg,h_reg,d_reg,wd_reg,cm_reg,y_reg};
+//assign rtc[55:0] = {s_reg,m_reg,h_reg,d_reg,rtc_set,reset,wd_reg[5:0],cnt3};
 
 assign scl=scl_hi_z? 1'bz:1'b0;
 assign sda=sda_hi_z? 1'bz:1'b0;
