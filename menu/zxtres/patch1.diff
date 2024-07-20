@@ -1,0 +1,98 @@
+diff --git a/menu.sv b/menu.sv
+index b5c50e3..db2e6bd 100644
+--- a/menu.sv
++++ b/menu.sv
+@@ -189,6 +189,11 @@ wire        i2c_ack;
+ wire        i2c_end;
+ `endif
+ 
++wire SPI_DO_U;
++wire SPI_DO_D;
++assign SPI_DO = CONF_DATA0 ? SPI_DO_D : SPI_DO_U;
++
++
+ user_io #(.STRLEN($size(CONF_STR)>>3), .FEATURES(32'd1 | (BIG_OSD << 13) | (HDMI << 14)), .ROM_DIRECT_UPLOAD(DIRECT_UPLOAD)) user_io
+ (
+ 	.clk_sys(clk_x2),
+@@ -196,7 +201,7 @@ user_io #(.STRLEN($size(CONF_STR)>>3), .FEATURES(32'd1 | (BIG_OSD << 13) | (HDMI
+ 
+ 	.SPI_CLK(SPI_SCK),
+ 	.SPI_SS_IO(CONF_DATA0),
+-	.SPI_MISO(SPI_DO),
++	.SPI_MISO(SPI_DO_U),
+ 	.SPI_MOSI(SPI_DI),
+ 	.status(status),
+ 
+@@ -236,7 +241,7 @@ data_io #(.ROM_DIRECT_UPLOAD(DIRECT_UPLOAD)) data_io(
+ 	.SPI_SS2       ( SPI_SS2      ),
+ 	.SPI_SS4       ( SPI_SS4      ),
+ 	.SPI_DI        ( SPI_DI       ),
+-	.SPI_DO        ( SPI_DO       ),
++	.SPI_DO        ( SPI_DO_D     ),
+ 	.ioctl_download( ioctl_downl  ),
+ 	.ioctl_upload  ( ioctl_upl    ),
+ 	.ioctl_index   ( ioctl_index  ),
+@@ -270,7 +275,7 @@ always @(posedge clk_ram) begin
+ end
+ 
+ wire [31:0] cpu_q;
+-wire [23:0] cpu1_addr;
++reg [23:0] cpu1_addr;
+ 
+ always @(posedge clk_ram) begin
+ 	cpu1_addr <= (((line_max-1'd1-vc)<<9)+hc)<<2;
+diff --git a/mist-modules b/mist-modules
+--- a/mist-modules
++++ b/mist-modules
+@@ -1 +1 @@
+-Subproject commit 544540d1f69b1cf087a3402242ad7419bfb812a5
++Subproject commit 544540d1f69b1cf087a3402242ad7419bfb812a5-dirty
+diff --git a/sdram.sv b/sdram.sv
+index 1ede62f..a4017ee 100644
+--- a/sdram.sv
++++ b/sdram.sv
+@@ -24,7 +24,7 @@
+ module sdram (
+ 
+ 	// interface to the MT48LC16M16 chip
+-	inout  reg [15:0] SDRAM_DQ,   // 16 bit bidirectional data bus
++	inout  [15:0]     SDRAM_DQ,   // 16 bit bidirectional data bus
+ 	output reg [12:0] SDRAM_A,    // 13 bit multiplexed address bus
+ 	output reg        SDRAM_DQML, // two byte masks
+ 	output reg        SDRAM_DQMH, // two byte masks
+@@ -45,7 +45,7 @@ module sdram (
+ 	input      [23:1] port1_a,
+ 	input       [1:0] port1_ds,
+ 	input      [15:0] port1_d,
+-	output     [31:0] port1_q,
++	output  reg[31:0] port1_q,
+ 
+ 	input      [23:2] cpu1_addr,
+ 	output reg [31:0] cpu1_q,
+@@ -172,11 +172,16 @@ always @(*) begin
+ 	end
+ end
+ 
++
++reg[15:0] sdram_dq;
++assign SDRAM_DQ = SDRAM_nWE ? 16'bZZZZZZZZZZZZZZZZ : sdram_dq;
++
++
+ always @(posedge clk) begin
+ 
+ 	// permanently latch ram data to reduce delays
+ 	sd_din <= SDRAM_DQ;
+-	SDRAM_DQ <= 16'bZZZZZZZZZZZZZZZZ;
++//	SDRAM_DQ <= 16'bZZZZZZZZZZZZZZZZ;
+ 	{ SDRAM_DQMH, SDRAM_DQML } <= 2'b11;
+ 	sd_cmd <= CMD_NOP;  // default: idle
+ 
+@@ -229,7 +234,7 @@ always @(posedge clk) begin
+ 			sd_cmd <= we_latch?CMD_WRITE:CMD_READ;
+ 			{ SDRAM_DQMH, SDRAM_DQML } <= ~ds;
+ 			if (we_latch) begin
+-				SDRAM_DQ <= din_latch;
++				sdram_dq <= din_latch;
+ 				port1_ack <= port1_req;
+ 			end
+ 			SDRAM_A <= { 4'b0010, addr_latch[9:1] };  // auto precharge
