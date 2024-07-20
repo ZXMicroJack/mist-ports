@@ -14,6 +14,12 @@ set_property IOSTANDARD LVCMOS33 [get_ports testled2]
 #set_property IOSTANDARD LVCMOS33 [get_ports BTN]
 #set_property PULLUP true [get_ports BTN]
 
+set_property PACKAGE_PIN Y7 [get_ports SDA]
+set_property IOSTANDARD LVCMOS33 [get_ports SDA]
+set_property PACKAGE_PIN AB6 [get_ports SCL]
+set_property IOSTANDARD LVCMOS33 [get_ports SCL]
+
+
 #Keyboard and mouse
 set_property PACKAGE_PIN U1 [get_ports clkps2]
 set_property IOSTANDARD LVCMOS33 [get_ports clkps2]
@@ -225,10 +231,10 @@ set_property PACKAGE_PIN W9 [get_ports mb_uart_tx]
 set_property IOSTANDARD LVCMOS33 [get_ports mb_uart_tx]
 
 #I2C
-set_property PACKAGE_PIN Y7 [get_ports i2c_sda]
-set_property IOSTANDARD LVCMOS33 [get_ports i2c_sda]
-set_property PACKAGE_PIN AB6 [get_ports i2c_scl]
-set_property IOSTANDARD LVCMOS33 [get_ports i2c_scl]
+#set_property PACKAGE_PIN Y7 [get_ports i2c_sda]
+#set_property IOSTANDARD LVCMOS33 [get_ports i2c_sda]
+#set_property PACKAGE_PIN AB6 [get_ports i2c_scl]
+#set_property IOSTANDARD LVCMOS33 [get_ports i2c_scl]
 
 #MIDI
 set_property PACKAGE_PIN Y8 [get_ports midi_wsbd]

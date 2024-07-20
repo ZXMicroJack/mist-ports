@@ -40,78 +40,9 @@ module zx3top(
   output wire joy_load_n,
   input wire xjoy_load_n,
   input wire joy_data,
-  output wire xjoy_data
-
-
-  //,
-  //input wire ear,
-  //inout wire clkps2,
-  //inout wire dataps2,
-  //inout wire mouseclk,
-  //inout wire mousedata,
-  //output wire audio_out_left,
-  //output wire audio_out_right,
-
-  //output wire [19:0] sram_addr,
-  //inout wire [15:0] sram_data,
-  //output wire sram_we_n,
-  //output wire sram_oe_n,
-  //output wire sram_ub_n,
-  //output wire sram_lb_n,
-
-  //output wire flash_cs_n,
-  //output wire flash_clk,
-  //output wire flash_mosi,
-  //input wire flash_miso,
-  //output wire flash_wp,
-  //output wire flash_hold,
-
-  //output wire uart_tx,
-  //input wire uart_rx,
-  //output wire uart_rts,
-  //output wire uart_reset,
-  //output wire uart_gpio0,
-
-  //output wire i2c_scl,
-  //inout wire i2c_sda,
-
-  //output wire midi_out,
-  //input wire midi_clkbd,
-  //input wire midi_wsbd,
-  //input wire midi_dabd,
-
-  //input wire joy_data,
-  //output wire joy_clk,
-  //output wire joy_load_n,
-
-  //input wire xjoy_data,
-  //output wire xjoy_clk,
-  //output wire xjoy_load_n,
-
-  //output wire i2s_bclk,
-  //output wire i2s_lrclk,
-  //output wire i2s_dout,
-
-  //output wire sd_cs_n,
-  //output wire sd_clk,
-  //output wire sd_mosi,
-  //input wire sd_miso,
-
-  //output wire dp_tx_lane_p,
-  //output wire dp_tx_lane_n,
-  //input wire  dp_refclk_p,
-  //input wire  dp_refclk_n,
-  //input wire  dp_tx_hp_detect,
-  //inout wire  dp_tx_auxch_tx_p,
-  //inout wire  dp_tx_auxch_tx_n,
-  //inout wire  dp_tx_auxch_rx_p,
-  //inout wire  dp_tx_auxch_rx_n,
-
-  //output wire testled,   // nos servirá como testigo de uso de la SPI
-  //output wire testled2,
-
-  //output wire mb_uart_tx,
-  //input wire mb_uart_rx
+  output wire xjoy_data,
+	inout wire SDA,
+	inout wire SCL
 );
 
 MENU menu_mist_inst(
@@ -147,8 +78,9 @@ MENU menu_mist_inst(
    .I2S_DATA(),
    .AUDIO_IN(),
    .UART_RX(1'b1),
-   .UART_TX()
-
+   .UART_TX(),
+   .SDA(SDA),
+   .SCL(SCL)
 );
 
 // JAMMA interface
@@ -163,3 +95,12 @@ endmodule
 module lfsr(output wire[22:0] rnd);
     assign rnd = 23'd0;
 endmodule
+
+module lfsr2(
+   input wire clk,
+   output wire[22:0] rnd
+);
+   reg [23:1] r_LFSR = 0;
+   assign rnd[22:0] = r_LFSR[23:1];
+   always @(posedge clk) r_LFSR <= {r_LFSR[22:1], r_LFSR[23] ^~ r_LFSR[18]};
+endmodule // LFSR

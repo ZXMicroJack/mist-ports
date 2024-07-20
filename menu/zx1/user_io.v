@@ -361,14 +361,6 @@ module user_io (
 						rtc_set <= spi_byte_in[2];
 					end
 
-					//if (byte_cnt == 2) rtc_out[55:48] <= spi_byte_in;
-					//else if (byte_cnt == 3) rtc_out[47:40] <= spi_byte_in;
-					//else if (byte_cnt == 4) rtc_out[39:32] <= spi_byte_in;
-					//else if (byte_cnt == 5) rtc_out[31:24] <= spi_byte_in;
-					//else if (byte_cnt == 6) rtc_out[23:16] <= spi_byte_in;
-					//else if (byte_cnt == 7) rtc_out[15:8] <= spi_byte_in;
-					//else if (byte_cnt == 8) rtc_out[7:0] <= spi_byte_in;
-
 					if (byte_cnt == 3) rtc_out[55:48] <= spi_byte_in;
 					else if (byte_cnt == 4) rtc_out[47:40] <= spi_byte_in;
 					else if (byte_cnt == 5) rtc_out[39:32] <= spi_byte_in;
@@ -378,7 +370,8 @@ module user_io (
 					else if (byte_cnt == 9) rtc_out[7:0] <= spi_byte_in;
 
 
-					if (byte_cnt == 1) spi_byte_out <= rtc_in[55:48];
+					if (byte_cnt == 0) spi_byte_out <= 8'hfe;
+					else if (byte_cnt == 1) spi_byte_out <= rtc_in[55:48];
 					else if (byte_cnt == 2) spi_byte_out <= rtc_in[47:40];
 					else if (byte_cnt == 3) spi_byte_out <= rtc_in[39:32];
 					else if (byte_cnt == 4) spi_byte_out <= rtc_in[31:24];

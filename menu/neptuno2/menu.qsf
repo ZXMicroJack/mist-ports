@@ -183,8 +183,8 @@ set_location_assignment PIN_F26 -to SDRAM_DQML
 #set_location_assignment PIN_B19 -to TXD
 
 # rtc
-#set_location_assignment PIN_AD5 -to SCL
-#set_location_assignment PIN_AD6 -to SDA
+set_location_assignment PIN_AD5 -to SCL
+set_location_assignment PIN_AD6 -to SDA
 
 # i2s out
 #set_location_assignment PIN_AD15 -to I2SL
@@ -394,17 +394,8 @@ set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 
-set_global_assignment -name SDC_FILE ../Menu_MIST/menu.sdc
-set_global_assignment -name SYSTEMVERILOG_FILE ../Menu_MIST/menu.sv
-set_global_assignment -name QIP_FILE "../Menu_MIST/mist-modules/mist.qip"
-set_global_assignment -name SYSTEMVERILOG_FILE ../Menu_MIST/sdram.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../Menu_MIST/cos.sv
 #set_global_assignment -name QIP_FILE pll.qip
-set_global_assignment -name VERILOG_FILE ../Menu_MIST/lfsr.v
-set_global_assignment -name VERILOG_FILE pll25.v
-set_global_assignment -name VERILOG_FILE neptuno2_top.v
 
-set_global_assignment -name SIGNALTAP_FILE output_files/sdram.stp
 
 set_global_assignment -name VERILOG_MACRO "I2S_AUDIO=1"
 set_global_assignment -name VERILOG_MACRO "USE_AUDIO_IN=1"
@@ -417,6 +408,17 @@ set_global_assignment -name RESERVE_ALL_UNUSED_PINS_WEAK_PULLUP "AS INPUT TRI-ST
 
 
 
-set_global_assignment -name CDF_FILE output_files/menu.cdf
 
+
+set_global_assignment -name VERILOG_FILE ../zxtres/pcf8563.v
+set_global_assignment -name SDC_FILE ../Menu_MIST/menu.sdc
+set_global_assignment -name SYSTEMVERILOG_FILE ../Menu_MIST/menu.sv
+set_global_assignment -name QIP_FILE "../Menu_MIST/mist-modules/mist.qip"
+set_global_assignment -name SYSTEMVERILOG_FILE ../Menu_MIST/sdram.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../Menu_MIST/cos.sv
+set_global_assignment -name VERILOG_FILE ../Menu_MIST/lfsr.v
+set_global_assignment -name VERILOG_FILE pll25.v
+set_global_assignment -name VERILOG_FILE neptuno2_top.v
+set_global_assignment -name SIGNALTAP_FILE output_files/sdram.stp
+set_global_assignment -name CDF_FILE output_files/menu.cdf
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
