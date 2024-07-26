@@ -44,13 +44,15 @@ module menu_neptuno2_top(
 
   // forward JAMMA DB9 data
   output wire JOY_CLK,
-  input wire XJOY_CLK,
-  output wire JOY_LOAD_N,
-  input wire XJOY_LOAD_N,
+  input wire JOY_XCLK,
+  output wire JOY_LOAD,
+  input wire JOY_XLOAD,
   input wire JOY_DATA,
-  output wire XJOY_DATA,
+  output wire JOY_XDATA,
+  output wire JOY_SELECT,
   inout wire SDA,
   inout wire SCL
+
 
 
   //,
@@ -163,10 +165,10 @@ MENU menu_mist_inst(
 );
 
 // JAMMA interface
-assign JOY_CLK = XJOY_CLK;
-assign JOY_LOAD_N = XJOY_LOAD_N;
-assign XJOY_DATA = JOY_DATA;
-
+assign JOY_CLK = JOY_XCLK;
+assign JOY_LOAD = JOY_XLOAD;
+assign JOY_XDATA = JOY_DATA;
+assign JOY_SELECT = 1'b1;
 
 endmodule
 

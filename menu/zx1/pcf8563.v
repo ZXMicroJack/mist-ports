@@ -14,7 +14,7 @@ module pcf8563(
   input wire[55:0] rtc_in
 );
 
-reg clk;
+//wire clk;
 reg scl_hi_z;
 reg sda_hi_z;
 reg scl_reg;
@@ -56,16 +56,19 @@ assign scl=scl_hi_z? 1'bz:1'b0;
 assign sda=sda_hi_z? 1'bz:1'b0;
 
 always @(posedge mclk) begin
-  cnt<=cnt+1;
-  if (cnt==7'b1000000) begin
-    cnt<=0;
-    clk<=~clk;
-  end
+  cnt[6:0]<=cnt[6:0]+7'd1;
+  //if (cnt==7'b1000000) begin
+    //cnt<=0;
+    //clk<=~clk;
+  //end
 end
+wire clk = cnt[5];
 
 always @(posedge mclk)
   sda_reg<=sda;
 
+
+// RTC signals
 reg rtc_set_a = 1'b0;
 reg rtc_set_b = 1'b0;
 reg rtc_set_prev = 1'b0;
@@ -119,7 +122,7 @@ always @(posedge clk) begin
       waitcmd:
         begin
           if (rtc_get_sig) begin
-            cnt3<=10;
+            cnt3<=12;
             p_state<=prepare;
             rtc_get_b <= rtc_get_a;
           end else if (rtc_set_sig) begin
@@ -135,36 +138,41 @@ always @(posedge clk) begin
           case (cnt3)
             16'd0:p_state<=start;
             16'd1:begin p_state<=write_data;write_reg<=`SLAVE_ADD_WRITE ; end
-            16'd2:begin p_state<=write_data;write_reg<=8'h02 ; end
-
-            16'd3:begin p_state<=write_data;write_reg<=rtc_in[55:48]; end  //s set
-            16'd4:begin p_state<=write_data;write_reg<=rtc_in[47:40]; end  //m set
-            16'd5:begin p_state<=write_data;write_reg<=rtc_in[39:32]; end  //h set
-            16'd6:begin p_state<=write_data;write_reg<=rtc_in[31:24]; end  //d set
-            16'd7:begin p_state<=write_data;write_reg<=rtc_in[23:16]; end  //week
-            16'd8:begin p_state<=write_data;write_reg<=rtc_in[15:8]; end  //month
-            16'd9:begin p_state<=write_data;write_reg<=rtc_in[7:0]; end  //year
-            16'd10:p_state<=start;
-            16'd11:begin p_state<=write_data;write_reg<=`SLAVE_ADD_WRITE ; end
-            16'd12:begin p_state<=write_data;write_reg<=8'h02 ; end
-            16'd13:p_state<=start;
-            16'd14:begin p_state<=write_data;write_reg<=`SLAVE_ADD_READ ; end
-            16'd15:p_state<=read_data;
-            16'd16:p_state<=ack;
-            16'd17:begin p_state<=read_data; s_reg<=read_reg; end
+            //16'd1:begin p_state<=write_data;write_reg<=8'h77 ; end
+            //16'd2:begin p_state<=write_data;write_reg<=8'h77 ; end
+            16'd2:begin p_state<=write_data;write_reg<=8'h00 ; end
+            16'd3:begin p_state<=write_data;write_reg<=8'h00 ; end
+            16'd4:begin p_state<=write_data;write_reg<=8'h00 ; end
+            16'd5:begin p_state<=write_data;write_reg<=rtc_in[55:48]; end  //s set
+            16'd6:begin p_state<=write_data;write_reg<=rtc_in[47:40]; end  //m set
+            16'd7:begin p_state<=write_data;write_reg<=rtc_in[39:32]; end  //h set
+            16'd8:begin p_state<=write_data;write_reg<=rtc_in[31:24]; end  //d set
+            16'd9:begin p_state<=write_data;write_reg<=rtc_in[23:16]; end  //week
+            16'd10:begin p_state<=write_data;write_reg<=rtc_in[15:8]; end  //month
+            16'd11:begin p_state<=write_data;write_reg<=rtc_in[7:0]; end  //year
+            16'd12:p_state<=start;
+            16'd13:begin p_state<=write_data;write_reg<=`SLAVE_ADD_WRITE ; end
+            //16'd13:begin p_state<=write_data;write_reg<=8'h88 ; end
+            16'd14:begin p_state<=write_data;write_reg<=8'h02 ; end
+            16'd15:p_state<=start;
+            16'd16:begin p_state<=write_data;write_reg<=`SLAVE_ADD_READ ; end
+            //16'd16:begin p_state<=write_data;write_reg<=8'h99 ; end
+            16'd17:p_state<=read_data;
             16'd18:p_state<=ack;
-            16'd19:begin p_state<=read_data; m_reg<=read_reg; end
+            16'd19:begin p_state<=read_data; s_reg<=read_reg; end
             16'd20:p_state<=ack;
-            16'd21:begin p_state<=read_data; h_reg<=read_reg; end
+            16'd21:begin p_state<=read_data; m_reg<=read_reg; end
             16'd22:p_state<=ack;
-            16'd23:begin p_state<=read_data; d_reg<=read_reg; end
+            16'd23:begin p_state<=read_data; h_reg<=read_reg; end
             16'd24:p_state<=ack;
-            16'd25:begin p_state<=read_data; wd_reg<=read_reg; end
+            16'd25:begin p_state<=read_data; d_reg<=read_reg; end
             16'd26:p_state<=ack;
-            16'd27:begin p_state<=read_data; cm_reg<=read_reg; end
-            16'd28:p_state<=nack;
-            16'd29:begin p_state<=stop; y_reg<=read_reg; end
-            16'd30:begin rtc <= rtcreg; p_state<=waitcmd; end
+            16'd27:begin p_state<=read_data; wd_reg<=read_reg; end
+            16'd28:p_state<=ack;
+            16'd29:begin p_state<=read_data; cm_reg<=read_reg; end
+            16'd30:p_state<=nack;
+            16'd31:begin p_state<=stop; y_reg<=read_reg; end
+            16'd32:begin rtc <= rtcreg; p_state<=waitcmd; end
           endcase
         end
 
@@ -198,8 +206,8 @@ always @(posedge clk) begin
             3: sda_hi_z<=1;
             4: begin
               cnt2<=0;
-                p_state<=idle;
-                end
+              p_state<=idle;
+            end
           endcase
         end
 

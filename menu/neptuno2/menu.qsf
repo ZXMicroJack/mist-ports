@@ -148,15 +148,15 @@ set_location_assignment PIN_H24 -to SDRAM_DQMH
 set_location_assignment PIN_F26 -to SDRAM_DQML
 
 # joysticks in
-#set_location_assignment PIN_AD4 -to JOY_CLK
-#set_location_assignment PIN_AC4 -to JOY_LOAD
-#set_location_assignment PIN_AD3 -to JOY_DATA
-#set_location_assignment PIN_A19 -to JOY_SELECT
+set_location_assignment PIN_AD4 -to JOY_CLK
+set_location_assignment PIN_AC4 -to JOY_LOAD
+set_location_assignment PIN_AD3 -to JOY_DATA
+set_location_assignment PIN_A19 -to JOY_SELECT
 
 # joysticks from mb
-#set_location_assignment PIN_AF4 -to JOY_XCLK
-#set_location_assignment PIN_AE3 -to JOY_XLOAD
-#set_location_assignment PIN_AF5 -to JOY_XDATA
+set_location_assignment PIN_AF4 -to JOY_XCLK
+set_location_assignment PIN_AE3 -to JOY_XLOAD
+set_location_assignment PIN_AF5 -to JOY_XDATA
 
 # audio data in
 #set_location_assignment PIN_AE5 -to MIDI_RX
@@ -421,4 +421,5 @@ set_global_assignment -name VERILOG_FILE pll25.v
 set_global_assignment -name VERILOG_FILE neptuno2_top.v
 set_global_assignment -name SIGNALTAP_FILE output_files/sdram.stp
 set_global_assignment -name CDF_FILE output_files/menu.cdf
+
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
