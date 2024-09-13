@@ -1,0 +1,1317 @@
+//! **************************************************************************
+// Written by: Map P.20131013 on Fri Jun 07 20:52:23 2024
+//! **************************************************************************
+
+SCHEMATIC START;
+CONFIG VCCAUX = "3.3";
+COMP "VGA_B<0>" LOCATE = SITE "P88" LEVEL 1;
+COMP "VGA_B<1>" LOCATE = SITE "P92" LEVEL 1;
+COMP "VGA_B<2>" LOCATE = SITE "P93" LEVEL 1;
+COMP "VGA_G<0>" LOCATE = SITE "P82" LEVEL 1;
+COMP "VGA_G<1>" LOCATE = SITE "P83" LEVEL 1;
+COMP "VGA_G<2>" LOCATE = SITE "P84" LEVEL 1;
+COMP "VGA_R<0>" LOCATE = SITE "P79" LEVEL 1;
+COMP "VGA_R<1>" LOCATE = SITE "P80" LEVEL 1;
+COMP "VGA_R<2>" LOCATE = SITE "P81" LEVEL 1;
+COMP "SPI_SCK" LOCATE = SITE "P56" LEVEL 1;
+PIN SPI_SCK_pin<0> = BEL "SPI_SCK" PINNAME PAD;
+PIN "SPI_SCK_pin<0>" CLOCK_DEDICATED_ROUTE = FALSE;
+COMP "SPI_SS2" LOCATE = SITE "P47" LEVEL 1;
+COMP "SPI_SS3" LOCATE = SITE "P44" LEVEL 1;
+COMP "SPI_SS4" LOCATE = SITE "P45" LEVEL 1;
+COMP "JF1" LOCATE = SITE "P2" LEVEL 1;
+COMP "SD_clk1" LOCATE = SITE "P24" LEVEL 1;
+COMP "EAR" LOCATE = SITE "P94" LEVEL 1;
+COMP "JDN" LOCATE = SITE "P5" LEVEL 1;
+COMP "LED" LOCATE = SITE "P11" LEVEL 1;
+COMP "JLT" LOCATE = SITE "P6" LEVEL 1;
+COMP "JRT" LOCATE = SITE "P7" LEVEL 1;
+COMP "JUP" LOCATE = SITE "P1" LEVEL 1;
+COMP "SRAM_WE_N" LOCATE = SITE "P121" LEVEL 1;
+COMP "JSEL" LOCATE = SITE "P39" LEVEL 1;
+COMP "PS2C" LOCATE = SITE "P99" LEVEL 1;
+COMP "PS2D" LOCATE = SITE "P98" LEVEL 1;
+COMP "SRAM_DQ<0>" LOCATE = SITE "P132" LEVEL 1;
+COMP "SRAM_DQ<1>" LOCATE = SITE "P127" LEVEL 1;
+COMP "SRAM_DQ<2>" LOCATE = SITE "P124" LEVEL 1;
+COMP "SRAM_DQ<3>" LOCATE = SITE "P123" LEVEL 1;
+COMP "SRAM_DQ<4>" LOCATE = SITE "P115" LEVEL 1;
+COMP "SRAM_DQ<5>" LOCATE = SITE "P117" LEVEL 1;
+COMP "SRAM_DQ<6>" LOCATE = SITE "P119" LEVEL 1;
+COMP "SRAM_DQ<7>" LOCATE = SITE "P126" LEVEL 1;
+COMP "SD_datain" LOCATE = SITE "P74" LEVEL 1;
+COMP "SD_cs" LOCATE = SITE "P59" LEVEL 1;
+COMP "CONF_DATA0" LOCATE = SITE "P51" LEVEL 1;
+COMP "SRAM_ADDR<10>" LOCATE = SITE "P104" LEVEL 1;
+COMP "SRAM_ADDR<11>" LOCATE = SITE "P102" LEVEL 1;
+COMP "SRAM_ADDR<12>" LOCATE = SITE "P101" LEVEL 1;
+COMP "SRAM_ADDR<13>" LOCATE = SITE "P100" LEVEL 1;
+COMP "SRAM_ADDR<14>" LOCATE = SITE "P111" LEVEL 1;
+COMP "SRAM_ADDR<15>" LOCATE = SITE "P131" LEVEL 1;
+COMP "SRAM_ADDR<16>" LOCATE = SITE "P138" LEVEL 1;
+COMP "SRAM_ADDR<17>" LOCATE = SITE "P140" LEVEL 1;
+COMP "SRAM_ADDR<18>" LOCATE = SITE "P142" LEVEL 1;
+COMP "SD_datain1" LOCATE = SITE "P23" LEVEL 1;
+COMP "SD_dataout" LOCATE = SITE "P78" LEVEL 1;
+COMP "VGA_HS" LOCATE = SITE "P87" LEVEL 1;
+COMP "VGA_VS" LOCATE = SITE "P85" LEVEL 1;
+COMP "SPI_DI" LOCATE = SITE "P48" LEVEL 1;
+COMP "SPI_DO" LOCATE = SITE "P58" LEVEL 1;
+COMP "SD_cs1" LOCATE = SITE "P15" LEVEL 1;
+COMP "SD_clk" LOCATE = SITE "P75" LEVEL 1;
+COMP "SRAM_ADDR<0>" LOCATE = SITE "P141" LEVEL 1;
+COMP "SRAM_ADDR<1>" LOCATE = SITE "P139" LEVEL 1;
+COMP "SRAM_ADDR<2>" LOCATE = SITE "P137" LEVEL 1;
+COMP "SRAM_ADDR<3>" LOCATE = SITE "P134" LEVEL 1;
+COMP "SRAM_ADDR<4>" LOCATE = SITE "P133" LEVEL 1;
+COMP "SRAM_ADDR<5>" LOCATE = SITE "P120" LEVEL 1;
+COMP "SRAM_ADDR<6>" LOCATE = SITE "P118" LEVEL 1;
+COMP "SRAM_ADDR<7>" LOCATE = SITE "P116" LEVEL 1;
+COMP "SRAM_ADDR<8>" LOCATE = SITE "P114" LEVEL 1;
+COMP "SRAM_ADDR<9>" LOCATE = SITE "P112" LEVEL 1;
+COMP "CLOCK_50" LOCATE = SITE "P55" LEVEL 1;
+COMP "AUDIO_L" LOCATE = SITE "P10" LEVEL 1;
+COMP "AUDIO_R" LOCATE = SITE "P9" LEVEL 1;
+COMP "PS2COUT" LOCATE = SITE "P41" LEVEL 1;
+COMP "PS2DOUT" LOCATE = SITE "P40" LEVEL 1;
+COMP "SD_dataout1" LOCATE = SITE "P27" LEVEL 1;
+PIN vram/Mram_ram1_pins<28> = BEL "vram/Mram_ram1" PINNAME CLKA;
+PIN vram/Mram_ram1_pins<29> = BEL "vram/Mram_ram1" PINNAME CLKB;
+PIN vram/Mram_ram4_pins<28> = BEL "vram/Mram_ram4" PINNAME CLKA;
+PIN vram/Mram_ram4_pins<29> = BEL "vram/Mram_ram4" PINNAME CLKB;
+PIN vram/Mram_ram2_pins<28> = BEL "vram/Mram_ram2" PINNAME CLKA;
+PIN vram/Mram_ram2_pins<29> = BEL "vram/Mram_ram2" PINNAME CLKB;
+PIN vram/Mram_ram3_pins<28> = BEL "vram/Mram_ram3" PINNAME CLKA;
+PIN vram/Mram_ram3_pins<29> = BEL "vram/Mram_ram3" PINNAME CLKB;
+PIN vram/Mram_ram5_pins<28> = BEL "vram/Mram_ram5" PINNAME CLKA;
+PIN vram/Mram_ram5_pins<29> = BEL "vram/Mram_ram5" PINNAME CLKB;
+PIN vram/Mram_ram6_pins<28> = BEL "vram/Mram_ram6" PINNAME CLKA;
+PIN vram/Mram_ram6_pins<29> = BEL "vram/Mram_ram6" PINNAME CLKB;
+PIN vram/Mram_ram7_pins<28> = BEL "vram/Mram_ram7" PINNAME CLKA;
+PIN vram/Mram_ram7_pins<29> = BEL "vram/Mram_ram7" PINNAME CLKB;
+PIN vram/Mram_ram8_pins<28> = BEL "vram/Mram_ram8" PINNAME CLKA;
+PIN vram/Mram_ram8_pins<29> = BEL "vram/Mram_ram8" PINNAME CLKB;
+PIN vram/Mram_ram11_pins<28> = BEL "vram/Mram_ram11" PINNAME CLKA;
+PIN vram/Mram_ram11_pins<29> = BEL "vram/Mram_ram11" PINNAME CLKB;
+PIN vram/Mram_ram9_pins<28> = BEL "vram/Mram_ram9" PINNAME CLKA;
+PIN vram/Mram_ram9_pins<29> = BEL "vram/Mram_ram9" PINNAME CLKB;
+PIN vram/Mram_ram10_pins<28> = BEL "vram/Mram_ram10" PINNAME CLKA;
+PIN vram/Mram_ram10_pins<29> = BEL "vram/Mram_ram10" PINNAME CLKB;
+PIN vram/Mram_ram12_pins<28> = BEL "vram/Mram_ram12" PINNAME CLKA;
+PIN vram/Mram_ram12_pins<29> = BEL "vram/Mram_ram12" PINNAME CLKB;
+PIN vram/Mram_ram13_pins<28> = BEL "vram/Mram_ram13" PINNAME CLKA;
+PIN vram/Mram_ram13_pins<29> = BEL "vram/Mram_ram13" PINNAME CLKB;
+PIN vram/Mram_ram14_pins<28> = BEL "vram/Mram_ram14" PINNAME CLKA;
+PIN vram/Mram_ram14_pins<29> = BEL "vram/Mram_ram14" PINNAME CLKB;
+PIN vram/Mram_ram15_pins<28> = BEL "vram/Mram_ram15" PINNAME CLKA;
+PIN vram/Mram_ram15_pins<29> = BEL "vram/Mram_ram15" PINNAME CLKB;
+PIN vram/Mram_ram16_pins<28> = BEL "vram/Mram_ram16" PINNAME CLKA;
+PIN vram/Mram_ram16_pins<29> = BEL "vram/Mram_ram16" PINNAME CLKB;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf0/Mram_mem2_pins<22> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf0/Mram_mem2" PINNAME CLKA;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf0/Mram_mem2_pins<23> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf0/Mram_mem2" PINNAME CLKB;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf0/Mram_mem1_pins<22> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf0/Mram_mem1" PINNAME CLKA;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf0/Mram_mem1_pins<23> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf0/Mram_mem1" PINNAME CLKB;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf1/Mram_mem2_pins<22> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf1/Mram_mem2" PINNAME CLKA;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf1/Mram_mem2_pins<23> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf1/Mram_mem2" PINNAME CLKB;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf1/Mram_mem1_pins<22> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf1/Mram_mem1" PINNAME CLKA;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf1/Mram_mem1_pins<23> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf1/Mram_mem1" PINNAME CLKB;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf2/Mram_mem2_pins<22> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf2/Mram_mem2" PINNAME CLKA;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf2/Mram_mem2_pins<23> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf2/Mram_mem2" PINNAME CLKB;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf2/Mram_mem1_pins<22> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf2/Mram_mem1" PINNAME CLKA;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf2/Mram_mem1_pins<23> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf2/Mram_mem1" PINNAME CLKB;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf3/Mram_mem2_pins<22> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf3/Mram_mem2" PINNAME CLKA;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf3/Mram_mem2_pins<23> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf3/Mram_mem2" PINNAME CLKB;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf3/Mram_mem1_pins<22> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf3/Mram_mem1" PINNAME CLKA;
+PIN video_mixer/scandoubler/Hq2x/hq2x_out/buf3/Mram_mem1_pins<23> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf3/Mram_mem1" PINNAME CLKB;
+PIN video_mixer/scandoubler/Hq2x/hq2x_in/buf1/Mram_mem_pins<20> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_in/buf1/Mram_mem" PINNAME CLKA;
+PIN video_mixer/scandoubler/Hq2x/hq2x_in/buf1/Mram_mem_pins<21> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_in/buf1/Mram_mem" PINNAME CLKB;
+PIN video_mixer/scandoubler/Hq2x/hq2x_in/buf0/Mram_mem_pins<20> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_in/buf0/Mram_mem" PINNAME CLKA;
+PIN video_mixer/scandoubler/Hq2x/hq2x_in/buf0/Mram_mem_pins<21> = BEL
+        "video_mixer/scandoubler/Hq2x/hq2x_in/buf0/Mram_mem" PINNAME CLKB;
+PIN video_mixer/osd/Mram_osd_buffer_pins<23> = BEL
+        "video_mixer/osd/Mram_osd_buffer" PINNAME CLKB;
+PIN sd_card/buffer_dpram/Mram_ram_pins<20> = BEL
+        "sd_card/buffer_dpram/Mram_ram" PINNAME CLKAWRCLK;
+PIN sd_card/buffer_dpram/Mram_ram_pins<21> = BEL
+        "sd_card/buffer_dpram/Mram_ram" PINNAME CLKBRDCLK;
+TIMEGRP pll_relojes_inst_clkout0 = BEL "reset" BEL "old_wr" BEL "ram_we_old"
+        BEL "ram_rd_old" BEL "sdram_we" BEL "sdram_din_0" BEL "sdram_din_1"
+        BEL "sdram_din_2" BEL "sdram_din_3" BEL "sdram_din_4" BEL
+        "sdram_din_5" BEL "sdram_din_6" BEL "sdram_din_7" BEL "plusd_mounted"
+        BEL "plus3" BEL "ce_psg" BEL "ULA/sv2v_autoblock_1.m512" BEL
+        "ULA/ulap_group" BEL "ULA/tmx_ena" BEL "ULA/VidEN" BEL "ram_rd_old2"
+        BEL "zx48" BEL "border_color_0" BEL "border_color_1" BEL
+        "border_color_2" BEL "page_reg_p1024_2" BEL "page_scr_copy" BEL
+        "p1024" BEL "ear_out" BEL "pf1024" BEL "mic_out" BEL "sd_r0_0" BEL
+        "sd_r0_1" BEL "sd_r0_2" BEL "sd_r0_3" BEL "sd_r0_4" BEL "sd_r0_5" BEL
+        "sd_r0_6" BEL "sd_r0_7" BEL "sd_l0_0" BEL "sd_l0_1" BEL "sd_l0_2" BEL
+        "sd_l0_3" BEL "sd_l0_4" BEL "sd_l0_5" BEL "sd_l0_6" BEL "sd_l0_7" BEL
+        "sd_l1_0" BEL "sd_l1_1" BEL "sd_l1_2" BEL "sd_l1_3" BEL "sd_l1_4" BEL
+        "sd_l1_5" BEL "sd_l1_6" BEL "sd_l1_7" BEL "sd_r1_0" BEL "sd_r1_1" BEL
+        "sd_r1_2" BEL "sd_r1_3" BEL "sd_r1_4" BEL "sd_r1_5" BEL "sd_r1_6" BEL
+        "sd_r1_7" BEL "ce_7mp" BEL "ce_7mn" BEL "old_m1" BEL "dac_r/DACout"
+        BEL "dac_l/DACout" BEL "ULA/sv2v_autoblock_2.old_wr" BEL
+        "ULA/pal_addr_0" BEL "ULA/pal_addr_1" BEL "ULA/pal_addr_2" BEL
+        "ULA/pal_addr_3" BEL "ULA/pal_addr_4" BEL "ULA/pal_addr_5" BEL
+        "ULA/ulap_ena" BEL "ULA/ulap_mono" BEL "ULA/mode512" BEL "ULA/attr_0"
+        BEL "ULA/attr_1" BEL "ULA/attr_2" BEL "ULA/attr_3" BEL "ULA/attr_4"
+        BEL "ULA/attr_5" BEL "ULA/attr_6" BEL "ULA/attr_7" BEL "ULA/bits_0"
+        BEL "ULA/bits_1" BEL "ULA/bits_2" BEL "ULA/bits_3" BEL "ULA/bits_4"
+        BEL "ULA/bits_5" BEL "ULA/bits_6" BEL "ULA/bits_7" BEL "page_128k_0"
+        BEL "page_128k_1" BEL "page_128k_2" BEL "ULA/tmx_cfg_0" BEL
+        "ULA/tmx_cfg_1" BEL "ULA/tmx_cfg_2" BEL "ULA/tmx_cfg_3" BEL
+        "ULA/tmx_cfg_4" BEL "ULA/tmx_cfg_5" BEL "ULA/CPUClk" BEL
+        "ULA/next_clk_r" BEL "ULA/vaddr_0" BEL "ULA/vaddr_1" BEL "ULA/vaddr_2"
+        BEL "ULA/vaddr_3" BEL "ULA/vaddr_4" BEL "ULA/vaddr_5" BEL
+        "ULA/vaddr_6" BEL "ULA/vaddr_7" BEL "ULA/vaddr_8" BEL "ULA/vaddr_9"
+        BEL "ULA/vaddr_10" BEL "ULA/vaddr_11" BEL "ULA/vaddr_12" BEL
+        "ULA/vaddr_13" BEL "ULA/vaddr_14" BEL "ULA/Border" BEL "ULA/vc_0" BEL
+        "ULA/vc_1" BEL "ULA/vc_2" BEL "ULA/vc_3" BEL "ULA/vc_4" BEL "ULA/vc_5"
+        BEL "ULA/vc_6" BEL "ULA/vc_7" BEL "ULA/vc_8" BEL "ULA/SRegister_0" BEL
+        "ULA/SRegister_1" BEL "ULA/SRegister_2" BEL "ULA/SRegister_3" BEL
+        "ULA/SRegister_4" BEL "ULA/SRegister_5" BEL "ULA/SRegister_6" BEL
+        "ULA/SRegister_7" BEL "ULA/mreqt23" BEL "ULA/ioreqtw3" BEL
+        "ULA/hiSRegister_0" BEL "ULA/hiSRegister_1" BEL "ULA/hiSRegister_2"
+        BEL "ULA/hiSRegister_3" BEL "ULA/hiSRegister_4" BEL
+        "ULA/hiSRegister_5" BEL "ULA/hiSRegister_6" BEL "ULA/hiSRegister_7"
+        BEL "ULA/hiSRegister_8" BEL "ULA/hiSRegister_9" BEL
+        "ULA/hiSRegister_10" BEL "ULA/hiSRegister_11" BEL "ULA/hiSRegister_12"
+        BEL "ULA/hiSRegister_13" BEL "ULA/hiSRegister_14" BEL
+        "ULA/hiSRegister_15" BEL "old_download" BEL
+        "sv2v_autoblock_5.st_ula_type_old_0" BEL
+        "sv2v_autoblock_5.st_ula_type_old_1" BEL
+        "sv2v_autoblock_5.st_memory_mode_old_0" BEL
+        "sv2v_autoblock_5.st_memory_mode_old_1" BEL
+        "sv2v_autoblock_5.st_memory_mode_old_2" BEL
+        "sv2v_autoblock_9.old_mounted" BEL "ULA/AttrOut_0" BEL "ULA/AttrOut_1"
+        BEL "ULA/AttrOut_2" BEL "ULA/AttrOut_3" BEL "ULA/AttrOut_4" BEL
+        "ULA/AttrOut_5" BEL "ULA/AttrOut_6" BEL "ULA/AttrOut_7" BEL
+        "sdram_addr_0" BEL "sdram_addr_1" BEL "sdram_addr_2" BEL
+        "sdram_addr_3" BEL "sdram_addr_4" BEL "sdram_addr_5" BEL
+        "sdram_addr_6" BEL "sdram_addr_7" BEL "sdram_addr_8" BEL
+        "sdram_addr_9" BEL "sdram_addr_10" BEL "sdram_addr_11" BEL
+        "sdram_addr_12" BEL "sdram_addr_13" BEL "sdram_addr_14" BEL
+        "sdram_addr_15" BEL "sdram_addr_16" BEL "sdram_addr_17" BEL
+        "sdram_addr_18" BEL "page_reg_0" BEL "page_reg_1" BEL "page_reg_2" BEL
+        "page_reg_3" BEL "page_reg_4" BEL "page_reg_5" BEL "page_reg_plus3_0"
+        BEL "page_reg_plus3_1" BEL "page_reg_plus3_2" BEL "ULA/palette_0" BEL
+        "ULA/palette_1" BEL "ULA/palette_2" BEL "ULA/palette_3" BEL
+        "ULA/palette_4" BEL "ULA/palette_5" BEL "ULA/palette_6" BEL
+        "ULA/palette_7" BEL "ULA/palette_8" BEL "ULA/palette_9" BEL
+        "ULA/palette_10" BEL "ULA/palette_11" BEL "ULA/palette_12" BEL
+        "ULA/palette_13" BEL "ULA/palette_14" BEL "ULA/palette_15" BEL
+        "ULA/palette_16" BEL "ULA/palette_17" BEL "ULA/palette_18" BEL
+        "ULA/palette_19" BEL "ULA/palette_20" BEL "ULA/palette_21" BEL
+        "ULA/palette_22" BEL "ULA/palette_23" BEL "ULA/palette_24" BEL
+        "ULA/palette_25" BEL "ULA/palette_26" BEL "ULA/palette_27" BEL
+        "ULA/palette_28" BEL "ULA/palette_29" BEL "ULA/palette_30" BEL
+        "ULA/palette_31" BEL "ULA/palette_32" BEL "ULA/palette_33" BEL
+        "ULA/palette_34" BEL "ULA/palette_35" BEL "ULA/palette_36" BEL
+        "ULA/palette_37" BEL "ULA/palette_38" BEL "ULA/palette_39" BEL
+        "ULA/palette_40" BEL "ULA/palette_41" BEL "ULA/palette_42" BEL
+        "ULA/palette_43" BEL "ULA/palette_44" BEL "ULA/palette_45" BEL
+        "ULA/palette_46" BEL "ULA/palette_47" BEL "ULA/palette_48" BEL
+        "ULA/palette_49" BEL "ULA/palette_50" BEL "ULA/palette_51" BEL
+        "ULA/palette_52" BEL "ULA/palette_53" BEL "ULA/palette_54" BEL
+        "ULA/palette_55" BEL "ULA/palette_56" BEL "ULA/palette_57" BEL
+        "ULA/palette_58" BEL "ULA/palette_59" BEL "ULA/palette_60" BEL
+        "ULA/palette_61" BEL "ULA/palette_62" BEL "ULA/palette_63" BEL
+        "ULA/palette_64" BEL "ULA/palette_65" BEL "ULA/palette_66" BEL
+        "ULA/palette_67" BEL "ULA/palette_68" BEL "ULA/palette_69" BEL
+        "ULA/palette_70" BEL "ULA/palette_71" BEL "ULA/palette_72" BEL
+        "ULA/palette_73" BEL "ULA/palette_74" BEL "ULA/palette_75" BEL
+        "ULA/palette_76" BEL "ULA/palette_77" BEL "ULA/palette_78" BEL
+        "ULA/palette_79" BEL "ULA/palette_80" BEL "ULA/palette_81" BEL
+        "ULA/palette_82" BEL "ULA/palette_83" BEL "ULA/palette_84" BEL
+        "ULA/palette_85" BEL "ULA/palette_86" BEL "ULA/palette_87" BEL
+        "ULA/palette_88" BEL "ULA/palette_89" BEL "ULA/palette_90" BEL
+        "ULA/palette_91" BEL "ULA/palette_92" BEL "ULA/palette_93" BEL
+        "ULA/palette_94" BEL "ULA/palette_95" BEL "ULA/palette_96" BEL
+        "ULA/palette_97" BEL "ULA/palette_98" BEL "ULA/palette_99" BEL
+        "ULA/palette_100" BEL "ULA/palette_101" BEL "ULA/palette_102" BEL
+        "ULA/palette_103" BEL "ULA/palette_104" BEL "ULA/palette_105" BEL
+        "ULA/palette_106" BEL "ULA/palette_107" BEL "ULA/palette_108" BEL
+        "ULA/palette_109" BEL "ULA/palette_110" BEL "ULA/palette_111" BEL
+        "ULA/palette_112" BEL "ULA/palette_113" BEL "ULA/palette_114" BEL
+        "ULA/palette_115" BEL "ULA/palette_116" BEL "ULA/palette_117" BEL
+        "ULA/palette_118" BEL "ULA/palette_119" BEL "ULA/palette_120" BEL
+        "ULA/palette_121" BEL "ULA/palette_122" BEL "ULA/palette_123" BEL
+        "ULA/palette_124" BEL "ULA/palette_125" BEL "ULA/palette_126" BEL
+        "ULA/palette_127" BEL "ULA/palette_128" BEL "ULA/palette_129" BEL
+        "ULA/palette_130" BEL "ULA/palette_131" BEL "ULA/palette_132" BEL
+        "ULA/palette_133" BEL "ULA/palette_134" BEL "ULA/palette_135" BEL
+        "ULA/palette_136" BEL "ULA/palette_137" BEL "ULA/palette_138" BEL
+        "ULA/palette_139" BEL "ULA/palette_140" BEL "ULA/palette_141" BEL
+        "ULA/palette_142" BEL "ULA/palette_143" BEL "ULA/palette_144" BEL
+        "ULA/palette_145" BEL "ULA/palette_146" BEL "ULA/palette_147" BEL
+        "ULA/palette_148" BEL "ULA/palette_149" BEL "ULA/palette_150" BEL
+        "ULA/palette_151" BEL "ULA/palette_152" BEL "ULA/palette_153" BEL
+        "ULA/palette_154" BEL "ULA/palette_155" BEL "ULA/palette_156" BEL
+        "ULA/palette_157" BEL "ULA/palette_158" BEL "ULA/palette_159" BEL
+        "ULA/palette_160" BEL "ULA/palette_161" BEL "ULA/palette_162" BEL
+        "ULA/palette_163" BEL "ULA/palette_164" BEL "ULA/palette_165" BEL
+        "ULA/palette_166" BEL "ULA/palette_167" BEL "ULA/palette_168" BEL
+        "ULA/palette_169" BEL "ULA/palette_170" BEL "ULA/palette_171" BEL
+        "ULA/palette_172" BEL "ULA/palette_173" BEL "ULA/palette_174" BEL
+        "ULA/palette_175" BEL "ULA/palette_176" BEL "ULA/palette_177" BEL
+        "ULA/palette_178" BEL "ULA/palette_179" BEL "ULA/palette_180" BEL
+        "ULA/palette_181" BEL "ULA/palette_182" BEL "ULA/palette_183" BEL
+        "ULA/palette_184" BEL "ULA/palette_185" BEL "ULA/palette_186" BEL
+        "ULA/palette_187" BEL "ULA/palette_188" BEL "ULA/palette_189" BEL
+        "ULA/palette_190" BEL "ULA/palette_191" BEL "ULA/palette_192" BEL
+        "ULA/palette_193" BEL "ULA/palette_194" BEL "ULA/palette_195" BEL
+        "ULA/palette_196" BEL "ULA/palette_197" BEL "ULA/palette_198" BEL
+        "ULA/palette_199" BEL "ULA/palette_200" BEL "ULA/palette_201" BEL
+        "ULA/palette_202" BEL "ULA/palette_203" BEL "ULA/palette_204" BEL
+        "ULA/palette_205" BEL "ULA/palette_206" BEL "ULA/palette_207" BEL
+        "ULA/palette_208" BEL "ULA/palette_209" BEL "ULA/palette_210" BEL
+        "ULA/palette_211" BEL "ULA/palette_212" BEL "ULA/palette_213" BEL
+        "ULA/palette_214" BEL "ULA/palette_215" BEL "ULA/palette_216" BEL
+        "ULA/palette_217" BEL "ULA/palette_218" BEL "ULA/palette_219" BEL
+        "ULA/palette_220" BEL "ULA/palette_221" BEL "ULA/palette_222" BEL
+        "ULA/palette_223" BEL "ULA/palette_224" BEL "ULA/palette_225" BEL
+        "ULA/palette_226" BEL "ULA/palette_227" BEL "ULA/palette_228" BEL
+        "ULA/palette_229" BEL "ULA/palette_230" BEL "ULA/palette_231" BEL
+        "ULA/palette_232" BEL "ULA/palette_233" BEL "ULA/palette_234" BEL
+        "ULA/palette_235" BEL "ULA/palette_236" BEL "ULA/palette_237" BEL
+        "ULA/palette_238" BEL "ULA/palette_239" BEL "ULA/palette_240" BEL
+        "ULA/palette_241" BEL "ULA/palette_242" BEL "ULA/palette_243" BEL
+        "ULA/palette_244" BEL "ULA/palette_245" BEL "ULA/palette_246" BEL
+        "ULA/palette_247" BEL "ULA/palette_248" BEL "ULA/palette_249" BEL
+        "ULA/palette_250" BEL "ULA/palette_251" BEL "ULA/palette_252" BEL
+        "ULA/palette_253" BEL "ULA/palette_254" BEL "ULA/palette_255" BEL
+        "ULA/palette_256" BEL "ULA/palette_257" BEL "ULA/palette_258" BEL
+        "ULA/palette_259" BEL "ULA/palette_260" BEL "ULA/palette_261" BEL
+        "ULA/palette_262" BEL "ULA/palette_263" BEL "ULA/palette_264" BEL
+        "ULA/palette_265" BEL "ULA/palette_266" BEL "ULA/palette_267" BEL
+        "ULA/palette_268" BEL "ULA/palette_269" BEL "ULA/palette_270" BEL
+        "ULA/palette_271" BEL "ULA/palette_272" BEL "ULA/palette_273" BEL
+        "ULA/palette_274" BEL "ULA/palette_275" BEL "ULA/palette_276" BEL
+        "ULA/palette_277" BEL "ULA/palette_278" BEL "ULA/palette_279" BEL
+        "ULA/palette_280" BEL "ULA/palette_281" BEL "ULA/palette_282" BEL
+        "ULA/palette_283" BEL "ULA/palette_284" BEL "ULA/palette_285" BEL
+        "ULA/palette_286" BEL "ULA/palette_287" BEL "ULA/palette_288" BEL
+        "ULA/palette_289" BEL "ULA/palette_290" BEL "ULA/palette_291" BEL
+        "ULA/palette_292" BEL "ULA/palette_293" BEL "ULA/palette_294" BEL
+        "ULA/palette_295" BEL "ULA/palette_296" BEL "ULA/palette_297" BEL
+        "ULA/palette_298" BEL "ULA/palette_299" BEL "ULA/palette_300" BEL
+        "ULA/palette_301" BEL "ULA/palette_302" BEL "ULA/palette_303" BEL
+        "ULA/palette_304" BEL "ULA/palette_305" BEL "ULA/palette_306" BEL
+        "ULA/palette_307" BEL "ULA/palette_308" BEL "ULA/palette_309" BEL
+        "ULA/palette_310" BEL "ULA/palette_311" BEL "ULA/palette_312" BEL
+        "ULA/palette_313" BEL "ULA/palette_314" BEL "ULA/palette_315" BEL
+        "ULA/palette_316" BEL "ULA/palette_317" BEL "ULA/palette_318" BEL
+        "ULA/palette_319" BEL "ULA/palette_320" BEL "ULA/palette_321" BEL
+        "ULA/palette_322" BEL "ULA/palette_323" BEL "ULA/palette_324" BEL
+        "ULA/palette_325" BEL "ULA/palette_326" BEL "ULA/palette_327" BEL
+        "ULA/palette_328" BEL "ULA/palette_329" BEL "ULA/palette_330" BEL
+        "ULA/palette_331" BEL "ULA/palette_332" BEL "ULA/palette_333" BEL
+        "ULA/palette_334" BEL "ULA/palette_335" BEL "ULA/palette_336" BEL
+        "ULA/palette_337" BEL "ULA/palette_338" BEL "ULA/palette_339" BEL
+        "ULA/palette_340" BEL "ULA/palette_341" BEL "ULA/palette_342" BEL
+        "ULA/palette_343" BEL "ULA/palette_344" BEL "ULA/palette_345" BEL
+        "ULA/palette_346" BEL "ULA/palette_347" BEL "ULA/palette_348" BEL
+        "ULA/palette_349" BEL "ULA/palette_350" BEL "ULA/palette_351" BEL
+        "ULA/palette_352" BEL "ULA/palette_353" BEL "ULA/palette_354" BEL
+        "ULA/palette_355" BEL "ULA/palette_356" BEL "ULA/palette_357" BEL
+        "ULA/palette_358" BEL "ULA/palette_359" BEL "ULA/palette_360" BEL
+        "ULA/palette_361" BEL "ULA/palette_362" BEL "ULA/palette_363" BEL
+        "ULA/palette_364" BEL "ULA/palette_365" BEL "ULA/palette_366" BEL
+        "ULA/palette_367" BEL "ULA/palette_368" BEL "ULA/palette_369" BEL
+        "ULA/palette_370" BEL "ULA/palette_371" BEL "ULA/palette_372" BEL
+        "ULA/palette_373" BEL "ULA/palette_374" BEL "ULA/palette_375" BEL
+        "ULA/palette_376" BEL "ULA/palette_377" BEL "ULA/palette_378" BEL
+        "ULA/palette_379" BEL "ULA/palette_380" BEL "ULA/palette_381" BEL
+        "ULA/palette_382" BEL "ULA/palette_383" BEL "ULA/palette_384" BEL
+        "ULA/palette_385" BEL "ULA/palette_386" BEL "ULA/palette_387" BEL
+        "ULA/palette_388" BEL "ULA/palette_389" BEL "ULA/palette_390" BEL
+        "ULA/palette_391" BEL "ULA/palette_392" BEL "ULA/palette_393" BEL
+        "ULA/palette_394" BEL "ULA/palette_395" BEL "ULA/palette_396" BEL
+        "ULA/palette_397" BEL "ULA/palette_398" BEL "ULA/palette_399" BEL
+        "ULA/palette_400" BEL "ULA/palette_401" BEL "ULA/palette_402" BEL
+        "ULA/palette_403" BEL "ULA/palette_404" BEL "ULA/palette_405" BEL
+        "ULA/palette_406" BEL "ULA/palette_407" BEL "ULA/palette_408" BEL
+        "ULA/palette_409" BEL "ULA/palette_410" BEL "ULA/palette_411" BEL
+        "ULA/palette_412" BEL "ULA/palette_413" BEL "ULA/palette_414" BEL
+        "ULA/palette_415" BEL "ULA/palette_416" BEL "ULA/palette_417" BEL
+        "ULA/palette_418" BEL "ULA/palette_419" BEL "ULA/palette_420" BEL
+        "ULA/palette_421" BEL "ULA/palette_422" BEL "ULA/palette_423" BEL
+        "ULA/palette_424" BEL "ULA/palette_425" BEL "ULA/palette_426" BEL
+        "ULA/palette_427" BEL "ULA/palette_428" BEL "ULA/palette_429" BEL
+        "ULA/palette_430" BEL "ULA/palette_431" BEL "ULA/palette_432" BEL
+        "ULA/palette_433" BEL "ULA/palette_434" BEL "ULA/palette_435" BEL
+        "ULA/palette_436" BEL "ULA/palette_437" BEL "ULA/palette_438" BEL
+        "ULA/palette_439" BEL "ULA/palette_440" BEL "ULA/palette_441" BEL
+        "ULA/palette_442" BEL "ULA/palette_443" BEL "ULA/palette_444" BEL
+        "ULA/palette_445" BEL "ULA/palette_446" BEL "ULA/palette_447" BEL
+        "ULA/palette_448" BEL "ULA/palette_449" BEL "ULA/palette_450" BEL
+        "ULA/palette_451" BEL "ULA/palette_452" BEL "ULA/palette_453" BEL
+        "ULA/palette_454" BEL "ULA/palette_455" BEL "ULA/palette_456" BEL
+        "ULA/palette_457" BEL "ULA/palette_458" BEL "ULA/palette_459" BEL
+        "ULA/palette_460" BEL "ULA/palette_461" BEL "ULA/palette_462" BEL
+        "ULA/palette_463" BEL "ULA/palette_464" BEL "ULA/palette_465" BEL
+        "ULA/palette_466" BEL "ULA/palette_467" BEL "ULA/palette_468" BEL
+        "ULA/palette_469" BEL "ULA/palette_470" BEL "ULA/palette_471" BEL
+        "ULA/palette_472" BEL "ULA/palette_473" BEL "ULA/palette_474" BEL
+        "ULA/palette_475" BEL "ULA/palette_476" BEL "ULA/palette_477" BEL
+        "ULA/palette_478" BEL "ULA/palette_479" BEL "ULA/palette_480" BEL
+        "ULA/palette_481" BEL "ULA/palette_482" BEL "ULA/palette_483" BEL
+        "ULA/palette_484" BEL "ULA/palette_485" BEL "ULA/palette_486" BEL
+        "ULA/palette_487" BEL "ULA/palette_488" BEL "ULA/palette_489" BEL
+        "ULA/palette_490" BEL "ULA/palette_491" BEL "ULA/palette_492" BEL
+        "ULA/palette_493" BEL "ULA/palette_494" BEL "ULA/palette_495" BEL
+        "ULA/palette_496" BEL "ULA/palette_497" BEL "ULA/palette_498" BEL
+        "ULA/palette_499" BEL "ULA/palette_500" BEL "ULA/palette_501" BEL
+        "ULA/palette_502" BEL "ULA/palette_503" BEL "ULA/palette_504" BEL
+        "ULA/palette_505" BEL "ULA/palette_506" BEL "ULA/palette_507" BEL
+        "ULA/palette_508" BEL "ULA/palette_509" BEL "ULA/palette_510" BEL
+        "ULA/palette_511" BEL "ULA/palette_q_0" BEL "ULA/palette_q_1" BEL
+        "ULA/palette_q_2" BEL "ULA/palette_q_3" BEL "ULA/palette_q_4" BEL
+        "ULA/palette_q_5" BEL "ULA/palette_q_6" BEL "ULA/palette_q_7" BEL
+        "turbosound/ym2149_1/O_AUDIO_L_9" BEL
+        "turbosound/ym2149_1/O_AUDIO_L_8" BEL
+        "turbosound/ym2149_1/O_AUDIO_R_9" BEL
+        "turbosound/ym2149_1/vol_mixer_l_9" BEL
+        "turbosound/ym2149_1/vol_mixer_l_8" BEL
+        "turbosound/ym2149_1/vol_mixer_r_9" BEL
+        "turbosound/ym2149_1/cnt_div_t1_1" BEL
+        "turbosound/ym2149_1/cnt_div_t1_0" BEL "sv2v_autoblock_1.counter_0"
+        BEL "sv2v_autoblock_1.counter_1" BEL "sv2v_autoblock_1.counter_2" BEL
+        "sv2v_autoblock_1.counter_3" BEL "sv2v_autoblock_1.counter_4" BEL
+        "sv2v_autoblock_1.counter_5" BEL "dac_r/SigmaLatch_2" BEL
+        "dac_r/SigmaLatch_1" BEL "dac_r/SigmaLatch_3" BEL "dac_r/SigmaLatch_4"
+        BEL "dac_r/SigmaLatch_5" BEL "dac_r/SigmaLatch_6" BEL
+        "dac_r/SigmaLatch_9" BEL "dac_r/SigmaLatch_7" BEL "dac_r/SigmaLatch_8"
+        BEL "dac_r/SigmaLatch_10" BEL "dac_r/SigmaLatch_11" BEL
+        "dac_r/SigmaLatch_12" BEL "dac_r/SigmaLatch_13" BEL
+        "dac_r/SigmaLatch_14" BEL "dac_r/SigmaLatch_15" BEL
+        "dac_l/SigmaLatch_5" BEL "dac_l/SigmaLatch_4" BEL "dac_l/SigmaLatch_8"
+        BEL "dac_l/SigmaLatch_6" BEL "dac_l/SigmaLatch_7" BEL
+        "dac_l/SigmaLatch_11" BEL "dac_l/SigmaLatch_9" BEL
+        "dac_l/SigmaLatch_10" BEL "dac_l/SigmaLatch_12" BEL
+        "dac_l/SigmaLatch_13" BEL "dac_l/SigmaLatch_14" BEL
+        "dac_l/SigmaLatch_15" BEL "ULA/INTCnt_1" BEL "ULA/INTCnt_2" BEL
+        "ULA/INTCnt_3" BEL "ULA/INTCnt_4" BEL "ULA/INTCnt_5" BEL
+        "ULA/INTCnt_6" BEL "ULA/FlashCnt_0" BEL "ULA/FlashCnt_1" BEL
+        "ULA/FlashCnt_2" BEL "ULA/FlashCnt_3" BEL "ULA/FlashCnt_4" BEL
+        "ULA/hc_0" BEL "ULA/hc_1" BEL "ULA/hc_2" BEL "ULA/hc_3" BEL "ULA/hc_4"
+        BEL "ULA/hc_5" BEL "ULA/hc_6" BEL "ULA/hc_7" BEL "ULA/hc_8" BEL
+        "turbosound/ym2149_1/cnt_div_0" BEL "turbosound/ym2149_1/cnt_div_1"
+        BEL "turbosound/ym2149_1/vol_r_9" BEL "turbosound/ym2149_1/vol_l_8"
+        BEL "turbosound/ym2149_1/vol_l_9" BEL "dac_r/SigmaLatch_16" BEL
+        "dac_l/SigmaLatch_16" BEL "pll/relojes_inst/clkout1_buf" BEL
+        "mist_io/sd_buff_addr_8" BEL "mist_io/sd_buff_addr_7" BEL
+        "mist_io/sd_buff_addr_6" BEL "mist_io/sd_buff_addr_5" BEL
+        "mist_io/sd_buff_addr_4" BEL "mist_io/sd_buff_addr_3" BEL
+        "mist_io/sd_buff_addr_2" BEL "mist_io/sd_buff_addr_1" BEL
+        "mist_io/sd_buff_addr_0" BEL "mist_io/img_size_31" BEL
+        "mist_io/img_size_30" BEL "mist_io/img_size_29" BEL
+        "mist_io/img_size_28" BEL "mist_io/img_size_27" BEL
+        "mist_io/img_size_26" BEL "mist_io/img_size_25" BEL
+        "mist_io/img_size_24" BEL "mist_io/img_size_23" BEL
+        "mist_io/img_size_22" BEL "mist_io/img_size_21" BEL
+        "mist_io/img_size_20" BEL "mist_io/img_size_19" BEL
+        "mist_io/img_size_18" BEL "mist_io/img_size_17" BEL
+        "mist_io/img_size_16" BEL "mist_io/img_size_15" BEL
+        "mist_io/img_size_14" BEL "mist_io/img_size_13" BEL
+        "mist_io/img_size_12" BEL "mist_io/img_size_11" BEL
+        "mist_io/img_size_10" BEL "mist_io/img_size_9" BEL
+        "mist_io/img_size_8" BEL "mist_io/img_size_7" BEL "mist_io/img_size_6"
+        BEL "mist_io/img_size_5" BEL "mist_io/img_size_4" BEL
+        "mist_io/img_size_3" BEL "mist_io/img_size_2" BEL "mist_io/img_size_1"
+        BEL "mist_io/img_size_0" BEL "mist_io/sd_buff_wr" BEL
+        "mist_io/sv2v_autoblock_2.b_wr_2" BEL
+        "mist_io/sv2v_autoblock_2.b_wr_1" BEL
+        "mist_io/sv2v_autoblock_2.b_wr_0" BEL "mist_io/ioctl_addr_18" BEL
+        "mist_io/ioctl_addr_17" BEL "mist_io/ioctl_addr_16" BEL
+        "mist_io/ioctl_addr_15" BEL "mist_io/ioctl_addr_14" BEL
+        "mist_io/ioctl_addr_13" BEL "mist_io/ioctl_addr_12" BEL
+        "mist_io/ioctl_addr_11" BEL "mist_io/ioctl_addr_10" BEL
+        "mist_io/ioctl_addr_9" BEL "mist_io/ioctl_addr_8" BEL
+        "mist_io/ioctl_addr_7" BEL "mist_io/ioctl_addr_6" BEL
+        "mist_io/ioctl_addr_5" BEL "mist_io/ioctl_addr_4" BEL
+        "mist_io/ioctl_addr_3" BEL "mist_io/ioctl_addr_2" BEL
+        "mist_io/ioctl_addr_1" BEL "mist_io/ioctl_addr_0" BEL
+        "mist_io/ioctl_dout_7" BEL "mist_io/ioctl_dout_6" BEL
+        "mist_io/ioctl_dout_5" BEL "mist_io/ioctl_dout_4" BEL
+        "mist_io/ioctl_dout_3" BEL "mist_io/ioctl_dout_2" BEL
+        "mist_io/ioctl_dout_1" BEL "mist_io/ioctl_dout_0" BEL
+        "mist_io/mount_strobe_1" BEL "mist_io/mount_strobe_0" BEL
+        "mist_io/sd_buff_dout_7" BEL "mist_io/sd_buff_dout_6" BEL
+        "mist_io/sd_buff_dout_5" BEL "mist_io/sd_buff_dout_4" BEL
+        "mist_io/sd_buff_dout_3" BEL "mist_io/sd_buff_dout_2" BEL
+        "mist_io/sd_buff_dout_1" BEL "mist_io/sd_buff_dout_0" BEL
+        "mist_io/joystick_1_5" BEL "mist_io/joystick_1_4" BEL
+        "mist_io/joystick_1_3" BEL "mist_io/joystick_1_2" BEL
+        "mist_io/joystick_1_1" BEL "mist_io/joystick_1_0" BEL
+        "mist_io/joystick_0_5" BEL "mist_io/joystick_0_4" BEL
+        "mist_io/joystick_0_3" BEL "mist_io/joystick_0_2" BEL
+        "mist_io/joystick_0_1" BEL "mist_io/joystick_0_0" BEL
+        "mist_io/but_sw_5" BEL "mist_io/but_sw_4" BEL "mist_io/but_sw_1" BEL
+        "mist_io/sv2v_autoblock_7.rclkD2" BEL
+        "mist_io/sv2v_autoblock_2.old_ready2" BEL
+        "mist_io/sv2v_autoblock_2.old_ready1" BEL
+        "mist_io/sv2v_autoblock_7.rclkD" BEL "mist_io/ioctl_download" BEL
+        "mist_io/status_18" BEL "mist_io/status_17" BEL "mist_io/status_16"
+        BEL "mist_io/status_15" BEL "mist_io/status_14" BEL
+        "mist_io/status_13" BEL "mist_io/status_12" BEL "mist_io/status_11"
+        BEL "mist_io/status_10" BEL "mist_io/status_9" BEL "mist_io/status_8"
+        BEL "mist_io/status_7" BEL "mist_io/status_5" BEL "mist_io/status_4"
+        BEL "mist_io/status_3" BEL "mist_io/status_2" BEL "mist_io/status_1"
+        BEL "mist_io/status_0" BEL "mist_io/ioctl_wr" BEL
+        "video_mixer/i_div_3" BEL "video_mixer/i_div_2" BEL
+        "video_mixer/i_div_1" BEL "video_mixer/i_div_0" BEL
+        "video_mixer/sv2v_autoblock_1.old_hs" BEL
+        "video_mixer/sv2v_autoblock_1.old_vs" BEL "video_mixer/scanline" BEL
+        "video_mixer/sv2v_autoblock_2.last_hsync" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hcnt_10" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hcnt_9" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hcnt_8" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hcnt_7" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hcnt_6" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hcnt_5" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hcnt_4" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hcnt_3" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hcnt_2" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hcnt_1" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hcnt_0" BEL
+        "video_mixer/scandoubler/pix_len_7" BEL
+        "video_mixer/scandoubler/pix_len_6" BEL
+        "video_mixer/scandoubler/pix_len_5" BEL
+        "video_mixer/scandoubler/pix_len_4" BEL
+        "video_mixer/scandoubler/pix_len_3" BEL
+        "video_mixer/scandoubler/pix_len_2" BEL
+        "video_mixer/scandoubler/pix_len_1" BEL
+        "video_mixer/scandoubler/pix_len_0" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_1.ce_cnt_2" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_1.ce_cnt_1" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_1.ce_cnt_0" BEL
+        "video_mixer/scandoubler/sd_h_10" BEL "video_mixer/scandoubler/sd_h_9"
+        BEL "video_mixer/scandoubler/sd_h_8" BEL
+        "video_mixer/scandoubler/sd_h_7" BEL "video_mixer/scandoubler/sd_h_6"
+        BEL "video_mixer/scandoubler/sd_h_5" BEL
+        "video_mixer/scandoubler/sd_h_4" BEL "video_mixer/scandoubler/sd_h_3"
+        BEL "video_mixer/scandoubler/sd_h_2" BEL
+        "video_mixer/scandoubler/sd_h_1" BEL "video_mixer/scandoubler/sd_h_0"
+        BEL "video_mixer/scandoubler/sv2v_autoblock_2.sd_hcnt_11" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.sd_hcnt_10" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.sd_hcnt_9" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.sd_hcnt_8" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.sd_hcnt_7" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.sd_hcnt_6" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.sd_hcnt_5" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.sd_hcnt_4" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.sd_hcnt_3" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.sd_hcnt_2" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.sd_hcnt_1" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.sd_hcnt_0" BEL
+        "video_mixer/scandoubler/phase_1" BEL
+        "video_mixer/scandoubler/phase_0" BEL
+        "video_mixer/scandoubler/sd_line_1" BEL
+        "video_mixer/scandoubler/sd_line_0" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_rise_11" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_rise_10" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_rise_9" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_rise_8" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_rise_7" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_rise_6" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_rise_5" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_rise_4" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_rise_3" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_rise_2" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_rise_1" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_max_11" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_max_10" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_max_9" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_max_8" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_max_7" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_max_6" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_max_5" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_max_4" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_max_3" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_max_2" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs_max_1" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_1.pixsz2_6" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_1.pixsz2_5" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_1.pixsz2_4" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_1.pixsz2_3" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_1.pixsz2_2" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_1.pixsz2_1" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_1.pixsz2_0" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.vs" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_2.hs" BEL
+        "video_mixer/scandoubler/ce_div_2" BEL
+        "video_mixer/scandoubler/ce_div_1" BEL
+        "video_mixer/scandoubler/ce_div_0" BEL "video_mixer/scandoubler/ce_x1"
+        BEL "video_mixer/scandoubler/sv2v_autoblock_2.hs2" BEL
+        "video_mixer/scandoubler/sv2v_autoblock_1.old_ce" BEL
+        "video_mixer/scandoubler/ce_x4" BEL "video_mixer/scandoubler/Hq2x/y_0"
+        BEL "video_mixer/scandoubler/Hq2x/i_1" BEL
+        "video_mixer/scandoubler/Hq2x/i_0" BEL
+        "video_mixer/scandoubler/Hq2x/sv2v_autoblock_1.offs_9" BEL
+        "video_mixer/scandoubler/Hq2x/sv2v_autoblock_1.offs_8" BEL
+        "video_mixer/scandoubler/Hq2x/sv2v_autoblock_1.offs_7" BEL
+        "video_mixer/scandoubler/Hq2x/sv2v_autoblock_1.offs_6" BEL
+        "video_mixer/scandoubler/Hq2x/sv2v_autoblock_1.offs_5" BEL
+        "video_mixer/scandoubler/Hq2x/sv2v_autoblock_1.offs_4" BEL
+        "video_mixer/scandoubler/Hq2x/sv2v_autoblock_1.offs_3" BEL
+        "video_mixer/scandoubler/Hq2x/sv2v_autoblock_1.offs_2" BEL
+        "video_mixer/scandoubler/Hq2x/sv2v_autoblock_1.offs_1" BEL
+        "video_mixer/scandoubler/Hq2x/sv2v_autoblock_1.offs_0" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_17" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_16" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_15" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_14" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_13" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_12" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_11" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_10" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_9" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_8" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_7" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_6" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_5" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_4" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_3" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_2" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_1" BEL
+        "video_mixer/scandoubler/Hq2x/wrdata_0" BEL
+        "video_mixer/scandoubler/Hq2x/B_17" BEL
+        "video_mixer/scandoubler/Hq2x/B_16" BEL
+        "video_mixer/scandoubler/Hq2x/B_15" BEL
+        "video_mixer/scandoubler/Hq2x/B_14" BEL
+        "video_mixer/scandoubler/Hq2x/B_13" BEL
+        "video_mixer/scandoubler/Hq2x/B_12" BEL
+        "video_mixer/scandoubler/Hq2x/B_11" BEL
+        "video_mixer/scandoubler/Hq2x/B_10" BEL
+        "video_mixer/scandoubler/Hq2x/B_9" BEL
+        "video_mixer/scandoubler/Hq2x/B_8" BEL
+        "video_mixer/scandoubler/Hq2x/B_7" BEL
+        "video_mixer/scandoubler/Hq2x/B_6" BEL
+        "video_mixer/scandoubler/Hq2x/B_5" BEL
+        "video_mixer/scandoubler/Hq2x/B_4" BEL
+        "video_mixer/scandoubler/Hq2x/B_3" BEL
+        "video_mixer/scandoubler/Hq2x/B_2" BEL
+        "video_mixer/scandoubler/Hq2x/B_1" BEL
+        "video_mixer/scandoubler/Hq2x/B_0" BEL
+        "video_mixer/scandoubler/Hq2x/F_17" BEL
+        "video_mixer/scandoubler/Hq2x/F_16" BEL
+        "video_mixer/scandoubler/Hq2x/F_15" BEL
+        "video_mixer/scandoubler/Hq2x/F_14" BEL
+        "video_mixer/scandoubler/Hq2x/F_13" BEL
+        "video_mixer/scandoubler/Hq2x/F_12" BEL
+        "video_mixer/scandoubler/Hq2x/F_11" BEL
+        "video_mixer/scandoubler/Hq2x/F_10" BEL
+        "video_mixer/scandoubler/Hq2x/F_9" BEL
+        "video_mixer/scandoubler/Hq2x/F_8" BEL
+        "video_mixer/scandoubler/Hq2x/F_7" BEL
+        "video_mixer/scandoubler/Hq2x/F_6" BEL
+        "video_mixer/scandoubler/Hq2x/F_5" BEL
+        "video_mixer/scandoubler/Hq2x/F_4" BEL
+        "video_mixer/scandoubler/Hq2x/F_3" BEL
+        "video_mixer/scandoubler/Hq2x/F_2" BEL
+        "video_mixer/scandoubler/Hq2x/F_1" BEL
+        "video_mixer/scandoubler/Hq2x/F_0" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_7" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_6" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_5" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_4" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_3" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_2" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_1" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_0" BEL
+        "video_mixer/scandoubler/Hq2x/H_17" BEL
+        "video_mixer/scandoubler/Hq2x/H_16" BEL
+        "video_mixer/scandoubler/Hq2x/H_15" BEL
+        "video_mixer/scandoubler/Hq2x/H_14" BEL
+        "video_mixer/scandoubler/Hq2x/H_13" BEL
+        "video_mixer/scandoubler/Hq2x/H_12" BEL
+        "video_mixer/scandoubler/Hq2x/H_11" BEL
+        "video_mixer/scandoubler/Hq2x/H_10" BEL
+        "video_mixer/scandoubler/Hq2x/H_9" BEL
+        "video_mixer/scandoubler/Hq2x/H_8" BEL
+        "video_mixer/scandoubler/Hq2x/H_7" BEL
+        "video_mixer/scandoubler/Hq2x/H_6" BEL
+        "video_mixer/scandoubler/Hq2x/H_5" BEL
+        "video_mixer/scandoubler/Hq2x/H_4" BEL
+        "video_mixer/scandoubler/Hq2x/H_3" BEL
+        "video_mixer/scandoubler/Hq2x/H_2" BEL
+        "video_mixer/scandoubler/Hq2x/H_1" BEL
+        "video_mixer/scandoubler/Hq2x/H_0" BEL
+        "video_mixer/scandoubler/Hq2x/pattern_7" BEL
+        "video_mixer/scandoubler/Hq2x/pattern_6" BEL
+        "video_mixer/scandoubler/Hq2x/pattern_5" BEL
+        "video_mixer/scandoubler/Hq2x/pattern_4" BEL
+        "video_mixer/scandoubler/Hq2x/pattern_3" BEL
+        "video_mixer/scandoubler/Hq2x/pattern_2" BEL
+        "video_mixer/scandoubler/Hq2x/D_17" BEL
+        "video_mixer/scandoubler/Hq2x/D_16" BEL
+        "video_mixer/scandoubler/Hq2x/D_15" BEL
+        "video_mixer/scandoubler/Hq2x/D_14" BEL
+        "video_mixer/scandoubler/Hq2x/D_13" BEL
+        "video_mixer/scandoubler/Hq2x/D_12" BEL
+        "video_mixer/scandoubler/Hq2x/D_11" BEL
+        "video_mixer/scandoubler/Hq2x/D_10" BEL
+        "video_mixer/scandoubler/Hq2x/D_9" BEL
+        "video_mixer/scandoubler/Hq2x/D_8" BEL
+        "video_mixer/scandoubler/Hq2x/D_7" BEL
+        "video_mixer/scandoubler/Hq2x/D_6" BEL
+        "video_mixer/scandoubler/Hq2x/D_5" BEL
+        "video_mixer/scandoubler/Hq2x/D_4" BEL
+        "video_mixer/scandoubler/Hq2x/D_3" BEL
+        "video_mixer/scandoubler/Hq2x/D_2" BEL
+        "video_mixer/scandoubler/Hq2x/D_1" BEL
+        "video_mixer/scandoubler/Hq2x/D_0" BEL
+        "video_mixer/scandoubler/Hq2x/A_17" BEL
+        "video_mixer/scandoubler/Hq2x/A_16" BEL
+        "video_mixer/scandoubler/Hq2x/A_15" BEL
+        "video_mixer/scandoubler/Hq2x/A_14" BEL
+        "video_mixer/scandoubler/Hq2x/A_13" BEL
+        "video_mixer/scandoubler/Hq2x/A_11" BEL
+        "video_mixer/scandoubler/Hq2x/A_10" BEL
+        "video_mixer/scandoubler/Hq2x/A_9" BEL
+        "video_mixer/scandoubler/Hq2x/A_8" BEL
+        "video_mixer/scandoubler/Hq2x/A_7" BEL
+        "video_mixer/scandoubler/Hq2x/A_5" BEL
+        "video_mixer/scandoubler/Hq2x/A_4" BEL
+        "video_mixer/scandoubler/Hq2x/A_3" BEL
+        "video_mixer/scandoubler/Hq2x/A_2" BEL
+        "video_mixer/scandoubler/Hq2x/A_1" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_17" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_16" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_15" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_14" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_13" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_11" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_10" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_9" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_8" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_7" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_5" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_4" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_3" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_2" BEL
+        "video_mixer/scandoubler/Hq2x/Prev0_1" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_17" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_16" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_15" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_14" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_13" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_11" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_10" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_9" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_8" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_7" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_5" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_4" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_3" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_2" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_1" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_17" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_16" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_15" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_14" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_13" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_12" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_11" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_10" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_9" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_8" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_7" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_6" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_5" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_4" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_3" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_2" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_1" BEL
+        "video_mixer/scandoubler/Hq2x/Prev1_0" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_17" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_16" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_15" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_14" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_13" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_11" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_10" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_9" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_8" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_7" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_5" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_4" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_3" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_2" BEL
+        "video_mixer/scandoubler/Hq2x/Curr1_1" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_17" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_16" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_15" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_14" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_13" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_12" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_11" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_10" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_9" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_8" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_7" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_6" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_5" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_4" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_3" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_2" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_1" BEL
+        "video_mixer/scandoubler/Hq2x/Prev2_0" BEL
+        "video_mixer/scandoubler/Hq2x/G_14" BEL
+        "video_mixer/scandoubler/Hq2x/G_13" BEL
+        "video_mixer/scandoubler/Hq2x/G_8" BEL
+        "video_mixer/scandoubler/Hq2x/G_7" BEL
+        "video_mixer/scandoubler/Hq2x/G_2" BEL
+        "video_mixer/scandoubler/Hq2x/G_1" BEL
+        "video_mixer/scandoubler/Hq2x/Curr2_addr1" BEL
+        "video_mixer/scandoubler/Hq2x/Next0_14" BEL
+        "video_mixer/scandoubler/Hq2x/Next0_13" BEL
+        "video_mixer/scandoubler/Hq2x/Next0_8" BEL
+        "video_mixer/scandoubler/Hq2x/Next0_7" BEL
+        "video_mixer/scandoubler/Hq2x/Next0_2" BEL
+        "video_mixer/scandoubler/Hq2x/Next0_1" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_addr2_10" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_addr2_9" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_addr2_8" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_addr2_7" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_addr2_6" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_addr2_5" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_addr2_4" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_addr2_3" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_addr2_2" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_addr2_1" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_addr2_0" BEL
+        "video_mixer/scandoubler/Hq2x/prevbuf" BEL
+        "video_mixer/scandoubler/Hq2x/Next1_14" BEL
+        "video_mixer/scandoubler/Hq2x/Next1_13" BEL
+        "video_mixer/scandoubler/Hq2x/Next1_8" BEL
+        "video_mixer/scandoubler/Hq2x/Next1_7" BEL
+        "video_mixer/scandoubler/Hq2x/Next1_6" BEL
+        "video_mixer/scandoubler/Hq2x/Next1_2" BEL
+        "video_mixer/scandoubler/Hq2x/Next1_1" BEL
+        "video_mixer/scandoubler/Hq2x/Next1_0" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_addr1_1" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_addr1_0" BEL
+        "video_mixer/scandoubler/Hq2x/wrin_addr2_9" BEL
+        "video_mixer/scandoubler/Hq2x/wrin_addr2_8" BEL
+        "video_mixer/scandoubler/Hq2x/wrin_addr2_7" BEL
+        "video_mixer/scandoubler/Hq2x/wrin_addr2_6" BEL
+        "video_mixer/scandoubler/Hq2x/wrin_addr2_5" BEL
+        "video_mixer/scandoubler/Hq2x/wrin_addr2_4" BEL
+        "video_mixer/scandoubler/Hq2x/wrin_addr2_3" BEL
+        "video_mixer/scandoubler/Hq2x/wrin_addr2_2" BEL
+        "video_mixer/scandoubler/Hq2x/wrin_addr2_1" BEL
+        "video_mixer/scandoubler/Hq2x/wrin_addr2_0" BEL
+        "video_mixer/scandoubler/Hq2x/Curr2_addr2_9" BEL
+        "video_mixer/scandoubler/Hq2x/Curr2_addr2_8" BEL
+        "video_mixer/scandoubler/Hq2x/Curr2_addr2_7" BEL
+        "video_mixer/scandoubler/Hq2x/Curr2_addr2_6" BEL
+        "video_mixer/scandoubler/Hq2x/Curr2_addr2_5" BEL
+        "video_mixer/scandoubler/Hq2x/Curr2_addr2_4" BEL
+        "video_mixer/scandoubler/Hq2x/Curr2_addr2_3" BEL
+        "video_mixer/scandoubler/Hq2x/Curr2_addr2_2" BEL
+        "video_mixer/scandoubler/Hq2x/Curr2_addr2_1" BEL
+        "video_mixer/scandoubler/Hq2x/Curr2_addr2_0" BEL
+        "video_mixer/scandoubler/Hq2x/sv2v_autoblock_1.old_reset_line" BEL
+        "video_mixer/scandoubler/Hq2x/sv2v_autoblock_1.old_reset_frame" BEL
+        "video_mixer/scandoubler/Hq2x/wrout_en" BEL
+        "video_mixer/scandoubler/Hq2x/wrin_en" BEL
+        "video_mixer/scandoubler/Hq2x/Next2_14" BEL
+        "video_mixer/scandoubler/Hq2x/Next2_13" BEL
+        "video_mixer/scandoubler/Hq2x/Next2_8" BEL
+        "video_mixer/scandoubler/Hq2x/Next2_7" BEL
+        "video_mixer/scandoubler/Hq2x/Next2_6" BEL
+        "video_mixer/scandoubler/Hq2x/Next2_2" BEL
+        "video_mixer/scandoubler/Hq2x/Next2_1" BEL
+        "video_mixer/scandoubler/Hq2x/Next2_0" BEL "video_mixer/osd/osd_pixel"
+        BEL "video_mixer/osd/osd_buffer_addr_10" BEL
+        "video_mixer/osd/osd_buffer_addr_9" BEL
+        "video_mixer/osd/osd_buffer_addr_8" BEL
+        "video_mixer/osd/osd_buffer_addr_7" BEL
+        "video_mixer/osd/osd_buffer_addr_6" BEL
+        "video_mixer/osd/osd_buffer_addr_5" BEL
+        "video_mixer/osd/osd_buffer_addr_4" BEL
+        "video_mixer/osd/osd_buffer_addr_3" BEL
+        "video_mixer/osd/osd_buffer_addr_2" BEL
+        "video_mixer/osd/osd_buffer_addr_1" BEL
+        "video_mixer/osd/osd_buffer_addr_0" BEL "video_mixer/osd/v_osd_end_10"
+        BEL "video_mixer/osd/v_osd_end_9" BEL "video_mixer/osd/v_osd_end_8"
+        BEL "video_mixer/osd/v_osd_end_7" BEL "video_mixer/osd/v_osd_end_6"
+        BEL "video_mixer/osd/v_osd_end_5" BEL "video_mixer/osd/v_osd_end_4"
+        BEL "video_mixer/osd/v_osd_end_3" BEL "video_mixer/osd/v_osd_end_2"
+        BEL "video_mixer/osd/v_osd_end_1" BEL "video_mixer/osd/v_osd_end_0"
+        BEL "video_mixer/osd/v_osd_start_10" BEL
+        "video_mixer/osd/v_osd_start_9" BEL "video_mixer/osd/v_osd_start_8"
+        BEL "video_mixer/osd/v_osd_start_7" BEL
+        "video_mixer/osd/v_osd_start_6" BEL "video_mixer/osd/v_osd_start_5"
+        BEL "video_mixer/osd/v_osd_start_4" BEL
+        "video_mixer/osd/v_osd_start_3" BEL "video_mixer/osd/v_osd_start_2"
+        BEL "video_mixer/osd/v_osd_start_1" BEL "video_mixer/osd/h_osd_end_10"
+        BEL "video_mixer/osd/h_osd_end_9" BEL "video_mixer/osd/h_osd_end_8"
+        BEL "video_mixer/osd/h_osd_end_7" BEL "video_mixer/osd/h_osd_end_6"
+        BEL "video_mixer/osd/h_osd_end_5" BEL "video_mixer/osd/h_osd_end_4"
+        BEL "video_mixer/osd/h_osd_end_3" BEL "video_mixer/osd/h_osd_end_2"
+        BEL "video_mixer/osd/h_osd_end_1" BEL "video_mixer/osd/h_osd_end_0"
+        BEL "video_mixer/osd/h_osd_start_10" BEL
+        "video_mixer/osd/h_osd_start_9" BEL "video_mixer/osd/h_osd_start_8"
+        BEL "video_mixer/osd/h_osd_start_7" BEL
+        "video_mixer/osd/h_osd_start_6" BEL "video_mixer/osd/h_osd_start_5"
+        BEL "video_mixer/osd/h_osd_start_4" BEL
+        "video_mixer/osd/h_osd_start_3" BEL "video_mixer/osd/h_osd_start_2"
+        BEL "video_mixer/osd/h_osd_start_1" BEL "video_mixer/osd/vs_low_10"
+        BEL "video_mixer/osd/vs_low_9" BEL "video_mixer/osd/vs_low_8" BEL
+        "video_mixer/osd/vs_low_7" BEL "video_mixer/osd/vs_low_6" BEL
+        "video_mixer/osd/vs_low_5" BEL "video_mixer/osd/vs_low_4" BEL
+        "video_mixer/osd/vs_low_3" BEL "video_mixer/osd/vs_low_2" BEL
+        "video_mixer/osd/vs_low_1" BEL "video_mixer/osd/vs_low_0" BEL
+        "video_mixer/osd/vs_high_10" BEL "video_mixer/osd/vs_high_9" BEL
+        "video_mixer/osd/vs_high_8" BEL "video_mixer/osd/vs_high_7" BEL
+        "video_mixer/osd/vs_high_6" BEL "video_mixer/osd/vs_high_5" BEL
+        "video_mixer/osd/vs_high_4" BEL "video_mixer/osd/vs_high_3" BEL
+        "video_mixer/osd/vs_high_2" BEL "video_mixer/osd/vs_high_1" BEL
+        "video_mixer/osd/vs_high_0" BEL "video_mixer/osd/hs_low_10" BEL
+        "video_mixer/osd/hs_low_9" BEL "video_mixer/osd/hs_low_8" BEL
+        "video_mixer/osd/hs_low_7" BEL "video_mixer/osd/hs_low_6" BEL
+        "video_mixer/osd/hs_low_5" BEL "video_mixer/osd/hs_low_4" BEL
+        "video_mixer/osd/hs_low_3" BEL "video_mixer/osd/hs_low_2" BEL
+        "video_mixer/osd/hs_low_1" BEL "video_mixer/osd/hs_low_0" BEL
+        "video_mixer/osd/hs_high_10" BEL "video_mixer/osd/hs_high_9" BEL
+        "video_mixer/osd/hs_high_8" BEL "video_mixer/osd/hs_high_7" BEL
+        "video_mixer/osd/hs_high_6" BEL "video_mixer/osd/hs_high_5" BEL
+        "video_mixer/osd/hs_high_4" BEL "video_mixer/osd/hs_high_3" BEL
+        "video_mixer/osd/hs_high_2" BEL "video_mixer/osd/hs_high_1" BEL
+        "video_mixer/osd/hs_high_0" BEL "video_mixer/osd/v_cnt_10" BEL
+        "video_mixer/osd/v_cnt_9" BEL "video_mixer/osd/v_cnt_8" BEL
+        "video_mixer/osd/v_cnt_7" BEL "video_mixer/osd/v_cnt_6" BEL
+        "video_mixer/osd/v_cnt_5" BEL "video_mixer/osd/v_cnt_4" BEL
+        "video_mixer/osd/v_cnt_3" BEL "video_mixer/osd/v_cnt_2" BEL
+        "video_mixer/osd/v_cnt_1" BEL "video_mixer/osd/v_cnt_0" BEL
+        "video_mixer/osd/h_cnt_10" BEL "video_mixer/osd/h_cnt_9" BEL
+        "video_mixer/osd/h_cnt_8" BEL "video_mixer/osd/h_cnt_7" BEL
+        "video_mixer/osd/h_cnt_6" BEL "video_mixer/osd/h_cnt_5" BEL
+        "video_mixer/osd/h_cnt_4" BEL "video_mixer/osd/h_cnt_3" BEL
+        "video_mixer/osd/h_cnt_2" BEL "video_mixer/osd/h_cnt_1" BEL
+        "video_mixer/osd/h_cnt_0" BEL "video_mixer/osd/osd_de" BEL
+        "video_mixer/osd/sv2v_autoblock_3.vsD" BEL
+        "video_mixer/osd/sv2v_autoblock_3.hsD" BEL "cpu/RD_n" BEL "cpu/WR_n"
+        BEL "cpu/IntCycleD_n_1" BEL "cpu/IntCycleD_n_0" BEL "cpu/DI_Reg_7" BEL
+        "cpu/DI_Reg_6" BEL "cpu/DI_Reg_5" BEL "cpu/DI_Reg_4" BEL
+        "cpu/DI_Reg_3" BEL "cpu/DI_Reg_2" BEL "cpu/DI_Reg_1" BEL
+        "cpu/DI_Reg_0" BEL "cpu/u0/TState_2" BEL "cpu/u0/TState_1" BEL
+        "cpu/u0/TState_0" BEL "cpu/u0/A_15" BEL "cpu/u0/A_14" BEL
+        "cpu/u0/A_13" BEL "cpu/u0/A_12" BEL "cpu/u0/A_11" BEL "cpu/u0/A_10"
+        BEL "cpu/u0/A_9" BEL "cpu/u0/A_8" BEL "cpu/u0/A_7" BEL "cpu/u0/A_6"
+        BEL "cpu/u0/A_5" BEL "cpu/u0/A_4" BEL "cpu/u0/A_3" BEL "cpu/u0/A_2"
+        BEL "cpu/u0/A_1" BEL "cpu/u0/A_0" BEL "cpu/u0/DO_7" BEL "cpu/u0/DO_6"
+        BEL "cpu/u0/DO_5" BEL "cpu/u0/DO_4" BEL "cpu/u0/DO_3" BEL
+        "cpu/u0/DO_2" BEL "cpu/u0/DO_1" BEL "cpu/u0/DO_0" BEL "cpu/u0/WZ_15"
+        BEL "cpu/u0/WZ_14" BEL "cpu/u0/WZ_13" BEL "cpu/u0/WZ_12" BEL
+        "cpu/u0/WZ_11" BEL "cpu/u0/WZ_10" BEL "cpu/u0/WZ_9" BEL "cpu/u0/WZ_8"
+        BEL "cpu/u0/WZ_7" BEL "cpu/u0/WZ_6" BEL "cpu/u0/WZ_5" BEL
+        "cpu/u0/WZ_4" BEL "cpu/u0/WZ_3" BEL "cpu/u0/WZ_2" BEL "cpu/u0/WZ_1"
+        BEL "cpu/u0/WZ_0" BEL "cpu/u0/BusA_7" BEL "cpu/u0/BusA_6" BEL
+        "cpu/u0/BusA_5" BEL "cpu/u0/BusA_4" BEL "cpu/u0/BusA_3" BEL
+        "cpu/u0/BusA_2" BEL "cpu/u0/BusA_1" BEL "cpu/u0/BusA_0" BEL
+        "cpu/u0/IntE_FF1" BEL "cpu/u0/Halt_FF" BEL "cpu/u0/RegAddrC_2" BEL
+        "cpu/u0/RegAddrC_1" BEL "cpu/u0/RegAddrC_0" BEL "cpu/u0/ALU_Op_r_3"
+        BEL "cpu/u0/ALU_Op_r_2" BEL "cpu/u0/ALU_Op_r_1" BEL
+        "cpu/u0/ALU_Op_r_0" BEL "cpu/u0/Read_To_Reg_r_4" BEL
+        "cpu/u0/Read_To_Reg_r_3" BEL "cpu/u0/Read_To_Reg_r_2" BEL
+        "cpu/u0/Read_To_Reg_r_1" BEL "cpu/u0/Read_To_Reg_r_0" BEL
+        "cpu/u0/Save_ALU_r" BEL "cpu/u0/RegAddrB_r_2" BEL
+        "cpu/u0/RegAddrB_r_1" BEL "cpu/u0/RegAddrB_r_0" BEL
+        "cpu/u0/RegAddrA_r_2" BEL "cpu/u0/RegAddrA_r_1" BEL
+        "cpu/u0/RegAddrA_r_0" BEL "cpu/u0/MCycles_2" BEL "cpu/u0/MCycles_1"
+        BEL "cpu/u0/MCycles_0" BEL "cpu/u0/IStatus_1" BEL "cpu/u0/IStatus_0"
+        BEL "cpu/u0/Arith16_r" BEL "cpu/u0/F_7" BEL "cpu/u0/F_6" BEL
+        "cpu/u0/F_5" BEL "cpu/u0/F_4" BEL "cpu/u0/F_3" BEL "cpu/u0/F_2" BEL
+        "cpu/u0/F_1" BEL "cpu/u0/F_0" BEL "cpu/u0/SP_15" BEL "cpu/u0/SP_14"
+        BEL "cpu/u0/SP_13" BEL "cpu/u0/SP_12" BEL "cpu/u0/SP_11" BEL
+        "cpu/u0/SP_10" BEL "cpu/u0/SP_9" BEL "cpu/u0/SP_8" BEL "cpu/u0/SP_7"
+        BEL "cpu/u0/SP_6" BEL "cpu/u0/SP_5" BEL "cpu/u0/SP_4" BEL
+        "cpu/u0/SP_3" BEL "cpu/u0/SP_2" BEL "cpu/u0/SP_1" BEL "cpu/u0/SP_0"
+        BEL "cpu/u0/BusB_7" BEL "cpu/u0/BusB_6" BEL "cpu/u0/BusB_5" BEL
+        "cpu/u0/BusB_4" BEL "cpu/u0/BusB_3" BEL "cpu/u0/BusB_2" BEL
+        "cpu/u0/BusB_1" BEL "cpu/u0/BusB_0" BEL "cpu/u0/ACC_7" BEL
+        "cpu/u0/ACC_6" BEL "cpu/u0/ACC_5" BEL "cpu/u0/ACC_4" BEL
+        "cpu/u0/ACC_3" BEL "cpu/u0/ACC_2" BEL "cpu/u0/ACC_1" BEL
+        "cpu/u0/ACC_0" BEL "cpu/u0/PC_15" BEL "cpu/u0/PC_14" BEL
+        "cpu/u0/PC_13" BEL "cpu/u0/PC_12" BEL "cpu/u0/PC_11" BEL
+        "cpu/u0/PC_10" BEL "cpu/u0/PC_9" BEL "cpu/u0/PC_8" BEL "cpu/u0/PC_7"
+        BEL "cpu/u0/PC_6" BEL "cpu/u0/PC_5" BEL "cpu/u0/PC_4" BEL
+        "cpu/u0/PC_3" BEL "cpu/u0/PC_2" BEL "cpu/u0/PC_1" BEL "cpu/u0/PC_0"
+        BEL "cpu/u0/M1_n" BEL "cpu/u0/XY_State_1" BEL "cpu/u0/XY_State_0" BEL
+        "cpu/u0/R_7" BEL "cpu/u0/R_6" BEL "cpu/u0/R_5" BEL "cpu/u0/R_4" BEL
+        "cpu/u0/R_3" BEL "cpu/u0/R_2" BEL "cpu/u0/R_1" BEL "cpu/u0/R_0" BEL
+        "cpu/u0/MCycle_2" BEL "cpu/u0/MCycle_1" BEL "cpu/u0/MCycle_0" BEL
+        "cpu/u0/Auto_Wait_t2" BEL "cpu/u0/BusAck" BEL "cpu/u0/ISet_1" BEL
+        "cpu/u0/ISet_0" BEL "cpu/u0/IR_7" BEL "cpu/u0/IR_6" BEL "cpu/u0/IR_5"
+        BEL "cpu/u0/IR_4" BEL "cpu/u0/IR_3" BEL "cpu/u0/IR_2" BEL
+        "cpu/u0/IR_1" BEL "cpu/u0/IR_0" BEL "cpu/u0/Auto_Wait_t1" BEL
+        "cpu/u0/IncDecZ" BEL "cpu/u0/Pre_XY_F_M_2" BEL "cpu/u0/Pre_XY_F_M_1"
+        BEL "cpu/u0/Pre_XY_F_M_0" BEL "cpu/u0/IntCycle" BEL "cpu/u0/BusReq_s"
+        BEL "cpu/u0/RegBusA_r_15" BEL "cpu/u0/RegBusA_r_14" BEL
+        "cpu/u0/RegBusA_r_13" BEL "cpu/u0/RegBusA_r_12" BEL
+        "cpu/u0/RegBusA_r_11" BEL "cpu/u0/RegBusA_r_10" BEL
+        "cpu/u0/RegBusA_r_9" BEL "cpu/u0/RegBusA_r_8" BEL "cpu/u0/RegBusA_r_7"
+        BEL "cpu/u0/RegBusA_r_6" BEL "cpu/u0/RegBusA_r_5" BEL
+        "cpu/u0/RegBusA_r_4" BEL "cpu/u0/RegBusA_r_3" BEL "cpu/u0/RegBusA_r_2"
+        BEL "cpu/u0/RegBusA_r_1" BEL "cpu/u0/RegBusA_r_0" BEL "cpu/u0/I_7" BEL
+        "cpu/u0/I_6" BEL "cpu/u0/I_5" BEL "cpu/u0/I_4" BEL "cpu/u0/I_3" BEL
+        "cpu/u0/I_2" BEL "cpu/u0/I_1" BEL "cpu/u0/I_0" BEL "cpu/u0/No_BTR" BEL
+        "cpu/u0/I_RXDD" BEL "cpu/u0/PreserveC_r" BEL "cpu/u0/XY_Ind" BEL
+        "cpu/u0/Z16_r" BEL "cpu/u0/BTR_r" BEL "cpu/u0/Alternate" BEL
+        "cpu/u0/RFSH_n" BEL "cpu/u0/Fp_7" BEL "cpu/u0/Fp_6" BEL "cpu/u0/Fp_5"
+        BEL "cpu/u0/Fp_4" BEL "cpu/u0/Fp_3" BEL "cpu/u0/Fp_2" BEL
+        "cpu/u0/Fp_1" BEL "cpu/u0/Fp_0" BEL "cpu/u0/Ap_7" BEL "cpu/u0/Ap_6"
+        BEL "cpu/u0/Ap_5" BEL "cpu/u0/Ap_4" BEL "cpu/u0/Ap_3" BEL
+        "cpu/u0/Ap_2" BEL "cpu/u0/Ap_1" BEL "cpu/u0/Ap_0" BEL
+        "cpu/u0/Regs/RegsL_0_7" BEL "cpu/u0/Regs/RegsL_0_6" BEL
+        "cpu/u0/Regs/RegsL_0_5" BEL "cpu/u0/Regs/RegsL_0_4" BEL
+        "cpu/u0/Regs/RegsL_0_3" BEL "cpu/u0/Regs/RegsL_0_2" BEL
+        "cpu/u0/Regs/RegsL_0_1" BEL "cpu/u0/Regs/RegsL_0_0" BEL
+        "cpu/u0/Regs/RegsL_7_7" BEL "cpu/u0/Regs/RegsL_7_6" BEL
+        "cpu/u0/Regs/RegsL_7_5" BEL "cpu/u0/Regs/RegsL_7_4" BEL
+        "cpu/u0/Regs/RegsL_7_3" BEL "cpu/u0/Regs/RegsL_7_2" BEL
+        "cpu/u0/Regs/RegsL_7_1" BEL "cpu/u0/Regs/RegsL_7_0" BEL
+        "cpu/u0/Regs/RegsL_5_7" BEL "cpu/u0/Regs/RegsL_5_6" BEL
+        "cpu/u0/Regs/RegsL_5_5" BEL "cpu/u0/Regs/RegsL_5_4" BEL
+        "cpu/u0/Regs/RegsL_5_3" BEL "cpu/u0/Regs/RegsL_5_2" BEL
+        "cpu/u0/Regs/RegsL_5_1" BEL "cpu/u0/Regs/RegsL_5_0" BEL
+        "cpu/u0/Regs/RegsL_4_7" BEL "cpu/u0/Regs/RegsL_4_6" BEL
+        "cpu/u0/Regs/RegsL_4_5" BEL "cpu/u0/Regs/RegsL_4_4" BEL
+        "cpu/u0/Regs/RegsL_4_3" BEL "cpu/u0/Regs/RegsL_4_2" BEL
+        "cpu/u0/Regs/RegsL_4_1" BEL "cpu/u0/Regs/RegsL_4_0" BEL
+        "cpu/u0/Regs/RegsL_6_7" BEL "cpu/u0/Regs/RegsL_6_6" BEL
+        "cpu/u0/Regs/RegsL_6_5" BEL "cpu/u0/Regs/RegsL_6_4" BEL
+        "cpu/u0/Regs/RegsL_6_3" BEL "cpu/u0/Regs/RegsL_6_2" BEL
+        "cpu/u0/Regs/RegsL_6_1" BEL "cpu/u0/Regs/RegsL_6_0" BEL
+        "cpu/u0/Regs/RegsL_3_7" BEL "cpu/u0/Regs/RegsL_3_6" BEL
+        "cpu/u0/Regs/RegsL_3_5" BEL "cpu/u0/Regs/RegsL_3_4" BEL
+        "cpu/u0/Regs/RegsL_3_3" BEL "cpu/u0/Regs/RegsL_3_2" BEL
+        "cpu/u0/Regs/RegsL_3_1" BEL "cpu/u0/Regs/RegsL_3_0" BEL
+        "cpu/u0/Regs/RegsL_2_7" BEL "cpu/u0/Regs/RegsL_2_6" BEL
+        "cpu/u0/Regs/RegsL_2_5" BEL "cpu/u0/Regs/RegsL_2_4" BEL
+        "cpu/u0/Regs/RegsL_2_3" BEL "cpu/u0/Regs/RegsL_2_2" BEL
+        "cpu/u0/Regs/RegsL_2_1" BEL "cpu/u0/Regs/RegsL_2_0" BEL
+        "cpu/u0/Regs/RegsH_7_7" BEL "cpu/u0/Regs/RegsH_7_6" BEL
+        "cpu/u0/Regs/RegsH_7_5" BEL "cpu/u0/Regs/RegsH_7_4" BEL
+        "cpu/u0/Regs/RegsH_7_3" BEL "cpu/u0/Regs/RegsH_7_2" BEL
+        "cpu/u0/Regs/RegsH_7_1" BEL "cpu/u0/Regs/RegsH_7_0" BEL
+        "cpu/u0/Regs/RegsH_6_7" BEL "cpu/u0/Regs/RegsH_6_6" BEL
+        "cpu/u0/Regs/RegsH_6_5" BEL "cpu/u0/Regs/RegsH_6_4" BEL
+        "cpu/u0/Regs/RegsH_6_3" BEL "cpu/u0/Regs/RegsH_6_2" BEL
+        "cpu/u0/Regs/RegsH_6_1" BEL "cpu/u0/Regs/RegsH_6_0" BEL
+        "cpu/u0/Regs/RegsL_1_7" BEL "cpu/u0/Regs/RegsL_1_6" BEL
+        "cpu/u0/Regs/RegsL_1_5" BEL "cpu/u0/Regs/RegsL_1_4" BEL
+        "cpu/u0/Regs/RegsL_1_3" BEL "cpu/u0/Regs/RegsL_1_2" BEL
+        "cpu/u0/Regs/RegsL_1_1" BEL "cpu/u0/Regs/RegsL_1_0" BEL
+        "cpu/u0/Regs/RegsH_4_7" BEL "cpu/u0/Regs/RegsH_4_6" BEL
+        "cpu/u0/Regs/RegsH_4_5" BEL "cpu/u0/Regs/RegsH_4_4" BEL
+        "cpu/u0/Regs/RegsH_4_3" BEL "cpu/u0/Regs/RegsH_4_2" BEL
+        "cpu/u0/Regs/RegsH_4_1" BEL "cpu/u0/Regs/RegsH_4_0" BEL
+        "cpu/u0/Regs/RegsH_3_7" BEL "cpu/u0/Regs/RegsH_3_6" BEL
+        "cpu/u0/Regs/RegsH_3_5" BEL "cpu/u0/Regs/RegsH_3_4" BEL
+        "cpu/u0/Regs/RegsH_3_3" BEL "cpu/u0/Regs/RegsH_3_2" BEL
+        "cpu/u0/Regs/RegsH_3_1" BEL "cpu/u0/Regs/RegsH_3_0" BEL
+        "cpu/u0/Regs/RegsH_5_7" BEL "cpu/u0/Regs/RegsH_5_6" BEL
+        "cpu/u0/Regs/RegsH_5_5" BEL "cpu/u0/Regs/RegsH_5_4" BEL
+        "cpu/u0/Regs/RegsH_5_3" BEL "cpu/u0/Regs/RegsH_5_2" BEL
+        "cpu/u0/Regs/RegsH_5_1" BEL "cpu/u0/Regs/RegsH_5_0" BEL
+        "cpu/u0/Regs/RegsH_1_7" BEL "cpu/u0/Regs/RegsH_1_6" BEL
+        "cpu/u0/Regs/RegsH_1_5" BEL "cpu/u0/Regs/RegsH_1_4" BEL
+        "cpu/u0/Regs/RegsH_1_3" BEL "cpu/u0/Regs/RegsH_1_2" BEL
+        "cpu/u0/Regs/RegsH_1_1" BEL "cpu/u0/Regs/RegsH_1_0" BEL
+        "cpu/u0/Regs/RegsH_0_7" BEL "cpu/u0/Regs/RegsH_0_6" BEL
+        "cpu/u0/Regs/RegsH_0_5" BEL "cpu/u0/Regs/RegsH_0_4" BEL
+        "cpu/u0/Regs/RegsH_0_3" BEL "cpu/u0/Regs/RegsH_0_2" BEL
+        "cpu/u0/Regs/RegsH_0_1" BEL "cpu/u0/Regs/RegsH_0_0" BEL
+        "cpu/u0/Regs/RegsH_2_7" BEL "cpu/u0/Regs/RegsH_2_6" BEL
+        "cpu/u0/Regs/RegsH_2_5" BEL "cpu/u0/Regs/RegsH_2_4" BEL
+        "cpu/u0/Regs/RegsH_2_3" BEL "cpu/u0/Regs/RegsH_2_2" BEL
+        "cpu/u0/Regs/RegsH_2_1" BEL "cpu/u0/Regs/RegsH_2_0" BEL
+        "divmmc/sv2v_autoblock_2.m1_trigger" BEL "divmmc/mapram" BEL
+        "divmmc/sram_page_3" BEL "divmmc/sram_page_2" BEL "divmmc/sram_page_1"
+        BEL "divmmc/sram_page_0" BEL "divmmc/conmem" BEL "divmmc/tx_strobe"
+        BEL "divmmc/spi_ss" BEL "divmmc/rx_strobe" BEL "divmmc/old_rd" BEL
+        "divmmc/spi/counter_3" BEL "divmmc/spi/counter_2" BEL
+        "divmmc/spi/counter_1" BEL "divmmc/spi/counter_0" BEL
+        "divmmc/spi/data_7" BEL "divmmc/spi/data_6" BEL "divmmc/spi/data_5"
+        BEL "divmmc/spi/data_4" BEL "divmmc/spi/data_3" BEL
+        "divmmc/spi/data_2" BEL "divmmc/spi/data_1" BEL "divmmc/spi/data_0"
+        BEL "divmmc/spi/io_byte_7" BEL "divmmc/spi/io_byte_6" BEL
+        "divmmc/spi/io_byte_5" BEL "divmmc/spi/io_byte_4" BEL
+        "divmmc/spi/io_byte_3" BEL "divmmc/spi/io_byte_2" BEL
+        "divmmc/spi/io_byte_1" BEL "divmmc/spi/io_byte_0" BEL
+        "sd_card/conf_buff_ptr_4" BEL "sd_card/conf_buff_ptr_3" BEL
+        "sd_card/conf_buff_ptr_2" BEL "sd_card/conf_buff_ptr_1" BEL
+        "sd_card/conf_buff_ptr_0" BEL "sd_card/delay_cnt_4" BEL
+        "sd_card/delay_cnt_3" BEL "sd_card/delay_cnt_2" BEL
+        "sd_card/delay_cnt_1" BEL "sd_card/delay_cnt_0" BEL
+        "sd_card/bit_cnt_2" BEL "sd_card/bit_cnt_1" BEL "sd_card/bit_cnt_0"
+        BEL "sd_card/read_state_FSM_FFd1" BEL "sd_card/read_state_FSM_FFd2"
+        BEL "sd_card/read_state_FSM_FFd3" BEL "sd_card/write_state_FSM_FFd1"
+        BEL "sd_card/write_state_FSM_FFd2" BEL "sd_card/write_state_FSM_FFd3"
+        BEL "sd_card/sd_sdo" BEL "sd_card/buffer_ptr_9" BEL
+        "sd_card/buffer_ptr_8" BEL "sd_card/buffer_ptr_7" BEL
+        "sd_card/buffer_ptr_6" BEL "sd_card/buffer_ptr_5" BEL
+        "sd_card/buffer_ptr_4" BEL "sd_card/buffer_ptr_3" BEL
+        "sd_card/buffer_ptr_2" BEL "sd_card/buffer_ptr_1" BEL
+        "sd_card/buffer_ptr_0" BEL "sd_card/sd_lba_31" BEL "sd_card/sd_lba_30"
+        BEL "sd_card/sd_lba_29" BEL "sd_card/sd_lba_28" BEL
+        "sd_card/sd_lba_27" BEL "sd_card/sd_lba_26" BEL "sd_card/sd_lba_25"
+        BEL "sd_card/sd_lba_24" BEL "sd_card/sd_lba_23" BEL
+        "sd_card/sd_lba_22" BEL "sd_card/sd_lba_21" BEL "sd_card/sd_lba_20"
+        BEL "sd_card/sd_lba_19" BEL "sd_card/sd_lba_18" BEL
+        "sd_card/sd_lba_17" BEL "sd_card/sd_lba_16" BEL "sd_card/sd_lba_15"
+        BEL "sd_card/sd_lba_14" BEL "sd_card/sd_lba_13" BEL
+        "sd_card/sd_lba_12" BEL "sd_card/sd_lba_11" BEL "sd_card/sd_lba_10"
+        BEL "sd_card/sd_lba_9" BEL "sd_card/sd_lba_8" BEL "sd_card/sd_lba_7"
+        BEL "sd_card/sd_lba_6" BEL "sd_card/sd_lba_5" BEL "sd_card/sd_lba_4"
+        BEL "sd_card/sd_lba_3" BEL "sd_card/sd_lba_2" BEL "sd_card/sd_lba_1"
+        BEL "sd_card/sd_lba_0" BEL "sd_card/sd_buff_sel" BEL
+        "sd_card/conf_byte_7" BEL "sd_card/conf_byte_6" BEL
+        "sd_card/conf_byte_5" BEL "sd_card/conf_byte_4" BEL
+        "sd_card/conf_byte_3" BEL "sd_card/conf_byte_2" BEL
+        "sd_card/conf_byte_1" BEL "sd_card/conf_byte_0" BEL
+        "sd_card/buffer_write_strobe" BEL "sd_card/sd_rd" BEL "sd_card/cmd_6"
+        BEL "sd_card/cmd_5" BEL "sd_card/cmd_4" BEL "sd_card/cmd_3" BEL
+        "sd_card/cmd_2" BEL "sd_card/cmd_1" BEL "sd_card/cmd_0" BEL
+        "sd_card/cmd55" BEL "sd_card/reply_len_2" BEL "sd_card/reply_len_0"
+        BEL "sd_card/reply_6" BEL "sd_card/reply_2" BEL "sd_card/reply_0" BEL
+        "sd_card/csdcid_255" BEL "sd_card/csdcid_254" BEL "sd_card/csdcid_253"
+        BEL "sd_card/csdcid_252" BEL "sd_card/csdcid_251" BEL
+        "sd_card/csdcid_250" BEL "sd_card/csdcid_249" BEL "sd_card/csdcid_248"
+        BEL "sd_card/csdcid_247" BEL "sd_card/csdcid_246" BEL
+        "sd_card/csdcid_245" BEL "sd_card/csdcid_244" BEL "sd_card/csdcid_243"
+        BEL "sd_card/csdcid_242" BEL "sd_card/csdcid_241" BEL
+        "sd_card/csdcid_240" BEL "sd_card/csdcid_239" BEL "sd_card/csdcid_238"
+        BEL "sd_card/csdcid_237" BEL "sd_card/csdcid_236" BEL
+        "sd_card/csdcid_235" BEL "sd_card/csdcid_234" BEL "sd_card/csdcid_233"
+        BEL "sd_card/csdcid_232" BEL "sd_card/csdcid_231" BEL
+        "sd_card/csdcid_230" BEL "sd_card/csdcid_229" BEL "sd_card/csdcid_228"
+        BEL "sd_card/csdcid_227" BEL "sd_card/csdcid_226" BEL
+        "sd_card/csdcid_225" BEL "sd_card/csdcid_224" BEL "sd_card/csdcid_223"
+        BEL "sd_card/csdcid_222" BEL "sd_card/csdcid_221" BEL
+        "sd_card/csdcid_220" BEL "sd_card/csdcid_219" BEL "sd_card/csdcid_218"
+        BEL "sd_card/csdcid_217" BEL "sd_card/csdcid_216" BEL
+        "sd_card/csdcid_215" BEL "sd_card/csdcid_214" BEL "sd_card/csdcid_213"
+        BEL "sd_card/csdcid_212" BEL "sd_card/csdcid_211" BEL
+        "sd_card/csdcid_210" BEL "sd_card/csdcid_209" BEL "sd_card/csdcid_208"
+        BEL "sd_card/csdcid_207" BEL "sd_card/csdcid_206" BEL
+        "sd_card/csdcid_205" BEL "sd_card/csdcid_204" BEL "sd_card/csdcid_203"
+        BEL "sd_card/csdcid_202" BEL "sd_card/csdcid_201" BEL
+        "sd_card/csdcid_200" BEL "sd_card/csdcid_199" BEL "sd_card/csdcid_198"
+        BEL "sd_card/csdcid_197" BEL "sd_card/csdcid_196" BEL
+        "sd_card/csdcid_195" BEL "sd_card/csdcid_194" BEL "sd_card/csdcid_193"
+        BEL "sd_card/csdcid_192" BEL "sd_card/csdcid_191" BEL
+        "sd_card/csdcid_190" BEL "sd_card/csdcid_189" BEL "sd_card/csdcid_188"
+        BEL "sd_card/csdcid_187" BEL "sd_card/csdcid_186" BEL
+        "sd_card/csdcid_185" BEL "sd_card/csdcid_184" BEL "sd_card/csdcid_183"
+        BEL "sd_card/csdcid_182" BEL "sd_card/csdcid_181" BEL
+        "sd_card/csdcid_180" BEL "sd_card/csdcid_179" BEL "sd_card/csdcid_178"
+        BEL "sd_card/csdcid_177" BEL "sd_card/csdcid_176" BEL
+        "sd_card/csdcid_175" BEL "sd_card/csdcid_174" BEL "sd_card/csdcid_173"
+        BEL "sd_card/csdcid_172" BEL "sd_card/csdcid_171" BEL
+        "sd_card/csdcid_170" BEL "sd_card/csdcid_169" BEL "sd_card/csdcid_168"
+        BEL "sd_card/csdcid_167" BEL "sd_card/csdcid_166" BEL
+        "sd_card/csdcid_165" BEL "sd_card/csdcid_164" BEL "sd_card/csdcid_163"
+        BEL "sd_card/csdcid_162" BEL "sd_card/csdcid_161" BEL
+        "sd_card/csdcid_160" BEL "sd_card/csdcid_159" BEL "sd_card/csdcid_158"
+        BEL "sd_card/csdcid_157" BEL "sd_card/csdcid_156" BEL
+        "sd_card/csdcid_155" BEL "sd_card/csdcid_154" BEL "sd_card/csdcid_153"
+        BEL "sd_card/csdcid_152" BEL "sd_card/csdcid_151" BEL
+        "sd_card/csdcid_150" BEL "sd_card/csdcid_149" BEL "sd_card/csdcid_148"
+        BEL "sd_card/csdcid_147" BEL "sd_card/csdcid_146" BEL
+        "sd_card/csdcid_145" BEL "sd_card/csdcid_144" BEL "sd_card/csdcid_143"
+        BEL "sd_card/csdcid_142" BEL "sd_card/csdcid_141" BEL
+        "sd_card/csdcid_140" BEL "sd_card/csdcid_139" BEL "sd_card/csdcid_138"
+        BEL "sd_card/csdcid_137" BEL "sd_card/csdcid_136" BEL
+        "sd_card/csdcid_135" BEL "sd_card/csdcid_134" BEL "sd_card/csdcid_133"
+        BEL "sd_card/csdcid_132" BEL "sd_card/csdcid_131" BEL
+        "sd_card/csdcid_130" BEL "sd_card/csdcid_129" BEL "sd_card/csdcid_128"
+        BEL "sd_card/csdcid_127" BEL "sd_card/csdcid_126" BEL
+        "sd_card/csdcid_125" BEL "sd_card/csdcid_124" BEL "sd_card/csdcid_123"
+        BEL "sd_card/csdcid_122" BEL "sd_card/csdcid_121" BEL
+        "sd_card/csdcid_120" BEL "sd_card/csdcid_119" BEL "sd_card/csdcid_118"
+        BEL "sd_card/csdcid_117" BEL "sd_card/csdcid_116" BEL
+        "sd_card/csdcid_115" BEL "sd_card/csdcid_114" BEL "sd_card/csdcid_113"
+        BEL "sd_card/csdcid_112" BEL "sd_card/csdcid_111" BEL
+        "sd_card/csdcid_110" BEL "sd_card/csdcid_109" BEL "sd_card/csdcid_108"
+        BEL "sd_card/csdcid_107" BEL "sd_card/csdcid_106" BEL
+        "sd_card/csdcid_105" BEL "sd_card/csdcid_104" BEL "sd_card/csdcid_103"
+        BEL "sd_card/csdcid_102" BEL "sd_card/csdcid_101" BEL
+        "sd_card/csdcid_100" BEL "sd_card/csdcid_99" BEL "sd_card/csdcid_98"
+        BEL "sd_card/csdcid_97" BEL "sd_card/csdcid_96" BEL
+        "sd_card/csdcid_95" BEL "sd_card/csdcid_94" BEL "sd_card/csdcid_93"
+        BEL "sd_card/csdcid_92" BEL "sd_card/csdcid_91" BEL
+        "sd_card/csdcid_90" BEL "sd_card/csdcid_89" BEL "sd_card/csdcid_88"
+        BEL "sd_card/csdcid_87" BEL "sd_card/csdcid_86" BEL
+        "sd_card/csdcid_85" BEL "sd_card/csdcid_84" BEL "sd_card/csdcid_83"
+        BEL "sd_card/csdcid_82" BEL "sd_card/csdcid_81" BEL
+        "sd_card/csdcid_80" BEL "sd_card/csdcid_79" BEL "sd_card/csdcid_78"
+        BEL "sd_card/csdcid_77" BEL "sd_card/csdcid_76" BEL
+        "sd_card/csdcid_75" BEL "sd_card/csdcid_74" BEL "sd_card/csdcid_73"
+        BEL "sd_card/csdcid_72" BEL "sd_card/csdcid_71" BEL
+        "sd_card/csdcid_70" BEL "sd_card/csdcid_69" BEL "sd_card/csdcid_68"
+        BEL "sd_card/csdcid_67" BEL "sd_card/csdcid_66" BEL
+        "sd_card/csdcid_65" BEL "sd_card/csdcid_64" BEL "sd_card/csdcid_63"
+        BEL "sd_card/csdcid_62" BEL "sd_card/csdcid_61" BEL
+        "sd_card/csdcid_60" BEL "sd_card/csdcid_59" BEL "sd_card/csdcid_58"
+        BEL "sd_card/csdcid_57" BEL "sd_card/csdcid_56" BEL
+        "sd_card/csdcid_55" BEL "sd_card/csdcid_54" BEL "sd_card/csdcid_53"
+        BEL "sd_card/csdcid_52" BEL "sd_card/csdcid_51" BEL
+        "sd_card/csdcid_50" BEL "sd_card/csdcid_49" BEL "sd_card/csdcid_48"
+        BEL "sd_card/csdcid_47" BEL "sd_card/csdcid_46" BEL
+        "sd_card/csdcid_45" BEL "sd_card/csdcid_44" BEL "sd_card/csdcid_43"
+        BEL "sd_card/csdcid_42" BEL "sd_card/csdcid_41" BEL
+        "sd_card/csdcid_40" BEL "sd_card/csdcid_39" BEL "sd_card/csdcid_38"
+        BEL "sd_card/csdcid_37" BEL "sd_card/csdcid_36" BEL
+        "sd_card/csdcid_35" BEL "sd_card/csdcid_34" BEL "sd_card/csdcid_33"
+        BEL "sd_card/csdcid_32" BEL "sd_card/csdcid_31" BEL
+        "sd_card/csdcid_30" BEL "sd_card/csdcid_29" BEL "sd_card/csdcid_28"
+        BEL "sd_card/csdcid_27" BEL "sd_card/csdcid_26" BEL
+        "sd_card/csdcid_25" BEL "sd_card/csdcid_24" BEL "sd_card/csdcid_23"
+        BEL "sd_card/csdcid_22" BEL "sd_card/csdcid_21" BEL
+        "sd_card/csdcid_20" BEL "sd_card/csdcid_19" BEL "sd_card/csdcid_18"
+        BEL "sd_card/csdcid_17" BEL "sd_card/csdcid_16" BEL
+        "sd_card/csdcid_15" BEL "sd_card/csdcid_14" BEL "sd_card/csdcid_13"
+        BEL "sd_card/csdcid_12" BEL "sd_card/csdcid_11" BEL
+        "sd_card/csdcid_10" BEL "sd_card/csdcid_9" BEL "sd_card/csdcid_8" BEL
+        "sd_card/csdcid_7" BEL "sd_card/csdcid_6" BEL "sd_card/csdcid_5" BEL
+        "sd_card/csdcid_4" BEL "sd_card/csdcid_3" BEL "sd_card/csdcid_2" BEL
+        "sd_card/csdcid_1" BEL "sd_card/csdcid_0" BEL "sd_card/args_39" BEL
+        "sd_card/args_38" BEL "sd_card/args_37" BEL "sd_card/args_36" BEL
+        "sd_card/args_35" BEL "sd_card/args_34" BEL "sd_card/args_33" BEL
+        "sd_card/args_32" BEL "sd_card/args_31" BEL "sd_card/args_30" BEL
+        "sd_card/args_29" BEL "sd_card/args_28" BEL "sd_card/args_27" BEL
+        "sd_card/args_26" BEL "sd_card/args_25" BEL "sd_card/args_24" BEL
+        "sd_card/args_23" BEL "sd_card/args_22" BEL "sd_card/args_21" BEL
+        "sd_card/args_20" BEL "sd_card/args_19" BEL "sd_card/args_18" BEL
+        "sd_card/args_17" BEL "sd_card/args_16" BEL "sd_card/args_15" BEL
+        "sd_card/args_14" BEL "sd_card/args_13" BEL "sd_card/args_12" BEL
+        "sd_card/args_11" BEL "sd_card/args_10" BEL "sd_card/args_9" BEL
+        "sd_card/args_8" BEL "sd_card/buffer_din_7" BEL "sd_card/buffer_din_6"
+        BEL "sd_card/buffer_din_5" BEL "sd_card/buffer_din_4" BEL
+        "sd_card/buffer_din_3" BEL "sd_card/buffer_din_2" BEL
+        "sd_card/buffer_din_1" BEL "sd_card/buffer_din_0" BEL "sd_card/sd_wr"
+        BEL "sd_card/terminate_cmd" BEL "sd_card/reply3_7" BEL
+        "sd_card/reply3_6" BEL "sd_card/reply3_5" BEL "sd_card/reply3_4" BEL
+        "sd_card/reply3_3" BEL "sd_card/reply3_2" BEL "sd_card/reply3_1" BEL
+        "sd_card/reply3_0" BEL "sd_card/reply2_7" BEL "sd_card/reply2_3" BEL
+        "sd_card/reply2_2" BEL "sd_card/reply2_1" BEL "sd_card/reply2_0" BEL
+        "sd_card/reply0_7" BEL "sd_card/reply0_6" BEL "sd_card/sbuf_6" BEL
+        "sd_card/sbuf_5" BEL "sd_card/sbuf_4" BEL "sd_card/sbuf_3" BEL
+        "sd_card/sbuf_2" BEL "sd_card/sbuf_1" BEL "sd_card/sbuf_0" BEL
+        "sd_card/sv2v_autoblock_2.ack_5" BEL
+        "sd_card/sv2v_autoblock_1.old_mounted" BEL
+        "sd_card/sv2v_autoblock_2.old_sd_sck" BEL "sd_card/conf_0" BEL
+        "init_reset" BEL "trdos_en" BEL "plusd_mem" BEL "ULA/HSync" BEL
+        "ULA/INT" BEL "ULA/HBlank" BEL "ULA/VSync" BEL "ULA/INTCnt_0" BEL
+        "mist_io/sd_ack_conf" BEL "mist_io/sd_ack" BEL
+        "video_mixer/scandoubler/hs_out" BEL
+        "video_mixer/scandoubler/req_line_reset" BEL "cpu/IORQ_n" BEL
+        "cpu/MREQ_n" BEL "cpu/CEN_pol" BEL "divmmc/automap" BEL
+        "divmmc/spi/counter_4" BEL "sd_card/byte_cnt_3" BEL
+        "sd_card/byte_cnt_2" BEL "sd_card/byte_cnt_1" BEL "sd_card/byte_cnt_0"
+        BEL "sd_card/sd_busy" BEL "sd_card/card_is_reset" BEL
+        "sd_card/sd_configuring" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_2_1" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_0_1" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_1_1" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_4_1" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_1_2" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_0_2" BEL "cpu/u0/IR_3_1" BEL
+        "cpu/u0/IR_5_1" BEL "cpu/u0/IR_7_1" BEL "cpu/u0/IR_6_1" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_5_1" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_4_2" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_2_2" BEL "cpu/u0/IR_1_1" BEL
+        "cpu/u0/IR_0_1" BEL "cpu/u0/IR_2_1" BEL
+        "video_mixer/scandoubler/Hq2x/nextpatt_5_2" PIN
+        "vram/Mram_ram1_pins<28>" PIN "vram/Mram_ram1_pins<29>" PIN
+        "vram/Mram_ram4_pins<28>" PIN "vram/Mram_ram4_pins<29>" PIN
+        "vram/Mram_ram2_pins<28>" PIN "vram/Mram_ram2_pins<29>" PIN
+        "vram/Mram_ram3_pins<28>" PIN "vram/Mram_ram3_pins<29>" PIN
+        "vram/Mram_ram5_pins<28>" PIN "vram/Mram_ram5_pins<29>" PIN
+        "vram/Mram_ram6_pins<28>" PIN "vram/Mram_ram6_pins<29>" PIN
+        "vram/Mram_ram7_pins<28>" PIN "vram/Mram_ram7_pins<29>" PIN
+        "vram/Mram_ram8_pins<28>" PIN "vram/Mram_ram8_pins<29>" PIN
+        "vram/Mram_ram11_pins<28>" PIN "vram/Mram_ram11_pins<29>" PIN
+        "vram/Mram_ram9_pins<28>" PIN "vram/Mram_ram9_pins<29>" PIN
+        "vram/Mram_ram10_pins<28>" PIN "vram/Mram_ram10_pins<29>" PIN
+        "vram/Mram_ram12_pins<28>" PIN "vram/Mram_ram12_pins<29>" PIN
+        "vram/Mram_ram13_pins<28>" PIN "vram/Mram_ram13_pins<29>" PIN
+        "vram/Mram_ram14_pins<28>" PIN "vram/Mram_ram14_pins<29>" PIN
+        "vram/Mram_ram15_pins<28>" PIN "vram/Mram_ram15_pins<29>" PIN
+        "vram/Mram_ram16_pins<28>" PIN "vram/Mram_ram16_pins<29>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf0/Mram_mem2_pins<22>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf0/Mram_mem2_pins<23>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf0/Mram_mem1_pins<22>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf0/Mram_mem1_pins<23>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf1/Mram_mem2_pins<22>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf1/Mram_mem2_pins<23>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf1/Mram_mem1_pins<22>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf1/Mram_mem1_pins<23>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf2/Mram_mem2_pins<22>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf2/Mram_mem2_pins<23>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf2/Mram_mem1_pins<22>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf2/Mram_mem1_pins<23>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf3/Mram_mem2_pins<22>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf3/Mram_mem2_pins<23>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf3/Mram_mem1_pins<22>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_out/buf3/Mram_mem1_pins<23>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_in/buf1/Mram_mem_pins<20>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_in/buf1/Mram_mem_pins<21>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_in/buf0/Mram_mem_pins<20>" PIN
+        "video_mixer/scandoubler/Hq2x/hq2x_in/buf0/Mram_mem_pins<21>" PIN
+        "video_mixer/osd/Mram_osd_buffer_pins<23>" PIN
+        "sd_card/buffer_dpram/Mram_ram_pins<20>" PIN
+        "sd_card/buffer_dpram/Mram_ram_pins<21>" BEL
+        "video_mixer/scandoubler/Hq2x/Mshreg_A_6" BEL
+        "video_mixer/scandoubler/Hq2x/A_6" BEL
+        "mist_io/Mshreg_sv2v_autoblock_2.old_ss2" BEL
+        "mist_io/sv2v_autoblock_2.old_ss2" BEL
+        "video_mixer/scandoubler/Hq2x/Mshreg_A_12" BEL
+        "video_mixer/scandoubler/Hq2x/A_12" BEL
+        "video_mixer/scandoubler/Hq2x/Mshreg_A_0" BEL
+        "video_mixer/scandoubler/Hq2x/A_0" BEL
+        "video_mixer/scandoubler/Hq2x/Mshreg_Curr0_12" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_12" BEL
+        "video_mixer/scandoubler/Hq2x/Mshreg_G_6" BEL
+        "video_mixer/scandoubler/Hq2x/G_6" BEL
+        "video_mixer/scandoubler/Hq2x/Mshreg_Curr0_6" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_6" BEL
+        "video_mixer/scandoubler/Hq2x/Mshreg_Curr0_0" BEL
+        "video_mixer/scandoubler/Hq2x/Curr0_0" BEL
+        "video_mixer/scandoubler/Hq2x/Mshreg_G_0" BEL
+        "video_mixer/scandoubler/Hq2x/G_0" BEL
+        "sd_card/Mshreg_sv2v_autoblock_2.ack_4" BEL
+        "sd_card/sv2v_autoblock_2.ack_4";
+PIN SP6_BUFIO2_INSERT_PLL1_ML_BUFIO2_0_pins<0> = BEL
+        "SP6_BUFIO2_INSERT_PLL1_ML_BUFIO2_0" PINNAME DIVCLK;
+PIN pll/relojes_inst/pll_base_inst/PLL_ADV_pins<2> = BEL
+        "pll/relojes_inst/pll_base_inst/PLL_ADV" PINNAME CLKIN1;
+TIMEGRP CLOCK_50 = PIN "SP6_BUFIO2_INSERT_PLL1_ML_BUFIO2_0_pins<0>" PIN
+        "pll/relojes_inst/pll_base_inst/PLL_ADV_pins<2>";
+SCHEMATIC END;
+
