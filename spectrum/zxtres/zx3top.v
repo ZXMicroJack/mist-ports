@@ -1,10 +1,4 @@
-//set_property -dict {PACKAGE_PIN V8 IOSTANDARD LVTTL} [get_ports mist_miso]
-//set_property -dict {PACKAGE_PIN V7 IOSTANDARD LVTTL} [get_ports mist_mosi]
-//set_property -dict {PACKAGE_PIN W7 IOSTANDARD LVTTL} [get_ports mist_sck]
-//set_property -dict {PACKAGE_PIN W9 IOSTANDARD LVTTL} [get_ports mist_confdata0]
-
-
-
+`default_nettype wire
 module zx3top(
   input wire clk50mhz,
 
@@ -54,77 +48,6 @@ module zx3top(
   input wire xjoy_load_n,
   input wire joy_data,
   output wire xjoy_data
-
-
-  //,
-  //input wire ear,
-  //inout wire clkps2,
-  //inout wire dataps2,
-  //inout wire mouseclk,
-  //inout wire mousedata,
-  //output wire audio_out_left,
-  //output wire audio_out_right,
-
-  //output wire [19:0] sram_addr,
-  //inout wire [15:0] sram_data,
-  //output wire sram_we_n,
-  //output wire sram_oe_n,
-  //output wire sram_ub_n,
-  //output wire sram_lb_n,
-
-  //output wire flash_cs_n,
-  //output wire flash_clk,
-  //output wire flash_mosi,
-  //input wire flash_miso,
-  //output wire flash_wp,
-  //output wire flash_hold,
-
-  //output wire uart_tx,
-  //input wire uart_rx,
-  //output wire uart_rts,
-  //output wire uart_reset,
-  //output wire uart_gpio0,
-
-  //output wire i2c_scl,
-  //inout wire i2c_sda,
-
-  //output wire midi_out,
-  //input wire midi_clkbd,
-  //input wire midi_wsbd,
-  //input wire midi_dabd,
-
-  //input wire joy_data,
-  //output wire joy_clk,
-  //output wire joy_load_n,
-
-  //input wire xjoy_data,
-  //output wire xjoy_clk,
-  //output wire xjoy_load_n,
-
-  //output wire i2s_bclk,
-  //output wire i2s_lrclk,
-  //output wire i2s_dout,
-
-  //output wire sd_cs_n,
-  //output wire sd_clk,
-  //output wire sd_mosi,
-  //input wire sd_miso,
-
-  //output wire dp_tx_lane_p,
-  //output wire dp_tx_lane_n,
-  //input wire  dp_refclk_p,
-  //input wire  dp_refclk_n,
-  //input wire  dp_tx_hp_detect,
-  //inout wire  dp_tx_auxch_tx_p,
-  //inout wire  dp_tx_auxch_tx_n,
-  //inout wire  dp_tx_auxch_rx_p,
-  //inout wire  dp_tx_auxch_rx_n,
-
-  //output wire testled,   // nos servirá como testigo de uso de la SPI
-  //output wire testled2,
-
-  //output wire mb_uart_tx,
-  //input wire mb_uart_rx
 );
 
 // JAMMA interface
@@ -164,6 +87,8 @@ zxspectrum spectrum_mist_inst(
    .SDRAM_CKE(sdram_cke), //	:  out 		std_logic;
    .AUDIO_LEFT(audio_l),
    .AUDIO_RIGHT(audio_r),
+   .AUDIO_L(audio_out_left),
+   .AUDIO_R(audio_out_right),
    .clock50(clock50)
    
 );

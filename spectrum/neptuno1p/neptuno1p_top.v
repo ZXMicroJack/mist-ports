@@ -55,8 +55,8 @@ assign JOY_CLK = XJOY_CLK;
 assign JOY_LOAD_N = XJOY_LOAD_N;
 assign XJOY_DATA = JOY_DATA;
 
-wire[15:0] audio_l;
-wire[15:0] audio_r;
+wire[15:0] audio_l16;
+wire[15:0] audio_r16;
 wire clock50;
 
 zxspectrum spectrum_mist_inst(
@@ -85,16 +85,18 @@ zxspectrum spectrum_mist_inst(
    .SDRAM_BA(SDRAM_BA), //		:  out 		std_logic_vector(1 downto 0);
    .SDRAM_CLK(SDRAM_CLK), //	:  out 		std_logic;
    .SDRAM_CKE(SDRAM_CKE), //	:  out 		std_logic;
-   .AUDIO_LEFT(audio_l),
-   .AUDIO_RIGHT(audio_r),
+   .AUDIO_LEFT(audio_l16),
+   .AUDIO_RIGHT(audio_r16),
+   .AUDIO_L(AUDIO_L),
+   .AUDIO_R(AUDIO_R),
    .clock50(clock50)
 
 );
 
 i2s_sound #(.CLKMHZ(50)) i2scodec (
     .clk(clock50),
-    .audio_l(audio_l),
-    .audio_r(audio_r),
+    .audio_l(audio_l16),
+    .audio_r(audio_r16),
     .i2s_bclk(I2SC),
     .i2s_lrclk(I2SL),
     .i2s_dout(I2SD)
