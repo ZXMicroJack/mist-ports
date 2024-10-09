@@ -239,6 +239,8 @@ set_global_assignment -name RESERVE_ALL_UNUSED_PINS_WEAK_PULLUP "AS INPUT TRI-ST
 
 set_global_assignment -name DEVICE_FILTER_PIN_COUNT 484
 
+set_global_assignment -name SYSTEMVERILOG_FILE ../zxtres/turbosound.sv
+set_global_assignment -name VERILOG_FILE ../zxtres/psg.v
 set_global_assignment -name VERILOG_FILE ../../common/i2s_sound.v
 set_global_assignment -name VERILOG_FILE "../spectrum-128k/sys/sigma_delta_dac.v"
 set_global_assignment -name VERILOG_FILE "../spectrum-128k/sys/sd_card.v"
@@ -248,14 +250,12 @@ set_global_assignment -name VERILOG_FILE "../spectrum-128k/sys/mist_io.v"
 set_global_assignment -name SYSTEMVERILOG_FILE "../spectrum-128k/sys/video_mixer.sv"
 set_global_assignment -name QIP_FILE "../spectrum-128k/T80/T80.qip"
 set_global_assignment -name SYSTEMVERILOG_FILE "../spectrum-128k/zxspectrum.sv"
-set_global_assignment -name VHDL_FILE "../spectrum-128k/YM2149.vhd"
 set_global_assignment -name SYSTEMVERILOG_FILE "../spectrum-128k/wd1793.sv"
 set_global_assignment -name VERILOG_FILE "../spectrum-128k/vram.v"
 set_global_assignment -name VHDL_FILE "../spectrum-128k/vol_table_array.vhd"
 set_global_assignment -name SYSTEMVERILOG_FILE "../spectrum-128k/ula.sv"
 set_global_assignment -name SYSTEMVERILOG_FILE "../spectrum-128k/u765.sv"
 set_global_assignment -name VHDL_FILE "../spectrum-128k/tzxplayer.vhd"
-set_global_assignment -name SYSTEMVERILOG_FILE "../spectrum-128k/turbosound.sv"
 set_global_assignment -name SYSTEMVERILOG_FILE "../spectrum-128k/tape.sv"
 set_global_assignment -name SYSTEMVERILOG_FILE "../spectrum-128k/snap_loader.sv"
 set_global_assignment -name SYSTEMVERILOG_FILE "../spectrum-128k/sdram.sv"

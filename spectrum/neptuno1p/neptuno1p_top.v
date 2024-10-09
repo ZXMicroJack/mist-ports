@@ -90,7 +90,6 @@ zxspectrum spectrum_mist_inst(
    .AUDIO_L(AUDIO_L),
    .AUDIO_R(AUDIO_R),
    .clock50(clock50)
-
 );
 
 i2s_sound #(.CLKMHZ(50)) i2scodec (
