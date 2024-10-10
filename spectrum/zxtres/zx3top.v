@@ -47,7 +47,12 @@ module zx3top(
   output wire joy_load_n,
   input wire xjoy_load_n,
   input wire joy_data,
-  output wire xjoy_data
+  output wire xjoy_data,
+
+  // MIDI in
+   output wire midi_out,
+   input wire midi_clkbd,
+   input wire midi_dabd
 );
 
 // JAMMA interface
@@ -58,6 +63,9 @@ assign xjoy_data = joy_data;
 wire[15:0] audio_l;
 wire[15:0] audio_r;
 wire clock50;
+
+wire[15:0] midi_audio_l;
+wire[15:0] midi_audio_r;
 
 zxspectrum spectrum_mist_inst(
    .CLOCK_27({clk50mhz, clk50mhz}),
@@ -89,8 +97,10 @@ zxspectrum spectrum_mist_inst(
    .AUDIO_RIGHT(audio_r),
    .AUDIO_L(audio_out_left),
    .AUDIO_R(audio_out_right),
-   .clock50(clock50)
-   
+   .clock50(clock50),
+   .MIDI_OUT(midi_out),
+   .AUDIO_LEFT_IN(midi_audio_l),
+   .AUDIO_RIGHT_IN(midi_audio_r)
 );
 
 i2s_sound #(.CLKMHZ(50)) i2scodec (
@@ -100,6 +110,15 @@ i2s_sound #(.CLKMHZ(50)) i2scodec (
     .i2s_bclk(i2s_bclk),
     .i2s_lrclk(i2s_lrclk),
     .i2s_dout(i2s_dout)
+  );
+
+i2s_decoder (
+    .clk(clock50),
+    .sck(midi_clkbd),
+    .ws(),
+    .sd(midi_dabd),
+    .left_out(midi_audio_l),
+    .right_out(midi_audio_r)
   );
 
 endmodule

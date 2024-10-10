@@ -1,9 +1,3 @@
-diff --git a/T80 b/T80
---- a/T80
-+++ b/T80
-@@ -1 +1 @@
--Subproject commit 0917cdf114034702dab18db176e1adc4c761df0f
-+Subproject commit 0917cdf114034702dab18db176e1adc4c761df0f-dirty
 diff --git a/sdram.sv b/sdram.sv
 index 6103a77..bd75726 100644
 --- a/sdram.sv
@@ -119,6 +113,15 @@ index 32482b5..3773920 100644
  module scandoubler #(parameter LENGTH, parameter HALF_DEPTH)
  (
  	// system interface
+diff --git a/sys/sigma_delta_dac.v b/sys/sigma_delta_dac.v
+index d0d6be0..03d5fa3 100644
+--- a/sys/sigma_delta_dac.v
++++ b/sys/sigma_delta_dac.v
+@@ -1,3 +1,4 @@
++`default_nettype wire
+ //
+ // PWM DAC
+ //
 diff --git a/sys/video_mixer.sv b/sys/video_mixer.sv
 index 385059c..2e4e27c 100644
 --- a/sys/video_mixer.sv
@@ -228,7 +231,7 @@ index 8384218..c463fa1 100644
  			{edsk_track,edsk_side,edsk_trackf,edsk_sidef,edsk_sector,edsk_sizecode,edsk_offset} <= edsk[edsk_addr];
  			edsk_spt <= spt[spt_addr];
 diff --git a/zxspectrum.sv b/zxspectrum.sv
-index 9f91f9b..ed148b9 100644
+index 9f91f9b..4e2d9ff 100644
 --- a/zxspectrum.sv
 +++ b/zxspectrum.sv
 @@ -1,4 +1,4 @@
@@ -237,7 +240,7 @@ index 9f91f9b..ed148b9 100644
  // Sinclair ZX Spectrum host board
  // 
  //  Port to MIST board. 
-@@ -55,7 +55,11 @@ module zxspectrum
+@@ -55,7 +55,15 @@ module zxspectrum
     output        SDRAM_nCS,
     output  [1:0] SDRAM_BA,
     output        SDRAM_CLK,
@@ -246,11 +249,15 @@ index 9f91f9b..ed148b9 100644
 +
 +   output[15:0]	AUDIO_LEFT,
 +   output[15:0]	AUDIO_RIGHT,
-+   output wire  clock50
++   output wire  clock50,
++   input[15:0]	AUDIO_LEFT_IN,
++   input[15:0]	AUDIO_RIGHT_IN,
++   output wire  MIDI_OUT
++
  );
  `default_nettype none
  
-@@ -75,7 +79,9 @@ localparam ARCH_P48   = 5'b011_10; // Pentagon 48
+@@ -75,7 +83,9 @@ localparam ARCH_P48   = 5'b011_10; // Pentagon 48
  localparam ARCH_P128  = 5'b000_10; // Pentagon 128
  localparam ARCH_P1024 = 5'b001_10; // Pentagon 1024
  
@@ -261,7 +268,7 @@ index 9f91f9b..ed148b9 100644
  localparam CONF_STR = {
  	"SPECTRUM;;",
  	"S1U,TRDIMGDSKMGT,Load Disk;",
-@@ -118,6 +124,7 @@ pll pll
+@@ -118,6 +128,7 @@ pll pll
  	.inclk0(CLOCK_27),
  	.c0(clk_sys),
  	.c1(SDRAM_CLK),
@@ -269,7 +276,7 @@ index 9f91f9b..ed148b9 100644
  	.locked(locked)
  );
  
-@@ -141,15 +148,15 @@ wire ce_tape = ce_cpu;
+@@ -141,15 +152,15 @@ wire ce_tape = ce_cpu;
  wire cpu_p = ~&turbo ? ce_cpu_tp : ce_cpu_sp;
  wire cpu_n = ~&turbo ? ce_cpu_tn : ce_cpu_sn;
  
@@ -288,7 +295,7 @@ index 9f91f9b..ed148b9 100644
  
  	ce_cpu_tp <= !(counter & turbo);
  	ce_cpu_tn <= !((counter & turbo) ^ turbo ^ turbo[4:1]);
-@@ -273,7 +280,7 @@ mist_io #(.STRLEN(($size(CONF_STR)>>3)+5)) mist_io
+@@ -273,7 +284,7 @@ mist_io #(.STRLEN(($size(CONF_STR)>>3)+5)) mist_io
  
  ///////////////////   CPU   ///////////////////
  wire [15:0] addr;
@@ -297,7 +304,17 @@ index 9f91f9b..ed148b9 100644
  wire  [7:0] cpu_dout;
  wire        nM1;
  wire        nMREQ;
-@@ -723,17 +730,17 @@ always @(posedge clk_sys) begin
+@@ -704,7 +715,8 @@ turbosound turbosound
+ 	.AUDIO_R(psg_right),
+ 
+ 	.IOA_in(0),
+-	.IOB_in(0)
++	.IOB_in(0),
++	.MIDI_OUT(MIDI_OUT)
+ );
+ 
+ // General Sound
+@@ -723,17 +735,17 @@ always @(posedge clk_sys) begin
  	end else begin
  		if (gs_ce_p) gs_no_wait <= 0;
  		if (gs_mem_ready) gs_no_wait <= 1;
@@ -320,7 +337,7 @@ index 9f91f9b..ed148b9 100644
  
  gs #(.INT_DIV(373)) gs
  (
-@@ -784,12 +791,21 @@ always @(posedge clk_sys) begin
+@@ -784,12 +796,22 @@ always @(posedge clk_sys) begin
      end
  end
  
@@ -330,8 +347,9 @@ index 9f91f9b..ed148b9 100644
 +wire[14:0] gs_left = &st_gs_memory ? 15'd0 : {~gs_l[14], gs_l[13:0]};
 +wire[14:0] gs_right = &st_gs_memory ? 15'd0 : {~gs_r[14], gs_r[13:0]};
 +
-+wire[14:0] audio_left = gs_left + {1'd0, psg_left, 3'd0} + {2'd0, sd_l0, 4'd0} + {2'd0, sd_l1, 4'd0} + {2'd0, ear_out, mic_out, tape_in, 10'd0};
-+wire[14:0] audio_right = gs_right + {1'd0, psg_right, 3'd0} + {2'd0, sd_r0, 4'd0} + {2'd0, sd_r1, 4'd0} + {2'd0, ear_out, mic_out, tape_in, 10'd0};
++wire[14:0] audio_left = gs_left + {1'd0, psg_left, 3'd0} + {2'd0, sd_l0, 4'd0} + {2'd0, sd_l1, 4'd0} + {2'd0, ear_out, mic_out, tape_in, 10'd0} + AUDIO_LEFT_IN[15:1];
++wire[14:0] audio_right = gs_right + {1'd0, psg_right, 3'd0} + {2'd0, sd_r0, 4'd0} + {2'd0, sd_r1, 4'd0} + {2'd0, ear_out, mic_out, tape_in, 10'd0} +
++AUDIO_RIGHT_IN[15:1];
 +
  // Final audio signal mixing
  sigma_delta_dac #(14) dac_l
@@ -343,7 +361,7 @@ index 9f91f9b..ed148b9 100644
  	.DACout(AUDIO_L)
  );
  
-@@ -797,7 +813,7 @@ sigma_delta_dac #(14) dac_r
+@@ -797,7 +819,7 @@ sigma_delta_dac #(14) dac_r
  (
  	.CLK(clk_sys),
  	.RESET(reset),
@@ -352,7 +370,7 @@ index 9f91f9b..ed148b9 100644
  	.DACout(AUDIO_R)
  );
  
-@@ -1168,8 +1184,8 @@ assign ula_tape_in = tape_in | ear_out | (issue2 & !tape_active & mic_out);
+@@ -1168,8 +1190,8 @@ assign ula_tape_in = tape_in | ear_out | (issue2 & !tape_active & mic_out);
  //////////////////  SNAPSHOT  //////////////////
  reg          snap_dl = 0;
  reg   [24:0] snap_dl_addr;

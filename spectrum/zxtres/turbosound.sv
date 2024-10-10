@@ -14,7 +14,8 @@ module turbosound
 	output wire [7:0] IOA_out,
 
 	input  [7:0] IOB_in,
-	output wire [7:0] IOB_out
+	output wire [7:0] IOB_out,
+	output wire MIDI_OUT
 );
 
 // AY1 selected by default
@@ -47,6 +48,7 @@ always_ff @(posedge CLK or posedge RESET) begin
 	end
 end
 
+assign MIDI_OUT = ay_select ? io1[2] : io0[2];
 
 /*module psg
 (

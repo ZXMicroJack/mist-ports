@@ -233,12 +233,12 @@ set_property IOSTANDARD LVCMOS33 [get_ports xjoy_data]
 #MIDI
 #set_property PACKAGE_PIN Y8 [get_ports midi_wsbd]
 #set_property IOSTANDARD LVCMOS33 [get_ports midi_wsbd]
-#set_property PACKAGE_PIN AA8 [get_ports midi_clkbd]
-#set_property IOSTANDARD LVCMOS33 [get_ports midi_clkbd]
-#set_property PACKAGE_PIN AB8 [get_ports midi_dabd]
-#set_property IOSTANDARD LVCMOS33 [get_ports midi_dabd]
-#set_property PACKAGE_PIN AB7 [get_ports midi_out]
-#set_property IOSTANDARD LVCMOS33 [get_ports midi_out]
+set_property PACKAGE_PIN AA8 [get_ports midi_clkbd]
+set_property IOSTANDARD LVCMOS33 [get_ports midi_clkbd]
+set_property PACKAGE_PIN AB8 [get_ports midi_dabd]
+set_property IOSTANDARD LVCMOS33 [get_ports midi_dabd]
+set_property PACKAGE_PIN AB7 [get_ports midi_out]
+set_property IOSTANDARD LVCMOS33 [get_ports midi_out]
 
 #Flash SPI
 #set_property IOSTANDARD LVCMOS33 [get_ports flash_clk]
