@@ -165,10 +165,15 @@ MENU menu_mist_inst(
 );
 
 // JAMMA interface
+reg joy_select = 1'b1;
+always @(posedge JOY_XLOAD) begin
+	joy_select <= ~joy_select | ~JOY_XCLK;
+end
+
 assign JOY_CLK = JOY_XCLK;
 assign JOY_LOAD = JOY_XLOAD;
 assign JOY_XDATA = JOY_DATA;
-assign JOY_SELECT = 1'b1;
+assign JOY_SELECT = joy_select;
 
 endmodule
 
