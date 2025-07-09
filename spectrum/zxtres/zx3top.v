@@ -48,6 +48,7 @@ module zx3top(
   input wire xjoy_load_n,
   input wire joy_data,
   output wire xjoy_data,
+  output wire joy_select,
 
   // MIDI in
    output wire midi_out,
@@ -56,9 +57,15 @@ module zx3top(
 );
 
 // JAMMA interface
+reg joy_select_ = 1'b1;
 assign joy_clk = xjoy_clk;
 assign joy_load_n = xjoy_load_n;
 assign xjoy_data = joy_data;
+assign joy_select = joy_select_;
+
+always @(posedge xjoy_load_n) begin
+	joy_select_ <= ~joy_select_ | ~xjoy_clk;
+end
 
 wire[15:0] audio_l;
 wire[15:0] audio_r;
